@@ -8,6 +8,12 @@ CREATE (Unforgiven:Movie {title:'Unforgiven', released:1992, tagline:"It's a hel
 CREATE (TheBirdcage:Movie {title:'The Birdcage', released:1996, tagline:'Come as you are'})
 CREATE (TheDaVinciCode:Movie {title:'The Da Vinci Code', released:2006, tagline:'Break The Codes'})
 CREATE (JerryMaguire:Movie {title:'Jerry Maguire', released:2000, tagline:'The rest of his life begins now.'})
+CREATE (StefanArndt:Person {name:'Stefan Arndt', born:1961})
+CREATE (Howard:Person {name:'Howard Deutch', born:1950})
+CREATE (ClintE:Person {name:'Clint Eastwood', born:1930})
+CREATE (MikeN:Person {name:'Mike Nichols', born:1931})
+CREATE (RonH:Person {name:'Ron Howard', born:1954})
+CREATE (CameronC:Person {name:'Cameron Crowe', born:1957})
 CREATE
 (JessicaThompson)-[:REVIEWED {summary:'An amazing journey', rating:95}]->(CloudAtlas),
 (JessicaThompson)-[:REVIEWED {summary:'Silly, but fun', rating:65}]->(TheReplacements),
@@ -17,17 +23,10 @@ CREATE
 (JessicaThompson)-[:REVIEWED {summary:"Slapstick redeemed only by the Robin Williams and Gene Hackman's stellar performances", rating:45}]->(TheBirdcage),
 (JessicaThompson)-[:REVIEWED {summary:'A solid romp', rating:68}]->(TheDaVinciCode),
 (JamesThompson)-[:REVIEWED {summary:'Fun, but a little far fetched', rating:65}]->(TheDaVinciCode),
-(JessicaThompson)-[:REVIEWED {summary:'You had me at Jerry', rating:92}]->(JerryMaguire);
-CREATE (StefanArndt:Person {name:'Stefan Arndt', born:1961})
-CREATE (Howard:Person {name:'Howard Deutch', born:1950})
-CREATE (ClintE:Person {name:'Clint Eastwood', born:1930})
-CREATE (MikeN:Person {name:'Mike Nichols', born:1931})
-CREATE (RonH:Person {name:'Ron Howard', born:1954})
-CREATE (CameronC:Person {name:'Cameron Crowe', born:1957})
-CREATE
+(JessicaThompson)-[:REVIEWED {summary:'You had me at Jerry', rating:92}]->(JerryMaguire),
 (CameronC)-[:PRODUCED]->(JerryMaguire),
 (RonH)-[:PRODUCED]->(TheDaVinciCode),
 (MikeN)-[:PRODUCED]->(TheBirdcage),
 (StefanArndt)-[:PRODUCED]->(CloudAtlas),
 (ClintE)-[:PRODUCED]->(Unforgiven),
-(Howard)-[:PRODUCED]->(TheReplacements)
+(Howard)-[:PRODUCED]->(TheReplacements);
