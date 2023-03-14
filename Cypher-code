@@ -18,3 +18,16 @@ CREATE
 (JessicaThompson)-[:REVIEWED {summary:'A solid romp', rating:68}]->(TheDaVinciCode),
 (JamesThompson)-[:REVIEWED {summary:'Fun, but a little far fetched', rating:65}]->(TheDaVinciCode),
 (JessicaThompson)-[:REVIEWED {summary:'You had me at Jerry', rating:92}]->(JerryMaguire);
+CREATE (StefanArndt:Person {name:'Stefan Arndt', born:1961})
+CREATE (Howard:Person {name:'Howard Deutch', born:1950})
+CREATE (ClintE:Person {name:'Clint Eastwood', born:1930})
+CREATE (MikeN:Person {name:'Mike Nichols', born:1931})
+CREATE (RonH:Person {name:'Ron Howard', born:1954})
+CREATE (CameronC:Person {name:'Cameron Crowe', born:1957})
+CREATE
+(CameronC)-[:PRODUCED]->(JerryMaguire),
+(RonH)-[:PRODUCED]->(TheDaVinciCode),
+(MikeN)-[:PRODUCED]->(TheBirdcage),
+(StefanArndt)-[:PRODUCED]->(CloudAtlas),
+(ClintE)-[:PRODUCED]->(Unforgiven),
+(Howard)-[:PRODUCED]->(TheReplacements)
