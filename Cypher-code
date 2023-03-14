@@ -1,4 +1,3 @@
-CREATE (PaulBlythe:Person {name:'Paul Blythe'})
 CREATE (AngelaScope:Person {name:'Angela Scope'})
 CREATE (JessicaThompson:Person {name:'Jessica Thompson'})
 CREATE (JamesThompson:Person {name:'James Thompson'})
