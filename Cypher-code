@@ -1,5 +1,4 @@
-CREATE (JessicaThompson:Person {name:'Jessica Thompson',email:'JessicaThompson@gmail.com'})
-CREATE (JamesThompson:Person {name:'James Thompson',email:'JamesThompson@gmail.com'})
+
 CREATE (CloudAtlas:Production {title:'Nấm kim châm Hàn Quốc', detail:'Nấm kim châm Hàn Quốc được nuôi trồng và đóng gói theo những tiêu chuẩn nghiêm ngặt, bảo đảm các tiêu chuẩn xanh - sạch, chất lượng và an toàn với người dùng. Sợi nấm dai, giòn và ngọt, khi nấu chín rất thơm nên thường được lăn bột chiên giòn, nấu súp hoặc để nướng ăn kèm.'})
 CREATE (TheReplacements:Production {title:'Bông cải trắng', detail:'Bông cải trắng được nuôi trồng tại Trung Quốc và đóng gói theo tiêu chuẩn nghiêm ngặt, bảo đảm các tiêu chuẩn xanh - sạch, chất lượng và an toàn với người dùng. Hàm lượng dinh dưỡng cao, vị giòn ngọt nên thường được dùng để chế biến các món xào hoặc luộc, giúp tăng cường miễn dịch.'})
 CREATE (Unforgiven:Production {title:'Cà rốt', detail:'Cà rốt là một loại củ rất quen thuộc trong các món ăn của người Việt. Cà rốt có hàm lượng chất dinh dưỡng và vitamin A cao, được xem là nguyên liệu cần thiết cho các món ăn dặm của trẻ nhỏ, giúp trẻ sáng mắt và cung cấp nguồn chất xơ dồi dào.'})
@@ -14,6 +13,8 @@ CREATE (MikeN:Person {name:'Mike Nichols', born:1931,email:'MikeN@gmail.com',pas
 CREATE (RonH:Person {name:'Ron Howard', born:1954,email:'RonH@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})
 CREATE (CameronC:Person {name:'Cameron Crowe', born:1957,email:'CameronC@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})
 CREATE (AngelaScope:Person {name:'Angela Scope',email:'AngelaScope@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})
+CREATE (JessicaThompson:Person {name:'Jessica Thompson',email:'JessicaThompson@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})
+CREATE (JamesThompson:Person {name:'James Thompson',email:'JamesThompson@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})
 CREATE
 (JessicaThompson)-[:REVIEWED {summary:'An amazing journey', rating:95}]->(CloudAtlas),
 (JessicaThompson)-[:REVIEWED {summary:'Silly, but fun', rating:65}]->(TheReplacements),
