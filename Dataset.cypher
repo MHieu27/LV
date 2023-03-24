@@ -85,6 +85,7 @@ CREATE
 (JamesThompson)-[:PURCHASE {amount:10, price:140000}]->(Xaurieng),
 (JessicaThompson)-[:PURCHASE {amount:50, price:54000}]->(Dualuoi),
 //RELATION REVIEWED
+(LanaW)-[:REVIEWED {rating: 30, summary: 'Sản phẩm không tươi ngon'}]->(LillyW),
 (LanaW)-[:REVIEWED {rating: 100, summary: 'Giá cả hợp lí'}]->(Hugo),
 (LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(RonH),
 (JoelS)-[:REVIEWED {rating: 30, summary: 'Sản phẩm không tươi ngon'}]->(LillyW),
