@@ -83,6 +83,7 @@ CREATE
 (JessicaThompson)-[:PURCHASE {amount:5, price:20000}]->(Caibexanh),
 (JessicaThompson)-[:PURCHASE {amount:40, price:132000}]->(Xaurieng),
 (JamesThompson)-[:PURCHASE {amount:10, price:140000}]->(Xaurieng),
+(JamesThompson)-[:PURCHASE {amount:10, price:6000}]->(Xalachbupmo),
 (JessicaThompson)-[:PURCHASE {amount:50, price:54000}]->(Dualuoi),
 //RELATION REVIEWED
 (LanaW)-[:REVIEWED {rating: 30, summary: 'Sản phẩm không tươi ngon'}]->(LillyW),
@@ -98,6 +99,7 @@ CREATE
 (JessicaThompson)-[:REVIEWED {rating:100, summary:'Sản phẩm xanh sạch'}]->(RonH),
 (JessicaThompson)-[:REVIEWED {rating:30, summary:'Sản phẩm kém chất lượng'}]->(CameronC),
 (JamesThompson)-[:REVIEWED {rating:50, summary:''}]->(Howard),
+(JamesThompson)-[:REVIEWED {rating:10, summary:'Sản phẩm bị hư'}]->(Keanu),
 (JamesThompson)-[:REVIEWED {rating:10, summary:'Sản phẩm bị hư'}]->(RonH),
 (AngelaScope)-[:REVIEWED {rating:30, summary:'Giao hàng chậm trễ'}]->(LillyW),
 (AngelaScope)-[:REVIEWED {rating:45, summary:'Sản phẩm không đúng mô tả'}]->(Howard);
