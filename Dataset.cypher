@@ -65,30 +65,69 @@ CREATE
 (Howard)-[:PROVIDER{amount:100,price:25000}]->(Bongcaitrang),
 //RELATION PURCHASE
 (LanaW)-[:PURCHASE {amount: 50, price: 68000}]->(Buoidaxanh),
+(LanaW)-[:REVIEWED {rating: 100, summary: 'Sản phẩm không tươi ngon'}]->(Buoidaxanh),
+
 (LanaW)-[:PURCHASE {amount: 50, price: 41000}]->(Duahaudo),
+(LanaW)-[:REVIEWED {rating: 100, summary: 'Giá cả hợp lí'}]->(Duahaudo),
+
 (LanaW)-[:PURCHASE {amount: 25, price: 60000}]->(Xoaicatchu),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xoaicatchu),
+
 (LanaW)-[:PURCHASE {amount: 25, price: 90000}]->(Xoaihoaloc),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xoaihoaloc),
+
 (LanaW)-[:PURCHASE {amount: 50, price: 135000}]->(Xaurieng),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+
 (JoelS)-[:PURCHASE {amount: 50, price: 65000}]->(Duahaukhonghat),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
+
 (JoelS)-[:PURCHASE {amount: 50, price: 41000}]->(Duahaudo),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Duahaudo),
+
 (JoelS)-[:PURCHASE {amount: 50, price: 8000}]->(Carot),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Carot),
+
 (JoelS)-[:PURCHASE {amount: 50, price: 54000}]->(Dualuoi),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Dualuoi),
+
 (JessicaThompson)-[:PURCHASE {amount: 5, price: 14000}]->(Namkimcham),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Namkimcham),
+
 (JessicaThompson)-[:PURCHASE {amount:5, price:25000}]->(Bongcaitrang),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Bongcaitrang),
+
 (JamesThompson)-[:PURCHASE {amount:50, price:25000}]->(Bongcaitrang),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Bongcaitrang),
+
 (AngelaScope)-[:PURCHASE {amount:50, price:65000}]->(Duahaukhonghat),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
+
 (AngelaScope)-[:PURCHASE {amount:45, price:30000}]->(Bongcaitrang),
-(AngelaScope)-[:PURCHASE {amount:50, price:68000}]->(Buoidaxanh),
-(JessicaThompson)-[:PURCHASE {amount:40, price:8000}]->(Carot),
-(JessicaThompson)-[:PURCHASE {amount:5, price:20000}]->(Caibexanh),
-(JessicaThompson)-[:PURCHASE {amount:40, price:132000}]->(Xaurieng),
-(JamesThompson)-[:PURCHASE {amount:10, price:140000}]->(Xaurieng),
-(JamesThompson)-[:PURCHASE {amount:10, price:6000}]->(Xalachbupmo),
-(JessicaThompson)-[:PURCHASE {amount:50, price:54000}]->(Dualuoi),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Bongcaitrang),
+
+(AngelaScope)-[:PURCHASE {amount:2, price:68000}]->(Buoidaxanh),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+
+(JessicaThompson)-[:PURCHASE {amount:2, price:8000}]->(Carot),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Carot),
+
+(JessicaThompson)-[:PURCHASE {amount:1, price:20000}]->(Caibexanh),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Caibexanh),
+
+(JessicaThompson)-[:PURCHASE {amount:2, price:132000}]->(Xaurieng),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+
+(JamesThompson)-[:PURCHASE {amount:1, price:140000}]->(Xaurieng),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+
+(JamesThompson)-[:PURCHASE {amount:1, price:6000}]->(Xalachbupmo),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xalachbupmo),
+
+(JessicaThompson)-[:PURCHASE {amount:2, price:54000}]->(Dualuoi),
+(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Dualuoi),
 //RELATION REVIEWED
-(LanaW)-[:REVIEWED {rating: 100, summary: 'Sản phẩm không tươi ngon'}]->(LillyW),
-(LanaW)-[:REVIEWED {rating: 100, summary: 'Giá cả hợp lí'}]->(Hugo),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(RonH),
+
 (JoelS)-[:REVIEWED {rating: 40, summary: 'Sản phẩm không tươi ngon'}]->(LillyW),
 (JoelS)-[:REVIEWED {rating: 100, summary: 'Sản phảm xanh sạch'}]->(ClintE),
 (JoelS)-[:REVIEWED {rating: 80, summary: 'Hài lòng'}]->(CameronC),
