@@ -47,98 +47,129 @@ CREATE
 (LillyW)-[:PROVIDER{amount:100,price:68000}]->(Buoidaxanh),
 (LillyW)-[:PROVIDER{amount:100,price:41000}]->(Duahaudo),
 (LillyW)-[:PROVIDER{amount:100,price:65000}]->(Duahaukhonghat),
-(Hugo)-[:PROVIDER{amount:70,price:60000}]->(Xoaicatchu),
-(Hugo)-[:PROVIDER{amount:70,price:90000}]->(Xoaihoaloc),
-(Hugo)-[:PROVIDER{amount:70,price:13000}]->(Xoaidailoan),
-(Keanu)-[:PROVIDER{amount:50,price:7000}]->(Bapcaithao),
-(Keanu)-[:PROVIDER{amount:50,price:6000}]->(Bapcaitrang),
-(Keanu)-[:PROVIDER{amount:50,price:6000}]->(Xalachbupmo),
-(Keanu)-[:PROVIDER{amount:50,price:10000}]->(Raumongtoi),
-(Keanu)-[:PROVIDER{amount:50,price:10000}]->(Caingot),
-(Carrie)-[:PROVIDER{amount:20,price:18000}]->(Bingoixanh),
-(Laurence)-[:PROVIDER{amount:40,price:39000}]->(Camxanh),
-(CameronC)-[:PROVIDER{amount:50,price:54000}]->(Dualuoi),
-(RonH)-[:PROVIDER{amount:50,price:132000}]->(Xaurieng),
-(MikeN)-[:PROVIDER{amount:5,price:20000}]->(Caibexanh),
-(StefanArndt)-[:PROVIDER{amount:5,price:14000}]->(Namkimcham),
-(ClintE)-[:PROVIDER{amount:50,price:8000}]->(Carot),
+(Hugo)-[:PROVIDER{amount:100,price:60000}]->(Xoaicatchu),
+(Hugo)-[:PROVIDER{amount:100,price:90000}]->(Xoaihoaloc),
+(Hugo)-[:PROVIDER{amount:100,price:13000}]->(Xoaidailoan),
+(Keanu)-[:PROVIDER{amount:100,price:7000}]->(Bapcaithao),
+(Keanu)-[:PROVIDER{amount:100,price:6000}]->(Bapcaitrang),
+(Keanu)-[:PROVIDER{amount:100,price:6000}]->(Xalachbupmo),
+(Keanu)-[:PROVIDER{amount:100,price:10000}]->(Raumongtoi),
+(Keanu)-[:PROVIDER{amount:100,price:10000}]->(Caingot),
+(Carrie)-[:PROVIDER{amount:100,price:18000}]->(Bingoixanh),
+(Laurence)-[:PROVIDER{amount:100,price:39000}]->(Camxanh),
+(CameronC)-[:PROVIDER{amount:100,price:54000}]->(Dualuoi),
+(RonH)-[:PROVIDER{amount:100,price:132000}]->(Xaurieng),
+(MikeN)-[:PROVIDER{amount:100,price:20000}]->(Caibexanh),
+(StefanArndt)-[:PROVIDER{amount:100,price:14000}]->(Namkimcham),
+(ClintE)-[:PROVIDER{amount:100,price:8000}]->(Carot),
 (Howard)-[:PROVIDER{amount:100,price:25000}]->(Bongcaitrang),
 //RELATION PURCHASE
-(LanaW)-[:PURCHASE {amount: 50, price: 68000}]->(Buoidaxanh),
-(LanaW)-[:REVIEWED {rating: 100, summary: 'Sản phẩm không tươi ngon'}]->(Buoidaxanh),
+//Buoidaxanh
+(LanaW)-[:PURCHASE {amount: 20, price: 68000}]->(Buoidaxanh),
+(LanaW)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Buoidaxanh),
 
-(LanaW)-[:PURCHASE {amount: 50, price: 41000}]->(Duahaudo),
-(LanaW)-[:REVIEWED {rating: 100, summary: 'Giá cả hợp lí'}]->(Duahaudo),
+(AngelaScope)-[:PURCHASE {amount:10, price:68000}]->(Buoidaxanh),
+(AngelaScope)-[:REVIEWED {rating: 5, summary: 'Sản phảm tươi ngon'}]->(Buoidaxanh),
 
-(LanaW)-[:PURCHASE {amount: 25, price: 60000}]->(Xoaicatchu),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xoaicatchu),
+(Keanu)-[:PURCHASE {amount:20, price:68000}]->(Buoidaxanh),
+(Keanu)-[:REVIEWED {rating: 2, summary: 'Sản phảm không tươi ngon'}]->(Buoidaxanh),
 
-(LanaW)-[:PURCHASE {amount: 25, price: 90000}]->(Xoaihoaloc),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xoaihoaloc),
+(JessicaThompson)-[:PURCHASE {amount:10, price:68000}]->(Buoidaxanh),
+(JessicaThompson)-[:REVIEWED {rating: 0, summary: 'Sản phảm không tươi ngon'}]->(Buoidaxanh),
 
-(LanaW)-[:PURCHASE {amount: 50, price: 135000}]->(Xaurieng),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+(JamesThompson)-[:PURCHASE {amount:10, price:68000}]->(Buoidaxanh),
+(JamesThompson)-[:REVIEWED {rating: 1, summary: 'Sản phảm không tươi ngon'}]->(Buoidaxanh),
 
-(JoelS)-[:PURCHASE {amount: 50, price: 65000}]->(Duahaukhonghat),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
+(RonH)-[:PURCHASE {amount:10, price:68000}]->(Buoidaxanh),
+(RonH)-[:REVIEWED {rating: null, summary: ''}]->(Buoidaxanh),
 
-(JoelS)-[:PURCHASE {amount: 50, price: 41000}]->(Duahaudo),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Duahaudo),
+(CameronC)-[:PURCHASE {amount:20, price:68000}]->(Buoidaxanh),
+(CameronC)-[:REVIEWED {rating: null, summary: ''}]->(Buoidaxanh),
+//Duahaudo
 
-(JoelS)-[:PURCHASE {amount: 50, price: 8000}]->(Carot),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Carot),
+(LanaW)-[:PURCHASE {amount: 20, price: 41000}]->(Duahaudo),
+(LanaW)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Duahaudo),
 
-(JoelS)-[:PURCHASE {amount: 50, price: 54000}]->(Dualuoi),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Dualuoi),
+(AngelaScope)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
+(AngelaScope)-[:REVIEWED {rating: null, summary: ''}]->(Duahaudo),
 
-(JessicaThompson)-[:PURCHASE {amount: 5, price: 14000}]->(Namkimcham),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Namkimcham),
+(Keanu)-[:PURCHASE {amount:20, price:41000}]->(Duahaudo),
+(Keanu)-[:REVIEWED {rating: null, summary: ''}]->(Duahaudo),
 
-(JessicaThompson)-[:PURCHASE {amount:5, price:25000}]->(Bongcaitrang),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Bongcaitrang),
+(JessicaThompson)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
+(JessicaThompson)-[:REVIEWED {rating: 0, summary: 'Sản phảm không tươi ngon'}]->(Duahaudo),
 
-(JamesThompson)-[:PURCHASE {amount:50, price:25000}]->(Bongcaitrang),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Bongcaitrang),
+(JamesThompson)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
+(JamesThompson)-[:REVIEWED {rating: null, summary: ''}]->(Duahaudo),
 
-(AngelaScope)-[:PURCHASE {amount:50, price:65000}]->(Duahaukhonghat),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
+(RonH)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
+(RonH)-[:REVIEWED {rating: 2, summary: 'Sản phảm không tươi ngon'}]->(Duahaudo),
 
-(AngelaScope)-[:PURCHASE {amount:45, price:30000}]->(Bongcaitrang),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Bongcaitrang),
+(CameronC)-[:PURCHASE {amount:20, price:41000}]->(Duahaudo),
+(CameronC)-[:REVIEWED {rating: null, summary: ''}]->(Duahaudo),
 
-(AngelaScope)-[:PURCHASE {amount:2, price:68000}]->(Buoidaxanh),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+//Duahaukhonghat
+(LanaW)-[:PURCHASE {amount: 20, price: 65000}]->(Duahaukhonghat),
+(LanaW)-[:REVIEWED {rating: null, summary: ''}]->(Duahaukhonghat),
 
-(JessicaThompson)-[:PURCHASE {amount:2, price:8000}]->(Carot),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Carot),
+(AngelaScope)-[:PURCHASE {amount:10, price:65000}]->(Duahaukhonghat),
+(AngelaScope)-[:REVIEWED {rating: 4, summary: 'Sản phảm tươi ngon'}]->(Duahaukhonghat),
 
-(JessicaThompson)-[:PURCHASE {amount:1, price:20000}]->(Caibexanh),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Caibexanh),
+(Keanu)-[:PURCHASE {amount:20, price:65000}]->(Duahaukhonghat),
+(Keanu)-[:REVIEWED {rating: 1, summary: 'Sản phảm tươi ngon'}]->(Duahaukhonghat),
 
-(JessicaThompson)-[:PURCHASE {amount:2, price:132000}]->(Xaurieng),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+(JessicaThompson)-[:PURCHASE {amount:10, price:65000}]->(Duahaukhonghat),
+(JessicaThompson)-[:REVIEWED {rating: null, summary: ''}]->(Duahaukhonghat),
 
-(JamesThompson)-[:PURCHASE {amount:1, price:140000}]->(Xaurieng),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xaurieng),
+(JamesThompson)-[:PURCHASE {amount:10, price:65000}]->(Duahaukhonghat),
+(JamesThompson)-[:REVIEWED {rating: null, summary: ''}]->(Duahaukhonghat),
 
-(JamesThompson)-[:PURCHASE {amount:1, price:6000}]->(Xalachbupmo),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Xalachbupmo),
+(RonH)-[:PURCHASE {amount:10, price:65000}]->(Duahaukhonghat),
+(RonH)-[:REVIEWED {rating: 1, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
 
-(JessicaThompson)-[:PURCHASE {amount:2, price:54000}]->(Dualuoi),
-(LanaW)-[:REVIEWED {rating: 40, summary: 'Sản phảm không tươi ngon'}]->(Dualuoi),
-//RELATION REVIEWED
+(CameronC)-[:PURCHASE {amount:20, price:65000}]->(Duahaukhonghat),
+(CameronC)-[:REVIEWED {rating: 1, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
 
-(JoelS)-[:REVIEWED {rating: 40, summary: 'Sản phẩm không tươi ngon'}]->(LillyW),
-(JoelS)-[:REVIEWED {rating: 100, summary: 'Sản phảm xanh sạch'}]->(ClintE),
-(JoelS)-[:REVIEWED {rating: 80, summary: 'Hài lòng'}]->(CameronC),
-(JessicaThompson)-[:REVIEWED {rating: 60, summary: 'Tạm chấp nhận'}]->(StefanArndt),
-(JessicaThompson)-[:REVIEWED {rating:20, summary:'Sản phẩm không đạt chất lượng'}]->(Howard),
-(JessicaThompson)-[:REVIEWED {rating:40, summary:''}]->(ClintE),
-(JessicaThompson)-[:REVIEWED {rating:20, summary:'Không phản hồi'}]->(MikeN),
-(JessicaThompson)-[:REVIEWED {rating:100, summary:'Sản phẩm xanh sạch'}]->(RonH),
-(JessicaThompson)-[:REVIEWED {rating:40, summary:'Sản phẩm kém chất lượng'}]->(CameronC),
-(JamesThompson)-[:REVIEWED {rating:40, summary:''}]->(Howard),
-(JamesThompson)-[:REVIEWED {rating:20, summary:'Sản phẩm bị hư'}]->(Keanu),
-(JamesThompson)-[:REVIEWED {rating:20, summary:'Sản phẩm bị hư'}]->(RonH),
-(AngelaScope)-[:REVIEWED {rating:40, summary:'Giao hàng chậm trễ'}]->(LillyW),
-(AngelaScope)-[:REVIEWED {rating:40, summary:'Sản phẩm không đúng mô tả'}]->(Howard);
+//Xoaicatchu
+(LanaW)-[:PURCHASE {amount: 20, price: 60000}]->(Xoaicatchu),
+(LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Xoaicatchu),
+
+(AngelaScope)-[:PURCHASE {amount:10, price:60000}]->(Xoaicatchu),
+(AngelaScope)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Xoaicatchu),
+
+(Keanu)-[:PURCHASE {amount:20, price:60000}]->(Xoaicatchu),
+(Keanu)-[:REVIEWED {rating: 3, summary: 'Sản phẩm không tươi ngon'}]->(Xoaicatchu),
+
+(JessicaThompson)-[:PURCHASE {amount:10, price:60000}]->(Xoaicatchu),
+(JessicaThompson)-[:REVIEWED {rating: 4, summary: 'Sản phảm tươi ngon'}]->(Xoaicatchu),
+
+(JamesThompson)-[:PURCHASE {amount:10, price:60000}]->(Xoaicatchu),
+(JamesThompson)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Xoaicatchu),
+
+(RonH)-[:PURCHASE {amount:10, price:60000}]->(Xoaicatchu),
+(RonH)-[:REVIEWED {rating: null, summary: ''}]->(Xoaicatchu),
+
+(CameronC)-[:PURCHASE {amount:20, price:60000}]->(Xoaicatchu),
+(CameronC)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Xoaicatchu),
+
+//Xoaihoaloc
+(LanaW)-[:PURCHASE {amount: 20, price: 90000}]->(Xoaihoaloc),
+(LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Xoaihoaloc),
+
+(AngelaScope)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
+(AngelaScope)-[:REVIEWED {rating: 0, summary: 'Sản phẩm không tươi ngon'}]->(Xoaihoaloc),
+
+(Keanu)-[:PURCHASE {amount:20, price:90000}]->(Xoaihoaloc),
+(Keanu)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Xoaihoaloc),
+
+(JessicaThompson)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
+(JessicaThompson)-[:REVIEWED {rating: null, summary: ''}]->(Xoaihoaloc),
+
+(JamesThompson)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
+(JamesThompson)-[:REVIEWED {rating: null, summary: ''}]->(Xoaihoaloc),
+
+(RonH)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
+(RonH)-[:REVIEWED {rating: null, summary: ''}]->(Xoaihoaloc),
+
+(CameronC)-[:PURCHASE {amount:20, price:90000}]->(Xoaihoaloc),
+(CameronC)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Xoaihoaloc),
