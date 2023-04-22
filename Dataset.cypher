@@ -172,4 +172,4 @@ CREATE
 (RonH)-[:REVIEWED {rating: null, summary: ''}]->(Xoaihoaloc),
 
 (CameronC)-[:PURCHASE {amount:20, price:90000}]->(Xoaihoaloc),
-(CameronC)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Xoaihoaloc),
+(CameronC)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Xoaihoaloc)
