@@ -87,26 +87,26 @@ CREATE
 (CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Buoidaxanh),
 //Duahaudo
 
-(LanaW)-[:PURCHASE {amount: 20, price: 41000}]->(Duahaudo),
-(LanaW)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Duahaudo),
+(LanaW)-[:PURCHASE {amount: 20, price: 41000}]->(Carot),
+(LanaW)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Carot),
 
-(AngelaScope)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
-(AngelaScope)-[:REVIEWED {rating: '', summary: ''}]->(Duahaudo),
+(AngelaScope)-[:PURCHASE {amount:10, price:41000}]->(Carot),
+(AngelaScope)-[:REVIEWED {rating: '', summary: ''}]->(Carot),
 
-(Keanu)-[:PURCHASE {amount:20, price:41000}]->(Duahaudo),
-(Keanu)-[:REVIEWED {rating: '', summary: ''}]->(Duahaudo),
+(Keanu)-[:PURCHASE {amount:20, price:41000}]->(Carot),
+(Keanu)-[:REVIEWED {rating: '', summary: ''}]->(Carot),
 
-(JessicaThompson)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
-(JessicaThompson)-[:REVIEWED {rating: 0, summary: 'Sản phảm không tươi ngon'}]->(Duahaudo),
+(JessicaThompson)-[:PURCHASE {amount:10, price:41000}]->(Carot),
+(JessicaThompson)-[:REVIEWED {rating: 0, summary: 'Sản phảm không tươi ngon'}]->(Carot),
 
-(JamesThompson)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
-(JamesThompson)-[:REVIEWED {rating: '', summary: ''}]->(Duahaudo),
+(JamesThompson)-[:PURCHASE {amount:10, price:41000}]->(Carot),
+(JamesThompson)-[:REVIEWED {rating: '', summary: ''}]->(Carot),
 
-(RonH)-[:PURCHASE {amount:10, price:41000}]->(Duahaudo),
-(RonH)-[:REVIEWED {rating: 2, summary: 'Sản phảm không tươi ngon'}]->(Duahaudo),
+(RonH)-[:PURCHASE {amount:10, price:41000}]->(Carot),
+(RonH)-[:REVIEWED {rating: 2, summary: 'Sản phảm không tươi ngon'}]->(Carot),
 
-(CameronC)-[:PURCHASE {amount:20, price:41000}]->(Duahaudo),
-(CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Duahaudo),
+(CameronC)-[:PURCHASE {amount:20, price:41000}]->(Carot),
+(CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Carot),
 
 //Duahaukhonghat
 (LanaW)-[:PURCHASE {amount: 20, price: 65000}]->(Duahaukhonghat),
@@ -153,23 +153,23 @@ CREATE
 (CameronC)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Xoaicatchu),
 
 //Xoaihoaloc
-(LanaW)-[:PURCHASE {amount: 20, price: 90000}]->(Xoaihoaloc),
-(LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Xoaihoaloc),
+(LanaW)-[:PURCHASE {amount: 20, price: 90000}]->(Bongcaitrang),
+(LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Bongcaitrang),
 
-(AngelaScope)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
-(AngelaScope)-[:REVIEWED {rating: 0, summary: 'Sản phẩm không tươi ngon'}]->(Xoaihoaloc),
+(AngelaScope)-[:PURCHASE {amount:10, price:90000}]->(Bongcaitrang),
+(AngelaScope)-[:REVIEWED {rating: 0, summary: 'Sản phẩm không tươi ngon'}]->(Bongcaitrang),
 
-(Keanu)-[:PURCHASE {amount:20, price:90000}]->(Xoaihoaloc),
-(Keanu)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Xoaihoaloc),
+(Keanu)-[:PURCHASE {amount:20, price:90000}]->(Bongcaitrang),
+(Keanu)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Bongcaitrang),
 
-(JessicaThompson)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
-(JessicaThompson)-[:REVIEWED {rating: '', summary: ''}]->(Xoaihoaloc),
+(JessicaThompson)-[:PURCHASE {amount:10, price:90000}]->(Bongcaitrang),
+(JessicaThompson)-[:REVIEWED {rating: '', summary: ''}]->(Bongcaitrang),
 
-(JamesThompson)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
-(JamesThompson)-[:REVIEWED {rating: '', summary: ''}]->(Xoaihoaloc),
+(JamesThompson)-[:PURCHASE {amount:10, price:90000}]->(Bongcaitrang),
+(JamesThompson)-[:REVIEWED {rating: '', summary: ''}]->(Bongcaitrang),
 
-(RonH)-[:PURCHASE {amount:10, price:90000}]->(Xoaihoaloc),
-(RonH)-[:REVIEWED {rating: '', summary: ''}]->(Xoaihoaloc),
+(RonH)-[:PURCHASE {amount:10, price:90000}]->(Bongcaitrang),
+(RonH)-[:REVIEWED {rating: '', summary: ''}]->(Bongcaitrang),
 
-(CameronC)-[:PURCHASE {amount:20, price:90000}]->(Xoaihoaloc),
-(CameronC)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Xoaihoaloc)
+(CameronC)-[:PURCHASE {amount:20, price:90000}]->(Bongcaitrang),
+(CameronC)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Bongcaitrang)
