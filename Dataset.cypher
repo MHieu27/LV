@@ -64,7 +64,10 @@ CREATE
 (ClintE)-[:PROVIDER{amount:100,price:8000}]->(Carot),
 (Howard)-[:PROVIDER{amount:100,price:25000}]->(Bongcaitrang),
 //RELATION PURCHASE
-//Buoidaxanh
+//Buoidaxanh-------------------------------------------------------------------------------
+(ClintE)-[:PURCHASE {amount: 20, price: 68000}]->(Buoidaxanh),
+(ClintE)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Buoidaxanh),
+
 (LanaW)-[:PURCHASE {amount: 20, price: 68000}]->(Buoidaxanh),
 (LanaW)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Buoidaxanh),
 
@@ -85,7 +88,7 @@ CREATE
 
 (CameronC)-[:PURCHASE {amount:20, price:68000}]->(Buoidaxanh),
 (CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Buoidaxanh),
-//Duahaudo
+//Duahaudo-------------------------------------------------------------------------------
 
 (LanaW)-[:PURCHASE {amount: 20, price: 41000}]->(Carot),
 (LanaW)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Carot),
@@ -108,7 +111,7 @@ CREATE
 (CameronC)-[:PURCHASE {amount:20, price:41000}]->(Carot),
 (CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Carot),
 
-//Duahaukhonghat
+//Duahaukhonghat-------------------------------------------------------------------------------
 (LanaW)-[:PURCHASE {amount: 20, price: 65000}]->(Duahaukhonghat),
 (LanaW)-[:REVIEWED {rating: '', summary: ''}]->(Duahaukhonghat),
 
@@ -130,7 +133,7 @@ CREATE
 (CameronC)-[:PURCHASE {amount:20, price:65000}]->(Duahaukhonghat),
 (CameronC)-[:REVIEWED {rating: 1, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
 
-//Xoaicatchu
+//Xoaicatchu-------------------------------------------------------------------------------
 (LanaW)-[:PURCHASE {amount: 20, price: 60000}]->(Xoaicatchu),
 (LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Xoaicatchu),
 
@@ -152,7 +155,7 @@ CREATE
 (CameronC)-[:PURCHASE {amount:20, price:60000}]->(Xoaicatchu),
 (CameronC)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Xoaicatchu),
 
-//Xoaihoaloc
+//Xoaihoaloc-------------------------------------------------------------------------------
 (LanaW)-[:PURCHASE {amount: 20, price: 90000}]->(Bongcaitrang),
 (LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Bongcaitrang),
 
