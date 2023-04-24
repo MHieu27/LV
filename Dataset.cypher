@@ -89,6 +89,8 @@ CREATE
 (CameronC)-[:PURCHASE {amount:20, price:68000}]->(Buoidaxanh),
 (CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Buoidaxanh),
 //Duahaudo-------------------------------------------------------------------------------
+(ClintE)-[:PURCHASE {amount: 20, price: 68000}]->(Duahaudo),
+(ClintE)-[:REVIEWED {rating: '', summary: ''}]->(Duahaudo),
 
 (LanaW)-[:PURCHASE {amount: 20, price: 41000}]->(Carot),
 (LanaW)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Carot),
@@ -112,6 +114,9 @@ CREATE
 (CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Carot),
 
 //Duahaukhonghat-------------------------------------------------------------------------------
+(ClintE)-[:PURCHASE {amount: 20, price: 68000}]->(Duahaukhonghat),
+(ClintE)-[:REVIEWED {rating: '', summary: ''}]->(Duahaukhonghat),
+
 (LanaW)-[:PURCHASE {amount: 20, price: 65000}]->(Duahaukhonghat),
 (LanaW)-[:REVIEWED {rating: '', summary: ''}]->(Duahaukhonghat),
 
@@ -134,6 +139,9 @@ CREATE
 (CameronC)-[:REVIEWED {rating: 1, summary: 'Sản phảm không tươi ngon'}]->(Duahaukhonghat),
 
 //Xoaicatchu-------------------------------------------------------------------------------
+(ClintE)-[:PURCHASE {amount: 20, price: 68000}]->(Xoaicatchu),
+(ClintE)-[:REVIEWED {rating: '', summary: ''}]->(Xoaicatchu),
+
 (LanaW)-[:PURCHASE {amount: 20, price: 60000}]->(Xoaicatchu),
 (LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Xoaicatchu),
 
@@ -155,7 +163,10 @@ CREATE
 (CameronC)-[:PURCHASE {amount:20, price:60000}]->(Xoaicatchu),
 (CameronC)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Xoaicatchu),
 
-//Xoaihoaloc-------------------------------------------------------------------------------
+//Bongcaitrang-------------------------------------------------------------------------------
+(ClintE)-[:PURCHASE {amount: 20, price: 68000}]->(Bongcaitrang),
+(ClintE)-[:REVIEWED {rating: '', summary: ''}]->(Bongcaitrang),
+
 (LanaW)-[:PURCHASE {amount: 20, price: 90000}]->(Bongcaitrang),
 (LanaW)-[:REVIEWED {rating: 2, summary: 'Sản phẩm không tươi ngon'}]->(Bongcaitrang),
 
