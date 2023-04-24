@@ -88,9 +88,9 @@ CREATE
 
 (CameronC)-[:PURCHASE {amount:20, price:68000}]->(Buoidaxanh),
 (CameronC)-[:REVIEWED {rating: '', summary: ''}]->(Buoidaxanh),
-//Duahaudo-------------------------------------------------------------------------------
-(ClintE)-[:PURCHASE {amount: 20, price: 68000}]->(Duahaudo),
-(ClintE)-[:REVIEWED {rating: '', summary: ''}]->(Duahaudo),
+//Carot-------------------------------------------------------------------------------
+(ClintE)-[:PURCHASE {amount: 20, price: 68000}]->(Carot),
+(ClintE)-[:REVIEWED {rating: '', summary: ''}]->(Carot),
 
 (LanaW)-[:PURCHASE {amount: 20, price: 41000}]->(Carot),
 (LanaW)-[:REVIEWED {rating: 4, summary: 'Sản phẩm tươi ngon'}]->(Carot),
