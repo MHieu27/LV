@@ -45,22 +45,8 @@ CREATE (JamesThompson:Person {name:'James Thompson',email:'JamesThompson@gmail.c
 CREATE
 //RELATION PROVIDER
 (LillyW)-[:PROVIDER{amount:100,price:68000}]->(Buoidaxanh),
-(LillyW)-[:PROVIDER{amount:100,price:41000}]->(Duahaudo),
 (LillyW)-[:PROVIDER{amount:100,price:65000}]->(Duahaukhonghat),
 (Hugo)-[:PROVIDER{amount:100,price:60000}]->(Xoaicatchu),
-(Hugo)-[:PROVIDER{amount:100,price:90000}]->(Xoaihoaloc),
-(Hugo)-[:PROVIDER{amount:100,price:13000}]->(Xoaidailoan),
-(Keanu)-[:PROVIDER{amount:100,price:7000}]->(Bapcaithao),
-(Keanu)-[:PROVIDER{amount:100,price:6000}]->(Bapcaitrang),
-(Keanu)-[:PROVIDER{amount:100,price:6000}]->(Xalachbupmo),
-(Keanu)-[:PROVIDER{amount:100,price:10000}]->(Raumongtoi),
-(Keanu)-[:PROVIDER{amount:100,price:10000}]->(Caingot),
-(Carrie)-[:PROVIDER{amount:100,price:18000}]->(Bingoixanh),
-(Laurence)-[:PROVIDER{amount:100,price:39000}]->(Camxanh),
-(CameronC)-[:PROVIDER{amount:100,price:54000}]->(Dualuoi),
-(RonH)-[:PROVIDER{amount:100,price:132000}]->(Xaurieng),
-(MikeN)-[:PROVIDER{amount:100,price:20000}]->(Caibexanh),
-(StefanArndt)-[:PROVIDER{amount:100,price:14000}]->(Namkimcham),
 (ClintE)-[:PROVIDER{amount:100,price:8000}]->(Carot),
 (Howard)-[:PROVIDER{amount:100,price:25000}]->(Bongcaitrang),
 //RELATION PURCHASE
