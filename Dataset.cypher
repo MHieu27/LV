@@ -187,7 +187,7 @@
 
     (CameronC)-[:PURCHASE {amount:20, price:90000}]->(Bongcaitrang),
     (CameronC)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Bongcaitrang)
-//MATCH (p:Person)
-//MATCH (prod:Production)
-//WHERE NOT (p)-[:REVIEWED]->(prod)
-//CREATE (p)-[:REVIEWED]->(prod)
+    //MATCH (p:Person)
+    //MATCH (prod:Production)
+    //WHERE NOT (p)-[:REVIEWED{rating:'',summary:''}]->(prod)
+    //CREATE (p)-[:REVIEWED]->(prod)
