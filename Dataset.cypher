@@ -189,5 +189,5 @@
     (CameronC)-[:REVIEWED {rating: 5, summary: 'Sản phẩm tươi ngon'}]->(Bongcaitrang)
     //MATCH (p:Person)
     //MATCH (prod:Production)
-    //WHERE NOT (p)-[:REVIEWED{rating:'',summary:''}]->(prod)
-    //CREATE (p)-[:REVIEWED]->(prod)
+    //WHERE NOT (p)-[:REVIEWED]->(prod)
+    //CREATE (p)-[:REVIEWED{rating:'',summary:''}]->(prod)
