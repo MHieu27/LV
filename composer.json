@@ -10,7 +10,11 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "laudis/neo4j-php-client": "2.8.1",
+        "phpjuice/opencf": "^2.2",
+        "phpjuice/slopeone": "^2.0",
+        "tigo/recommendation": "^0.0.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

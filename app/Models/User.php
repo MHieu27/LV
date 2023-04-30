@@ -36,44 +36,28 @@ class User extends Model implements
      *
      * @var array<int, string>
      */
-    protected $primaryKey = 'username';
-
+    protected $primaryKey = 'email';
+    protected $label = 'Person';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
+        'name',
         'email',
+        'id',
         'bio',
         'image',
-        'passwordHash',
+        'password',
         'email_verified_at',
     ];
 
-    protected $hidden = [
+  /*   protected $hidden = [
         'passwordHash',
-    ];
+    ]; */
     public function getAuthIdentifier(): string
     {
-        return $this->username;
-    }
-    public function purchase()
-    {
-        return $this->hasMany(Purchase_details::class);
-    }
-    public function type()
-    {
-        return $this->hasOne(User_type::class,'Has_Type');
-    }
-    public function point(){
-        return $this->hasMany(Point::class);
-    }
-    public function session(){
-        return $this->hasMany(Session::class,'Session_User');
-    }
-    public function product(){
-        return $this->hasMany(Product::class,'Product_user');
+        return $this->email;
     }
 }

@@ -21,8 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::controller(UserController::class)->group(function(){
     Route::post('/users','create');
+    Route::post('/get-user','getUser');
 });
 Route::controller(ProductController::class)->group(function(){
     Route::post('/create-pro','create');
+
 });
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<style>
+.add-prd {
+  background: red;
+  height:100px;
+  width:100px;
+  transition: width 2s;
+}
+
+.aff {
+  width: 200px;
+}
+.aff1::after {
+  content: " - Remember this";
+}
+</style>
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
+  rel="stylesheet"
+/>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+</head>
+<body>
+ <div  style="position:fixed; right:20px;z-index:2;top:65px;">
+	<button type="button" class="rounded-circle btn btn-success p-1 text-center" style="z-index:1" >
+       <i class="fas fa-plus-circle" style="font-size: 60px;padding:0%"></i>
+    </button>
+ </div>
+ <div class="add-prd"  style="position:fixed; right:20px;z-index:1;top:65px;">
+    <button type="button" class="btn1 rounded-circle btn btn-success p-1 text-center" style="display:none;"></button>
+ </div>
+
+<script>
+
+
+$(document).ready(function(){
+  $(".btn-success").mouseover(function(){
+    $(".add-prd").addClass("aff");
+     $(".btn1").addClass("aff1");
+     $(".btn1").css("display", "block");
+  });
+  $(".btn-success").mouseout(function(){
+    $(".add-prd").removeClass("aff");
+     $(".btn1").removeClass("aff1");
+     $(".btn1").css("display", "none");
+  });
+});
+</script>
+</html>
+
+

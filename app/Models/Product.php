@@ -21,7 +21,9 @@ class Product extends Model
     public function category(){
         return $this->hasMany(Category::class,'Product_Category');
     }
-    public function user(){
-        return $this->hasMany(User::class,'User_Product');
+    public function user($rating){
+        return $this->hasMany(User::class,'User_Product')->ofMany([
+            'rating' => $rating,
+        ]);
     }
 }

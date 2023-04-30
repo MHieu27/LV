@@ -17,18 +17,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',function(){
+Route::get('/welcome',function(){
     return view('welcome');
 });
 Route::controller(UserController::class)->group(function () {
-    Route::get('/login','getlogin')->name('login');
+    Route::get('/','getlogin')->name('login');
     Route::post('/users/login', 'login')->name('check-login');
     Route::post('/users', 'create')->name('create');
 });
 Route::middleware(['auth', 'auth'])->group(function () {
     Route::get('/index', [HomeController::class, 'index'])->name('home');
-    Route::controller(Product::class)->group(function(){
-    });
+    Route::post('/eval',[HomeController::class,'evalution'])->name('eval');
 });
 
-Route::get('/logout', function(){Auth::logout();return Redirect::to('login');})->name('logout');
+Route::get('/logout', function(){Auth::logout();return Redirect::to('');})->name('logout');
+
