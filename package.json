@@ -12,6 +12,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "mdb-ui-kit": "^6.2.0",
         "neovis.js": "^2.0.2",
         "unidecode": "^0.1.8"
     }

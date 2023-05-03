@@ -29,47 +29,77 @@ class UserController extends Controller
     }
     public function create(Request $request)
     {
- /*        $request->validate([
-            'user.email' => 'required|email:rfc',
-            'user.username' => 'required|string|unique:User,email|min:3|max:50',
-            'user.password' => ['required', ...$this->passwordValidationRules()]
-        ]); */
 
         $user = $request->all();
-        $user['passwordHash'] = Hash::make($user['password']);
+        $hashed_password = bcrypt($user['password']);
+        // $user['passwordHash'] = Hash::make($user['password']);
         $check_username = User::query()->where('username', $user['username'])->first();
         if($check_username != null){
             Session::flash('message', 'Ten da ton tai!');
             return redirect()->back();
         }
-        $user = $this->session->run(<<<'CYPHER'
-        MATCH p=()-[r:PROVIDER]->() RETURN p
-        CYPHER,['']);
+        // $user = $this->session->run(<<<'CYPHER'
+        // MATCH p=()-[r:PROVIDER]->() RETURN p
+        // CYPHER,['']);
+        // return redirect()->route('login');
+        
+        $result = $this->session->run(<<<'CYPHER'
+        CREATE (n:User{Username: $username,
+                        email: $email,
+                        password: $password,
+                        phonenumber: $phonenumber,
+                        address: $address,
+                        birthday: $birthday,
+                        gender: $gender
+                    })RETURN n
+        CYPHER, [
+            'email' => $user['email'],
+            'username' => $user['username'],
+            'password' => $hashed_password,
+            'phonenumber' => $user['phonenumber'],
+            'address' => $user['address'],
+            'birthday' => $user['birthday'],
+            'gender' => $user['gender'],
+        ]);
+
         return redirect()->route('login');
-    /*     return (new UserResource($user))
-            ->toResponse($request)
-            ->setStatusCode(201); */
     }
+
     public function login(Request $request)
     {
-/*         $request->validate([
-            'user.email' => 'required|email:rfc',
-            'user.password' => 'required|max:255'
-        ]); */
-
         $credentials = $request->all();
         $user = User::query('limit',20)->where('email', $credentials['email'])->first();
-/*         dd($user); */
-        /* if ($user === null || !Hash::check($credentials['password'], $user->getAttribute('password'))) {
+        //$user trả về đối tượng
+        if ($user === null || !Hash::check($credentials['password'], $user->getAttribute('password'))) {
             Session::flash('message', 'This is a message!');
             return redirect()->back();
-        } */
+        }
 /*         new UserResource($user); */
         Auth::login($user);
         new UserResource($user);
      /*    return  $result; */
         return redirect()->route('home');
     }
+
+    public function search (Request $request)
+    {
+        $search_user = $request->all();
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        //return response($search_user);
+        $result2 = $this->session->run(<<<'CYPHER'
+        MATCH (n:User)
+        WHERE n.Username STARTS WITH $username
+        RETURN n
+        CYPHER, [
+            'username' => $search_user['username']
+        ]);
+        foreach($result2 as $result){
+            $username = $result['n']['properties']['Username'];
+            //$username = $result['n']['id'];
+        }
+        return view ('search', ['search_user' => $username, 'user' => $user]);
+    }
+
     public function getUser(Request $request){
         $result_2 = $this->session->run(<<<'CYPHER'
         MATCH p=()-[r:REVIEWED]->() RETURN p

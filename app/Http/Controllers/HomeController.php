@@ -26,27 +26,34 @@ class HomeController extends Controller
         usort($arr, function($a, $b) {
             return $b['rating'] <=> $a['rating'];
         });
-        $request['name'] = Auth::id();
+        $request['username'] = Auth::id();
         $list = $this->Recommodater($request);
         $recommobe = $this->filter_user($list);
         $recommobe2 = $this->recommobe_prov($list);
+        // Lấy ra các gía trị của user
+        return view ('home',['user'=>$user]);
 
-        if(!$recommobe)
-            return view('content',['recommobe2' => $recommobe2,'user' => $user,'product_user'=>$this->List_product(),'products' => $arr,'recommobe' => $recommobe = array()/* $this->List_top() */]);
-        /* foreach ($this->List_top() as $elem2) {
-            $found = false;
-            foreach ($recommobe as $elem1) {
-                if ($elem1['user'] === $elem2['user']) {
-                    $found = true;
-                    break;
-                }
-            }
-            if (!$found) {
-                $recommobe[] = $elem2;
-            }
-        } */
-        return view('content',['recommobe2' => $recommobe2,'user' => $user,'product_user'=>$this->List_product(),'products' => $arr,'recommobe' => $recommobe]);
+        // if(!$recommobe)
+        //     return view('content',['recommobe2' => $recommobe2,'user' => $user,'product_user'=>$this->List_product(),'products' => $arr,'recommobe' => $recommobe = array()/* $this->List_top() */]);
+        // /* foreach ($this->List_top() as $elem2) {
+        //     $found = false;
+        //     foreach ($recommobe as $elem1) {
+        //         if ($elem1['user'] === $elem2['user']) {
+        //             $found = true;
+        //             break;
+        //         }
+        //     }
+        //     if (!$found) {
+        //         $recommobe[] = $elem2;
+        //     }
+        // } */
+        // return view('content',['recommobe2' => $recommobe2,'user' => $user,'product_user'=>$this->List_product(),'products' => $arr,'recommobe' => $recommobe]);
     }
+
+
+
+
+
     public function List_top(){
         $arr_recom1 = array();
         $arr_recom2 = array();

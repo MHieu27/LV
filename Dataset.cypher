@@ -24,6 +24,7 @@
     CREATE (Caingot:Production {title:'Cải ngọt ',img:'https://cdn.tgdd.vn/Products/Images/8820/223330/bhx/cai-ngot-baby-goi-300g-202205181631113408.jpg', detail:'Rau an toàn 4KFarm với tiêu chí 4 KHÔNG, luôn ưu tiên bảo vệ sức khỏe người tiêu dùng. Hàm lượng chất xơ cao, chứa nhiều chất dinh dưỡng,Cải Ngọt 4KFarm là một trong những loại rau được ưa thích để chế biến những món canh rau ngon bổ dưỡng phù hợp với mọi lứa tuổi.'})
 
     //CREATE USER
+    CREATE (Keanu:Person {name:'Keanu Reeves', born:1964,email:'Keanu@gmail.com',password:'123'})
     CREATE (Keanu:Person {name:'Keanu Reeves', born:1964,email:'Keanu@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})
     CREATE (Carrie:Person {name:'Carrie-Anne Moss', born:1967,email:'Carrie@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})
     CREATE (Laurence:Person {name:'Laurence Fishburne', born:1961,email:'Laurence@gmail.com',password:'$2y$10$Dw8rknOSP1EUZb7nmXNvIuOoBtoCQbEB3u.8rlIbLYZNVLbq6L3qG'})

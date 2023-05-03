@@ -14,11 +14,13 @@ use Laravel\Sanctum\HasApiTokens;
 use Vinelab\NeoEloquent\Eloquent\Model;
 
 /**
- * @property string $username
+ * @property string $Username
  * @property string $email
- * @property string $bio
- * @property string $image
  * @property string $passwordHash
+ * @property string $phonenumber
+ * @property string $address
+ * @property string $birthday
+ * @property string $gender
  */
 class User extends Model implements
     AuthenticatableContract,
@@ -37,20 +39,20 @@ class User extends Model implements
      * @var array<int, string>
      */
     protected $primaryKey = 'email';
-    protected $label = 'Person';
+    protected $label = 'User';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'Username',
         'email',
-        'id',
-        'bio',
-        'image',
         'password',
-        'email_verified_at',
+        'phonenumber',
+        'address',
+        'birthday',
+        'gender',
     ];
 
   /*   protected $hidden = [
