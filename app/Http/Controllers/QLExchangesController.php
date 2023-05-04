@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use DateTime;
+use Faker\Provider\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -22,6 +24,8 @@ class QLExchangesController extends Controller
 
     public function index ()
     {
+
+        //lấy danh mục
         $user = new UserResource(User::findOrFail(Auth::id()));
         $getCategory = $this->session->run(<<<'CYPHER'
         MATCH (c:Category) 
@@ -35,9 +39,10 @@ class QLExchangesController extends Controller
             array_push($new_category,$getValue);
         }
 
+        //lấy tất cả sản phẩm
         $getProducts = $this->session->run(<<<'CYPHER'
-        MATCH(u:User{email: $email}) - [:`Đăng bán`] -> (p:Product) - [:`Thuộc loại`] -> (c:Category) 
-        RETURN p.name as product_name, p.desc as desc, p.img as img, p.price as price, p.quantity as quantity, c.category_name as category_name
+        MATCH(u:User{email: $email}) - [:`Đăng bán`] -> (p:Product) - [:`Thuộc loại`] -> (c:Category), (p:Product) - [rel:`Phiên giao dịch`] -> (s:Session)
+        RETURN p.name as product_name, p.desc as desc, p.img as img, rel.price as price, rel.quantity as quantity, c.category_name as category_name, s.Session_endtime as Session_endtime, p.id as idProduct, s.id as idSession
         CYPHER,
         [
             'email' => $user->email,
@@ -47,47 +52,51 @@ class QLExchangesController extends Controller
         foreach($getProducts as $getProduct){
             array_push($new_product, $getProduct);
         }
-
-        //return response($new_category);
+        //$createdate = date('Y/m/d H:i:s', $test1);
+        //return response($new_product);
         return view('exchange-management', ['user' => $user, 'namecategory' => $new_category, 'products' => $new_product]);
     }
 
     public function createProduct (Request $request) {
         $user = new UserResource(User::findOrFail(Auth::id()));
         $product = $request->all();
-        $this->session->run(<<<'CYPHER'
+        $file = $request->img;
+        $file_name = $file->getClientoriginalName();
+        $file->move(public_path('uploads'), $file_name);
+        //dd($product);
+        $result=$this->session->run(<<<'CYPHER'
         MERGE (u:User{email: $email})
         MERGE (p:Product{name: $name,
             desc: $desc,
-            img: $img,
-            price: $price,
-            quantity: $quantity})
+            img: $img})
         MERGE (c:Category{category_name: $category_name})
+        MERGE (s:Session{Session_endtime: $Session_endtime})
         MERGE (u)- [:`Đăng bán`] ->(p) -[:`Thuộc loại`] -> (c)
+        MERGE (p) - [rel: `Phiên giao dịch`{price: $price,quantity: $quantity}] -> (s)
+        SET s.id = id(s), p.id = id(p)
         RETURN p
         CYPHER,
         [
             'email' => $user->email,
             'name' => $product['product_name'],
             'desc' => $product['desc'],
-            'img' => $product['img'],
+            'img' => $file_name,
             'category_name' => $product['category_name'],
             'price' => $product['price'],
             'quantity' => $product['quantity'],
+            'Session_endtime' => $product['Session_endtime']
         ]);
-
-        //return response($product);
         return redirect() -> route('exchanges-management');
     }
 
-    public function deleteProduct ($name) {
+    public function deleteProduct ($id) {
+        $id = intval($id);
         $this->session->run(<<<'CYPHER'
-        MATCH (p:Product{name: $name})
+        MATCH (p:Product{id: $id})
         DETACH DELETE p
-        RETURN p
         CYPHER,
         [
-            'name' => $name
+            'id' => $id
         ]);
         //return view('exchanges-management');
         return redirect() -> route('exchanges-management');

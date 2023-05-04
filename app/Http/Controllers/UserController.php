@@ -87,17 +87,20 @@ class UserController extends Controller
         $user = new UserResource(User::findOrFail(Auth::id()));
         //return response($search_user);
         $result2 = $this->session->run(<<<'CYPHER'
-        MATCH (n:User)
-        WHERE n.Username STARTS WITH $username
-        RETURN n
+        MATCH (u:User)
+        WHERE u.Username STARTS WITH $username
+        RETURN u.Username as username
         CYPHER, [
             'username' => $search_user['username']
         ]);
+        $search_users = [];
         foreach($result2 as $result){
-            $username = $result['n']['properties']['Username'];
-            //$username = $result['n']['id'];
+            array_push($search_users, $result);
+            //$username = $result['n']['properties']['Username'];
         }
-        return view ('search', ['search_user' => $username, 'user' => $user]);
+
+        //return response($user);
+       return view ('search', ['search_user' => $search_users, 'user' => $user]);
     }
 
     public function getUser(Request $request){

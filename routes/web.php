@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExchangesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductInFoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QLExchangesController;
 use App\Http\Controllers\UserController;
@@ -45,13 +46,18 @@ Route::controller(ExchangesController::class) -> group(function(){
     Route::get('/exchanges','index') -> name('exchanges');
 });
 
-
+Route::controller(ProductInFoController::class) -> group(function(){
+    Route::get('product-info/{id}', 'index') -> name('product-info');
+    Route::post('product-info/{id}', 'orderByUser') -> name('order-by-user');
+});
 
 Route::controller(QLExchangesController::class) -> group(function(){
     Route::get('/exchanges-management','index') -> name('exchanges-management');
     Route::post('/exchanges-management', 'createProduct') ->name('create-product');
-    Route::get('/exchanges-management/{name}', 'deleteProduct') -> name('delete-product');
+    Route::get('/exchanges-management/{id}', 'deleteProduct') -> name('delete-product');
 });
+
+
 
 Route::get('/logout', function(){Auth::logout();return Redirect::to('');})->name('logout');
 

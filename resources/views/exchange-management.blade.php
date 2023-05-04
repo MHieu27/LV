@@ -14,7 +14,7 @@
         <div class="post-container">
             <div class="manager-product">
                 <h1>Quản lý sản phẩm</h1>
-                <form action="{{route('create-product')}}" method="POST">
+                <form action="{{route('create-product')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <label for="name">Tên sản phẩm:</label>
                     <input type="text" id="name" name="product_name" required>
@@ -34,8 +34,11 @@
             
                     <label for="quantity">Số lượng:</label>
                     <input type="number" id="quantity" name="quantity" required>
+
+                    <label for="datetime">Enter a datetime:</label>
+                    <input type="datetime-local" id="datetime" name="Session_endtime">
             
-                    <input type="submit" value="Thêm sản phẩm">
+                    <input type="submit" onclick="startCountdown()" value="Thêm sản phẩm">
                 </form>
             
             <table>
@@ -47,20 +50,22 @@
                         <th>Danh mục</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
+                        <th>Thời gian kết thúc</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
             @foreach ($products as $product)
                 <tbody>
                     <tr>
-                        <td>{{$product['product_name']}}</td>
+                        <td><a href="{{route('product-info', ['id' => $product['idProduct']])}}">{{$product['product_name']}}</a></td>
                         <td>{{$product['desc']}}</td>
-                        <td><img style="width: 100%; heigth:30%" src="{{$product['img']}}" alt="" srcset=""></td>
+                        <td><img style="width: 75%; heigth:30%" src="{{url('/uploads')}}/{{$product['img']}}" alt="" srcset=""></td>
                         <td>{{$product['category_name']}}</td>
                         <td>{{$product['price']}}đ</td>
                         <td>{{$product['quantity']}}</td>
+                        <td>{{$product['Session_endtime']}}</td>
                         <td>
-                            <a href="{{route('delete-product',['name'=>$product['product_name']])}}"><button class="delete">Xóa</button></a>
+                            <a href="{{route('delete-product',['id'=>$product['idProduct']])}}"><button class="delete">Xóa</button></a>
                         </td>
                     </tr>
                 </tbody>
@@ -71,6 +76,5 @@
     </div>
 </div>
 </body>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </html>

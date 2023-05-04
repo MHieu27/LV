@@ -23,9 +23,9 @@
 
             <div class="nav-right">
                 <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                     <form action="{{route('search')}}" method="post">
                         @csrf
-                        <i class="fa-solid fa-magnifying-glass"></i>
                         <input type="text" name="username" placeholder="Tìm kiếm...">
                     </form>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="user-profile">
                         <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                         <div>
-                            <p>{{$user->Username}}</p>
+                            {{-- <p>{{$user->Username}}</p> --}}
                             <a href="{{route('profile')}}">Xem trang cá nhân</a>
                         </div>
                     </div>

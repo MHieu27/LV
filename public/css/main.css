@@ -595,6 +595,7 @@ display: none;
     width: 100%;
     border-radius: 4px;
     margin-bottom: 5px;
+    height: 150px;
 }
 
 .product-box {
@@ -619,13 +620,13 @@ display: none;
 
 .product-info-container {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
 
 .product-imgs {
-    width: 100%;
+    width: 40%;
     display: block;
 }
 
@@ -703,6 +704,7 @@ display: none;
    border-radius: 25px;
    outline: 0;
    border: 1.5px solid #ddd;
+   width: 100px;
 }
 
 .purchase-info button {
@@ -760,7 +762,7 @@ display: none;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
 .manager-product .manager-product table th, table td {
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #ddd;
     text-align: left;
 }
@@ -793,3 +795,100 @@ display: none;
     background-color: #c00;
 }
 
+/*Product-info*/
+.auction-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .table-header {
+    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .header-item {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 20%;
+  }
+  
+  .table-body {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .table-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .table-item {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 20%;
+  }
+  
+  .bid-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px 16px;
+  }
+
+  /* exchanges-manager */
+
+  .manager-product tr td a{
+    color: black;
+  }
+  .manager-product tr td a:hover{
+    color: var(--texthover-color);
+  }
+
+  /* search */
+
+  .search-container {
+    padding: 80px 5%;
+    color: #ff0000;
+}
+
+.search-details {
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    display: block;
+}
+
+.search-details .pd-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.search-details .pd-img {
+    width: 100px;
+    margin-right: 20px;
+    border-radius: 41px;
+}
+
+.search-details .pd-row div h3 {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.search-details .pd-row div h3 a{
+    font-size: 25px;
+    font-weight: 600;
+    color: #12263a;
+}
+
+.search-details .pd-row div h3 a:hover{
+    color: var(--texthover-color);
+}

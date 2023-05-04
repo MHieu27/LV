@@ -9,17 +9,22 @@
         </div>
     </div>
     <div class="main-content">
-        <div class="profile-container">
-            <div class="profile-detais">
+        <div class="search-container">
+            <div class="search-details">
+                @foreach ($search_user as $user)
                 <div class="pd-left">
                     <div class="pd-row">
                         <img class="pd-img" src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                        <div>
-                            <h3><a href="{{route('profile2',['username'=>$search_user])}}">{{$search_user}}</a></h3>
+                       
+                            <h3><a href="{{route('profile2', ['username'=> $user['username']])}}">{{$user['username']}}</a></h3>
                             <p>100 Lượt theo dõi</p>
                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
+
+            
         </div>
     </div>
