@@ -34,9 +34,8 @@
             
                     <label for="quantity">Số lượng:</label>
                     <input type="number" id="quantity" name="quantity" required>
-
                     <label for="datetime">Enter a datetime:</label>
-                    <input type="datetime-local" id="datetime" name="Session_endtime">
+                    <input type="datetime-local" id="datetime" min="{{ \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d\TH:i') }}"name="Session_endtime">
             
                     <input type="submit" onclick="startCountdown()" value="Thêm sản phẩm">
                 </form>

@@ -92,12 +92,14 @@ class QLExchangesController extends Controller
     public function deleteProduct ($id) {
         $id = intval($id);
         $this->session->run(<<<'CYPHER'
-        MATCH (p:Product{id: $id})
+        MATCH(p:Product{id: $id})- [:`Phiên giao dịch`] -> (s:Session)
         DETACH DELETE p
         CYPHER,
         [
             'id' => $id
         ]);
+        // MATCH(p:Product{id: $id}) - [:`Phiên giao dịch`] -> (s:Session) <- [:`Đặt mua`] - (o:Order)
+        // DETACH DELETE p
         //return view('exchanges-management');
         return redirect() -> route('exchanges-management');
     }

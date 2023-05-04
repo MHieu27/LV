@@ -42,8 +42,21 @@
                             So luong <input type="number" name="order_quantity"max ="<?= $productinfo['quantity'] ?>">
                         </div>
                         <div class="purchase-info">
-                            <button type="submit" class="btn-purchase">Mua</button>
+                            @php
+                                $current_time= \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y H:i')
+                            @endphp
+                            @if(\Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $productinfo['Session_endtime'])->format('d/m/Y H:i') < $current_time)
+                            <!-- Thông báo sản phẩm đã hết hạn bán -->
+                            <div class="purchase-info">
+                                <p>Sản phẩm đã hết hạn đấu giá</p>
+                            </div>
+                            @else
+                            <div class="purchase-info">
+                                <button type="submit" class="btn-purchase">Mua</button>
+                            </div>
+                            @endif
                         </div>
+                        {{$current_time}}
                         @endforeach
                     </form>
                 </div>
@@ -64,7 +77,7 @@
                     <div class="table-item"><a href="">{{$getOrderUser['username']}}</a></div>
                     <div class="table-item">{{$getOrderUser['order_price']}}</div>
                     <div class="table-item">{{$getOrderUser['order_quantity']}}</div>
-                    <div class="table-item">{{$getOrderUser['session_endtime']}}</div>
+                    <div class="table-item">{{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $getOrderUser['session_endtime'])->format('d/m/Y H:i') }}</div>
                 </div>
                 @endforeach
                 </div>
