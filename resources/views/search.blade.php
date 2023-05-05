@@ -6,6 +6,7 @@
             <a href={{route('exchanges')}}>Sàn giao dịch</a>
             <a href="#">Tin nhắn</a>
             <a href={{route('exchanges-management')}}>Quản lý sàn giao dịch</a>
+            <a href={{route('list-auctioned')}}>Xem sản phẩm đấu giá</a>
         </div>
     </div>
     <div class="main-content">

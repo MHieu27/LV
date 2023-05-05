@@ -15,9 +15,9 @@ use Vinelab\NeoEloquent\Eloquent\Model;
 
 /**
  * 
- * @property string $Username
  * @property int $id
  * @property string $email
+ * @property string $Username
  * @property string $passwordHash
  * @property string $phonenumber
  * @property string $address
@@ -49,7 +49,7 @@ class User extends Model implements
      */
     protected $fillable = [
         'id',
-        'Username',
+        'username',
         'email',
         'password',
         'phonenumber',
@@ -58,9 +58,9 @@ class User extends Model implements
         'gender',
     ];
 
-  /*   protected $hidden = [
+    protected $hidden = [
         'passwordHash',
-    ]; */
+    ];
     public function getAuthIdentifier(): string
     {
         return $this->id;

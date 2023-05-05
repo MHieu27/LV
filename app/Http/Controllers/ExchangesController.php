@@ -36,6 +36,6 @@ class ExchangesController extends Controller
             array_push($new_all_product, $getAllProduct);
         }
         //return response($new_all_product);
-        return view('exchanges', ['user' => $user, 'getAllProducts' => $new_all_product]);
+        return view('exchanges', ['user' => $user, 'getAllProducts' => $new_all_product, 'id' => $user['id']]);
     }
 }

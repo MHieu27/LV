@@ -51,8 +51,8 @@ class ProductInFoController extends Controller
         foreach($result as $item){
             array_push($getOrderUsers, $item);
         }
-        //return response(collect($getOrderUsers)->sortByDesc('order_price')->sortByDesc('order_quantity'));
-        return view('product-info',['productInfos' => $new_productInfo, 'getOrderUsers' => $getOrderUsers]);
+        //return response($user);
+        return view('product-info',['productInfos' => $new_productInfo, 'getOrderUsers' => $getOrderUsers, 'username' => $user['Username'], 'id' => $user['id']]);
     }
 
     public function orderByUser (Request $request, $id) 
@@ -65,8 +65,8 @@ class ProductInFoController extends Controller
         MERGE(u:User{email:$email})
         MERGE(o:Order{order_price: $order_price, order_quantity: $order_quantity})
         MERGE(u) - [:`Mua`] -> (o) - [:`Đặt mua`] -> (s)
-        SET o.id = id(o)
         RETURN u.id as id, u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, p.name as productname, s.Session_endtime as time
+
         CYPHER,
         [
             'email' => $user->email,
@@ -74,6 +74,8 @@ class ProductInFoController extends Controller
             'order_price' => $order['order_price'],
             'order_quantity' => $order['order_quantity']
         ]);
+
+        
 
         return redirect() -> route('product-info',['id' => $id]);
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExchangesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListAuctionedController;
 use App\Http\Controllers\ProductInFoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QLExchangesController;
@@ -46,6 +47,10 @@ Route::middleware(['auth', 'auth'])->group(function () {
 
 Route::controller(ExchangesController::class) -> group(function(){
     Route::get('/exchanges','index') -> name('exchanges');
+});
+
+Route::controller(ListAuctionedController::class) -> group(function(){
+    Route::get('/list-auctioned/{id}', 'index') -> name('list-auctioned');
 });
 
 Route::controller(ProductInFoController::class) -> group(function(){

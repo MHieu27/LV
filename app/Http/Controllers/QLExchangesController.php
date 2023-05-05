@@ -54,7 +54,7 @@ class QLExchangesController extends Controller
         }
         //$createdate = date('Y/m/d H:i:s', $test1);
         //return response($new_product);
-        return view('exchange-management', ['user' => $user, 'namecategory' => $new_category, 'products' => $new_product]);
+        return view('exchange-management', ['user' => $user, 'namecategory' => $new_category, 'products' => $new_product, 'id' => $user['id']]);
     }
 
     public function createProduct (Request $request) {

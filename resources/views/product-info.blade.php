@@ -7,6 +7,7 @@
                 <a href={{route('exchanges')}}>Sàn giao dịch</a>
                 <a href="#">Tin nhắn</a>
                 <a href={{route('exchanges-management')}}>Quản lý sàn giao dịch</a>
+                <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
             </div>
         </div>
 
@@ -44,7 +45,8 @@
                         </div>
                         <div class="purchase-info">
                             @php
-                                $current_time= \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y H:i')
+                                $current_time= \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y H:i');
+                                $username_counts = array_count_values(array_column($getOrderUsers, 'username'));
                             @endphp
                             @if(\Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $productinfo['Session_endtime'])->format('d/m/Y H:i') < $current_time)
                             <!-- Thông báo sản phẩm đã hết hạn bán -->
@@ -60,6 +62,7 @@
                         {{$current_time}}
                         @endforeach
                     </form>
+                    <input type="hidden" id="username" value="{{ $username }}">
                 </div>
             </div>
             <div class="auction-table">
@@ -72,9 +75,9 @@
                 </div>
                 <div class="table-body">
                 @foreach(collect($getOrderUsers)->sortByDesc(function($user){
-                    return $user['order_price'] * $user['order_quantity'];}) as $getOrderUser)
+                    return $user['order_price'] * $user['order_quantity'];}) as $index => $getOrderUser)
                 <div class="table-row">
-                    <div class="table-item">1</div>
+                    <div class="table-item">{{$index + 1}}</div>
                     <div class="table-item"><a href="{{route('profile2', ['id'=> $getOrderUser['id']])}}">{{$getOrderUser['username']}}</a></div>
                     <div class="table-item">{{$getOrderUser['order_price']}}</div>
                     <div class="table-item">{{$getOrderUser['order_quantity']}}</div>
@@ -87,5 +90,25 @@
         </div>
     </div>
 </body>
+<script>
+
+const username = document.getElementById('username').value;
+    const rows = document.querySelectorAll('.table-row');
+    let count = 0;
+    console.log(username);
+    rows.forEach((row) => {
+        const name = row.querySelector('.table-item a').textContent;
+        if (name === username) {
+            count++;
+        }
+    });
+
+    if (count >= 3) {
+        const purchaseBtn = document.querySelector('.btn-purchase');
+        if (purchaseBtn) {
+            purchaseBtn.style.display = 'none';
+        }
+    }
+</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </html>
