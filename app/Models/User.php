@@ -14,7 +14,9 @@ use Laravel\Sanctum\HasApiTokens;
 use Vinelab\NeoEloquent\Eloquent\Model;
 
 /**
+ * 
  * @property string $Username
+ * @property int $id
  * @property string $email
  * @property string $passwordHash
  * @property string $phonenumber
@@ -38,7 +40,7 @@ class User extends Model implements
      *
      * @var array<int, string>
      */
-    protected $primaryKey = 'email';
+    protected $primaryKey = 'id';
     protected $label = 'User';
     /**
      * The attributes that are mass assignable.
@@ -46,6 +48,7 @@ class User extends Model implements
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'Username',
         'email',
         'password',
@@ -60,6 +63,6 @@ class User extends Model implements
     ]; */
     public function getAuthIdentifier(): string
     {
-        return $this->email;
+        return $this->id;
     }
 }

@@ -93,7 +93,8 @@ class QLExchangesController extends Controller
         $id = intval($id);
         $this->session->run(<<<'CYPHER'
         MATCH(p:Product{id: $id})- [:`Phiên giao dịch`] -> (s:Session)
-        DETACH DELETE p
+        OPTIONAL MATCH (o:Order) - [:`Đặt mua`] -> (s:Session)
+        DETACH DELETE p, o, s
         CYPHER,
         [
             'id' => $id

@@ -51,7 +51,9 @@ class UserController extends Controller
                         address: $address,
                         birthday: $birthday,
                         gender: $gender
-                    })RETURN n
+                    })
+        SET n.id = id(n)
+        RETURN n
         CYPHER, [
             'email' => $user['email'],
             'username' => $user['username'],
@@ -89,7 +91,7 @@ class UserController extends Controller
         $result2 = $this->session->run(<<<'CYPHER'
         MATCH (u:User)
         WHERE u.Username STARTS WITH $username
-        RETURN u.Username as username
+        RETURN u.Username as username, u.id as id
         CYPHER, [
             'username' => $search_user['username']
         ]);

@@ -11,10 +11,6 @@
                    </div>
                 </div>
             </div>
-            <div class="pd-right">
-                <button class="follow-btn" type="button">Theo dõi</button>
-                <button type="button"><i class="fa-regular fa-message"></i>Nhắn tin</button>
-            </div>
         </div>  
         
         <div class="profile-info">

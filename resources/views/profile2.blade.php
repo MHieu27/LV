@@ -4,16 +4,32 @@
         <div class="profile-detais">
             <div class="pd-left">
                 <div class="pd-row">
+                    @foreach($profileUsers as $profileUser)
                     <img class="pd-img" src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                    <div>
-                        <h3>{{$username}}</h3>
-                        <p>100 Lượt theo dõi</p>
+                        <h3>{{$profileUser['username']}}</h3>
+                        <a href="#"><p>{{$profileUser['totalFollower']}} người theo dõi</p></a>
                    </div>
                 </div>
             </div>
             <div class="pd-right">
-                <button class="follow-btn" type="button">Theo dõi</button>
-                <button type="button"><i class="fa-regular fa-message"></i>Nhắn tin</button>
+                <form action="{{route('follow', ['id' => $profileUser['id']])}}" method="post">
+                    @csrf
+                    @if(!$profileUser['follow'])
+                        <button class="follow-btn" type="submit">Theo dõi</button>
+                        <button type="button"><i class="fa-regular fa-message"></i>Nhắn tin</button>
+                    {{-- @else
+                        <button class="follow-btn" type="submit">Huy theo doi</button>
+                        <button type="button"><i class="fa-regular fa-message"></i>Nhắn tin</button> --}}
+                    @endif
+                </form>
+                <form action="{{route('un-follow', ['id' => $profileUser['id']])}}" method="post">
+                    @csrf
+                    @if($profileUser['follow'])
+                        <button class="follow-btn" type="submit">Huỷ theo dõi</button>
+                        <button type="button"><i class="fa-regular fa-message"></i>Nhắn tin</button>
+                    @endif
+                </form>
             </div>
         </div>  
         
@@ -24,20 +40,21 @@
                     <p class="intro-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, mollitia? Magni quia veniam deleniti illo numquam ab ratione minima? Laborum quis quos voluptates veniam quidem illum nam ad vero! Eius.</p>
                     <hr>
                     <ul>
-                        <li><i class="fa fa-home"></i>{{$address}}</li>
-                        <li><i class="fa fa-briefcase"></i>Làm việc tại {{$address}}</li>
-                        <li><i class="fa fa-birthday-cake"></i>{{$birthday}}</li>
-                        <li><i class='fas fa-user-circle'></i>{{$gender}}</li>
+                        <li><i class="fa fa-home"></i>{{$profileUser['address']}}</li>
+                        <li><i class="fa fa-briefcase"></i>Làm việc tại {{$profileUser['address']}}</li>
+                        <li><i class="fa fa-birthday-cake"></i>{{$profileUser['birthday']}}</li>
+                        <li><i class='fas fa-user-circle'></i>{{$profileUser['gender']}}</li>
                     </ul>
                 </div>
 
                 <div class="profile-intro">
                     <div class="link">
-                        <a href="{{route('profile2',['username'=>$username])}}">Trang cá nhân</a>
+                        <a href="{{route('profile2',['id'=>$profileUser['id']])}}">Trang cá nhân</a>
                         <a href="#">Sản phẩm</a>
                     </div>
                 </div>
             </div>
+            @endforeach
             <div class="post-col">
                            <!--Post1-->
             <div class="post-container">

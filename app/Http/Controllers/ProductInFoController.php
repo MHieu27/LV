@@ -28,7 +28,7 @@ class ProductInFoController extends Controller
 
         $getProductInfos = $this->session->run(<<<'CYPHER'
         MATCH (u:User) - [:`Đăng bán`] -> (p:Product{id: $id}) - [:`Thuộc loại`] -> (c:Category), (p:Product) - [rel:`Phiên giao dịch`] -> (s:Session)
-        RETURN u.Username as username,  p.name as product_name, p.desc as desc, p.img as img, rel.price as price, rel.quantity as quantity, c.category_name as category_name, s.Session_endtime as Session_endtime, p.id as idProduct
+        RETURN u.id as id, u.Username as username,  p.name as product_name, p.desc as desc, p.img as img, rel.price as price, rel.quantity as quantity, c.category_name as category_name, s.Session_endtime as Session_endtime, p.id as idProduct
         CYPHER,
         [
             'id' => $id,
@@ -41,7 +41,7 @@ class ProductInFoController extends Controller
 
         $result = $this->session->run(<<<'CYPHER'
         MATCH(u:User) - [:Mua] -> (o:Order) - [:`Đặt mua`] -> (s:Session) <- [rel:`Phiên giao dịch`] - (p:Product{id: $id}) 
-        RETURN  u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, s.Session_endtime as session_endtime, rel.quantity as quantity, rel.price as price
+        RETURN  u.id as id, u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, s.Session_endtime as session_endtime, rel.quantity as quantity, rel.price as price
         CYPHER,
         [
             'id' => $id,
@@ -66,7 +66,7 @@ class ProductInFoController extends Controller
         MERGE(o:Order{order_price: $order_price, order_quantity: $order_quantity})
         MERGE(u) - [:`Mua`] -> (o) - [:`Đặt mua`] -> (s)
         SET o.id = id(o)
-        RETURN u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, p.name as productname, s.Session_endtime as time
+        RETURN u.id as id, u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, p.name as productname, s.Session_endtime as time
         CYPHER,
         [
             'email' => $user->email,

@@ -10,7 +10,8 @@
             </div>
         </div>
 
-        <div class="main-content">
+        <div class="main-content" style="background: #fff";
+    >
             <div class="product-info-container">
                 @foreach ($productInfos as $productinfo)
                 <div class="product-imgs">
@@ -26,8 +27,8 @@
                             <span>5</span>
                         </div>
                     </div>
-                    <div class="product-price"><span>{{$productinfo['price']}} VND</span></div>
-                    <div class="count-product"><span>So luong: {{$productinfo['quantity']}}</span></div>
+                    <div class="product-price"><span>Giá: {{$productinfo['price']}}đ</span></div>
+                    <div class="count-product"><span>Số lượng: {{$productinfo['quantity']}}</span></div>
                     <div class="product-detail">
                         <h2>Giới thiệu sản phẩm</h2>
                         <p>{{$productinfo['desc']}}</p>
@@ -39,7 +40,7 @@
                             <input type="number" name ="order_price"min = "<?= $productinfo['price'] ?>">VND
                         </div>
                         <div class="purchase-info">
-                            So luong <input type="number" name="order_quantity"max ="<?= $productinfo['quantity'] ?>">
+                           Số lượng: <input type="number" name="order_quantity"max ="<?= $productinfo['quantity'] ?>">
                         </div>
                         <div class="purchase-info">
                             @php
@@ -74,7 +75,7 @@
                     return $user['order_price'] * $user['order_quantity'];}) as $getOrderUser)
                 <div class="table-row">
                     <div class="table-item">1</div>
-                    <div class="table-item"><a href="">{{$getOrderUser['username']}}</a></div>
+                    <div class="table-item"><a href="{{route('profile2', ['id'=> $getOrderUser['id']])}}">{{$getOrderUser['username']}}</a></div>
                     <div class="table-item">{{$getOrderUser['order_price']}}</div>
                     <div class="table-item">{{$getOrderUser['order_quantity']}}</div>
                     <div class="table-item">{{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $getOrderUser['session_endtime'])->format('d/m/Y H:i') }}</div>

@@ -35,13 +35,13 @@
                     <h2 class="product-title"><a href="{{route('product-info', ['id' => $getAllProduct['idProduct']])}}">{{$getAllProduct['product_name']}}</a></h2>
                     <span class="price">{{$getAllProduct['price']}}VND</span>
                     <div>
-                        <span class="time-cd">Thời gian kết thúc: {{$getAllProduct['Session_endtime']}}</span>
+                        <span class="time-cd">Thời gian kết thúc: {{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $getAllProduct['Session_endtime'])->format('d/m/Y H:i') }}</span>
                     </div>
                     <hr>
                     <div class="user-profile">
                         <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                         <div class="product-rating">
-                            <a href="{{route('profile2',['username'=>$getAllProduct['username']])}}">{{$getAllProduct['username']}}</a>
+                            <a href="{{route('profile2',['id'=>$getAllProduct['id']])}}">{{$getAllProduct['username']}}</a>
                             <i class="fa fa-star"></i>
                             <span>5</span>
                         </div>
@@ -100,7 +100,7 @@
     // Thêm tiêu đề sản phẩm
     const productTitle = document.createElement('h2');
     const productLink = document.createElement('a');
-    productLink.href = `/product-info/${product.product_name}`;
+    productLink.href = `/product-info/${product.idProduct}`;
     productLink.innerText = product.product_name;
     productTitle.appendChild(productLink);
     productBox.appendChild(productTitle);
@@ -134,7 +134,7 @@
     productRating.classList.add('product-rating');
 
     const userLink = document.createElement('a');
-    userLink.href = `/profile2/${product.username}`;
+    userLink.href = `/profile2/${product.id}`;
     userLink.innerText = product.username;
     productRating.appendChild(userLink);
 

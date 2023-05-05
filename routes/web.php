@@ -33,8 +33,10 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(ProfileController::class) -> group(function(){
-    Route::get('/profile2/{username}', 'profileOrderUser') -> name('profile2');
+    Route::get('/profile2/{id}', 'profileOrderUser') -> name('profile2');
     Route::get('/profile', 'index') -> name('profile');
+    Route::post('/profile2/{id}', 'followUser') -> name('follow');
+    Route::post('/profile2/{id}/unfollow', 'unFollowUser') -> name('un-follow');
 });
 
 Route::middleware(['auth', 'auth'])->group(function () {

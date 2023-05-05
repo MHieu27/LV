@@ -20,7 +20,7 @@
                     <input type="text" id="name" name="product_name" required>
         
                     <label for="description">Mô tả sản phẩm:</label>
-                    <textarea  id ="description" name="desc" required></textarea>
+                    <textarea  style="width: 100%; height: 100px"id ="description" name="desc" required></textarea>
                     <label for="description">Hình ảnh</label>
                     <input type="file" name="img" > 
                     <label for="category">Danh mục:</label>
@@ -34,7 +34,7 @@
             
                     <label for="quantity">Số lượng:</label>
                     <input type="number" id="quantity" name="quantity" required>
-                    <label for="datetime">Enter a datetime:</label>
+                    <label for="datetime">Ngày kết thúc</label>
                     <input type="datetime-local" id="datetime" min="{{ \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d\TH:i') }}"name="Session_endtime">
             
                     <input type="submit" onclick="startCountdown()" value="Thêm sản phẩm">
@@ -62,7 +62,7 @@
                         <td>{{$product['category_name']}}</td>
                         <td>{{$product['price']}}đ</td>
                         <td>{{$product['quantity']}}</td>
-                        <td>{{$product['Session_endtime']}}</td>
+                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $product['Session_endtime'])->format('d/m/Y H:i') }}</td>
                         <td>
                             <a href="{{route('delete-product',['id'=>$product['idProduct']])}}"><button class="delete">Xóa</button></a>
                         </td>

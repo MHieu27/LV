@@ -17,7 +17,7 @@
                         <img class="pd-img" src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                        <div>
                        
-                            <h3><a href="{{route('profile2', ['username'=> $user['username']])}}">{{$user['username']}}</a></h3>
+                            <h3><a href="{{route('profile2', ['id'=> $user['id']])}}">{{$user['username']}}</a></h3>
                             <p>100 Lượt theo dõi</p>
                        </div>
                     </div>

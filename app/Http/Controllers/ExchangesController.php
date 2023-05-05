@@ -26,7 +26,7 @@ class ExchangesController extends Controller
         //RETURN p.name as product_name, p.desc as desc, p.img as img, p.price as price, p.quantity as quantity, c.category_name as category_name, s.Session_endtime as Session_endtime
         $getAllProducts = $this->session->run(<<<'CYPHER'
         MATCH (u:User) - [:`Đăng bán`] -> (p:Product) - [:`Thuộc loại`] -> (c:Category), (p:Product) - [rel:`Phiên giao dịch`] -> (s:Session)
-        RETURN u.Username as username,  p.name as product_name, p.desc as desc, p.img as img, rel.price as price, rel.quantity as quantity, c.category_name as category_name, s.Session_endtime as Session_endtime, p.id as idProduct
+        RETURN u.id as id, u.Username as username,  p.name as product_name, p.desc as desc, p.img as img, rel.price as price, rel.quantity as quantity, c.category_name as category_name, s.Session_endtime as Session_endtime, p.id as idProduct
         CYPHER,
         [
         ]);
