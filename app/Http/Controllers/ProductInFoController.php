@@ -51,8 +51,8 @@ class ProductInFoController extends Controller
         foreach($result as $item){
             array_push($getOrderUsers, $item);
         }
-        //return response($user);
-        return view('product-info',['productInfos' => $new_productInfo, 'getOrderUsers' => $getOrderUsers, 'username' => $user['Username'], 'id' => $user['id']]);
+        //return response($item);
+        return view('product-info',['productInfos' => $new_productInfo, 'getOrderUsers' => $getOrderUsers, 'username' => $user['Username'], 'id' => $user['id'], 'checkSeller' => $getProductInfo['username']]);
     }
 
     public function orderByUser (Request $request, $id) 
@@ -63,8 +63,9 @@ class ProductInFoController extends Controller
         $orders = $this->session->run(<<<'CYPHER'
         MATCH(p:Product{id: $id}) - [:`Phiên giao dịch`] -> (s:Session) 
         MERGE(u:User{email:$email})
-        MERGE(o:Order{order_price: $order_price, order_quantity: $order_quantity})
+        MERGE(o:Order{order_price: $order_price, order_quantity: $order_quantity, status: 'Đã đấu giá'})
         MERGE(u) - [:`Mua`] -> (o) - [:`Đặt mua`] -> (s)
+        SET o.id = id(o)
         RETURN u.id as id, u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, p.name as productname, s.Session_endtime as time
 
         CYPHER,
@@ -78,5 +79,26 @@ class ProductInFoController extends Controller
         
 
         return redirect() -> route('product-info',['id' => $id]);
+    }
+
+    public function updateByUser (Request $request, $id)
+    {
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $update = $request->all();
+        $id = intval($id);
+        $queryUpdate = $this->session->run(<<<'CYPHER'
+        MATCH(u:User{id: $myID}) - [:Mua] -> (o:Order) - [:`Đặt mua`] -> (s:Session) <- [:`Phiên giao dịch`] - (p:Product{id: $idProduct})
+        SET o.order_price = $update_price, o.order_quantity = $update_quantity
+        RETURN u,o,s,p
+
+        CYPHER,
+        [
+            'myID' => $user->id,
+            'idProduct' => $id,
+            'update_price' => $update['update_price'],
+            'update_quantity' => $update['update_quantity']
+        ]);
+
+        return redirect() -> route('product-info', ['id' => $id]);
     }
 }

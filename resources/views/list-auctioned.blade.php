@@ -25,7 +25,7 @@
             @foreach ($getAllListAuctioned as $ListAuctioned)
                 <tbody>
                     <tr>
-                        <td><a href="{{route('product-info', ['id' => $ListAuctioned['idProduct']])}}">{{$ListAuctioned['username']}}</a></td>
+                        <td><a href="{{route('product-info', ['id' => $ListAuctioned['idProduct']])}}">{{$ListAuctioned['product_name']}}</a></td>
                         <td>{{$ListAuctioned['order_price']}}đ</td>
                         <td>{{$ListAuctioned['order_quantity']}}</td>
                         <td><a href="{{route('profile2',['id'=>$ListAuctioned['idSeller']])}}">{{$ListAuctioned['seller']}}</a></td>

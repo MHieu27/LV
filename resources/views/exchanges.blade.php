@@ -27,9 +27,11 @@
             <!-- Danh sách sản phẩm sẽ được hiển thị ở đây -->
           </div>
           
-        <!--Post1-->
         <div class="post-container">
             <div class="product-container">
+              @php
+                $current_time= \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y H:i');
+              @endphp
                 @foreach ($getAllProducts as $getAllProduct)
                 <div class="product-box">
                     <img class="product-img" src="{{url('/uploads')}}/{{$getAllProduct['img']}}"alt="">
@@ -205,6 +207,18 @@ searchInput.addEventListener("keyup", function(event) {
   }
 }
   });
+  
+    const currentTime = new Date('{{ $current_time }}').getTime();
+    const productBoxes = document.querySelectorAll('.product-box');
+
+    productBoxes.forEach((box) => {
+        const sessionEndTime = Date.parse(box.querySelector('.time-cd').textContent.replace('Thời gian kết thúc: ', ''));
+        if (currentTime > sessionEndTime) {
+            box.style.display = 'none';
+        }
+    });
+
+
 
 </script>
 </html>

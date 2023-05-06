@@ -53,7 +53,7 @@ class QLExchangesController extends Controller
             array_push($new_product, $getProduct);
         }
         //$createdate = date('Y/m/d H:i:s', $test1);
-        //return response($new_product);
+        //return response($getProduct);
         return view('exchange-management', ['user' => $user, 'namecategory' => $new_category, 'products' => $new_product, 'id' => $user['id']]);
     }
 
@@ -88,6 +88,7 @@ class QLExchangesController extends Controller
         ]);
         return redirect() -> route('exchanges-management');
     }
+
 
     public function deleteProduct ($id) {
         $id = intval($id);

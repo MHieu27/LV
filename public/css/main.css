@@ -686,6 +686,7 @@ display: none;
     text-transform: capitalize;
     color: #12263a;
     padding-bottom: 0.6rem;
+    margin-top: 30px;
 }
 
 .product-detail p{
@@ -694,24 +695,31 @@ display: none;
     opacity: 0.8;
 }
 
+.endtime-product span{
+    font-weight: bold;
+}
+
 .purchase-info {
     margin: 25px 0;
 }
 
 .purchase-info input {
-   text-align: center;
-   padding: 1px 0;
-   border-radius: 25px;
-   outline: 0;
-   border: 1.5px solid #ddd;
-   width: 100px;
+    text-align: center;
+    padding: 1px 0;
+    border-radius: 25px;
+    outline: 0;
+    border: 1.5px solid #ddd;
+    width: 180px;
+    height: 35px;
 }
 
 .purchase-info button {
     text-align: center;
     padding: 10px 20px;
     color: #fff;
-    background:#9a9a9a;
+    background: #2a2a2a;
+    border: 0;
+    border-radius: 10px;
 }
 
 .purchase-info button:hover{
@@ -795,10 +803,86 @@ display: none;
     background-color: #c00;
 }
 
+/* The modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .modal-content .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .modal-content .close:hover,
+  .modal-content .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .modal-content label {
+    margin-bottom: 8px;
+  }
+  
+  .modal-content input {
+    margin-bottom: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .modal-content button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .modal-content button:hover {
+    background-color: var(--texthover-color);
+  }
+  
+
 /*Product-info*/
 .auction-table {
     border-collapse: collapse;
     width: 100%;
+    text-align: center;
+  }
+
+  .updateBtn:hover {
+    cursor: pointer;
+    background-color: var(--texthover-color) ;
   }
 
   
@@ -807,7 +891,7 @@ display: none;
     display: flex;
     flex-direction: row;
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     width: 100%;
   }
   
@@ -822,6 +906,20 @@ display: none;
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+
+  .table-body .table-item .form-auction-btn button{
+    width: 65px;
+    height: 25px;
+    background: #79ffc0;
+    color: black;
+    border: none;
+    border-radius: 25px;
+  }
+
+  .table-body .table-item .form-auction-btn button:hover{
+    background: var(--texthover-color);
+    cursor: pointer;
   }
   
   .table-row {

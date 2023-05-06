@@ -56,6 +56,7 @@ Route::controller(ListAuctionedController::class) -> group(function(){
 Route::controller(ProductInFoController::class) -> group(function(){
     Route::get('product-info/{id}', 'index') -> name('product-info');
     Route::post('product-info/{id}', 'orderByUser') -> name('order-by-user');
+    Route::post('product-info/update/{id}', 'updateByUser') -> name('update-by-user');
 });
 
 Route::controller(QLExchangesController::class) -> group(function(){
