@@ -41,7 +41,7 @@ class ProductInFoController extends Controller
 
         $result = $this->session->run(<<<'CYPHER'
         MATCH(u:User) - [:Mua] -> (o:Order) - [:`Đặt mua`] -> (s:Session) <- [rel:`Phiên giao dịch`] - (p:Product{id: $id}) 
-        RETURN  u.id as id, u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, s.Session_endtime as session_endtime, rel.quantity as quantity, rel.price as price
+        RETURN  u.id as id, u.Username as username, o.order_price as order_price, o.order_quantity as order_quantity, s.Session_endtime as session_endtime, rel.quantity as quantity, rel.price as price, o.id as orderID, o.status as order_status
         CYPHER,
         [
             'id' => $id,
@@ -51,7 +51,7 @@ class ProductInFoController extends Controller
         foreach($result as $item){
             array_push($getOrderUsers, $item);
         }
-        //return response($item);
+        //return response($getOrderUsers);
         return view('product-info',['productInfos' => $new_productInfo, 'getOrderUsers' => $getOrderUsers, 'username' => $user['Username'], 'id' => $user['id'], 'checkSeller' => $getProductInfo['username']]);
     }
 

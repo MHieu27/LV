@@ -26,7 +26,7 @@ class ListAuctionedController extends Controller
         $id = intval($id);
         $queryListAuctioned = $this->session->run(<<<'CYPHER'
         MATCH(u:User{id: $id}) - [:Mua] -> (o:Order) - [:`Đặt mua`] -> (s:Session) <- [:`Phiên giao dịch`] - (p:Product) <- [:`Đăng bán`] - (u2)
-        RETURN u.Username as username, p.name as product_name, o.order_price as order_price, o.order_quantity as order_quantity ,u2.Username as seller, p.id as idProduct, u2.id as idSeller
+        RETURN u.Username as username, p.name as product_name, o.order_price as order_price, o.order_quantity as order_quantity ,u2.Username as seller, p.id as idProduct, u2.id as idSeller, o.status as order_status
         CYPHER,
         [
             'id' => $id

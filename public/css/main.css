@@ -9,6 +9,7 @@
     --texthover-color: rgb(3, 183, 0);
     --text-color: rgb(150, 154, 154);
     --sidebar-color: rgb(207, 255, 207);
+    --main-background: rgb(75, 147, 114);
 }
 
 .bg {
@@ -722,6 +723,20 @@ display: none;
     border-radius: 10px;
 }
 
+.suggestBtn {    
+    width: 150px;
+    height: 40px;
+    color: black;
+    border: 0 none;
+    border-radius: 30px;
+    background: var(--main-background);
+}
+
+.suggestBtn:hover {    
+    cursor: pointer;
+    background: var(--texthover-color);
+}
+
 .purchase-info button:hover{
     background: var(--texthover-color);
 }
@@ -950,6 +965,131 @@ display: none;
     color: white;
     cursor: pointer;
     padding: 8px 16px;
+  }
+
+  /* Modal */
+.Modal-suggest {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  /* Nội dung modal */
+  .modal-suggest-order {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  
+  
+  
+  /* Nút đóng modal */
+  .modal-suggest-order .close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .Modal-suggest {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  /* Nội dung modal */
+  .modal-suggest-order {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  
+  
+  
+  /* Nút đóng modal */
+  .modal-suggest-order .close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .infoOrder {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .infoOrder td, .infoOrder th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .infoOrder tr:nth-child(even){background-color: #f2f2f2;}
+  
+  .infoOrder tr:hover {background-color: #ddd;}
+  
+  .infoOrder th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+  
+  .close-modal:hover,
+  .close-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .confirmSell {
+    text-align: center;
+  }
+  
+  .btn-sell-submit {
+    margin-top: 20px;
+    width: 100px;
+    height: 35px;
+    border: 1 none #fff;
+    border-radius: 5px;
+    color: black;
+    background: #4caf50;
+  }
+  
+  .orderButton {
+    width: 100px;
+    height: 35px;
+    border: 1 none #fff;
+    border-radius: 5px;
+    color: black;
+    background: #4caf50;
+  }
+  
+  .orderButton:hover {
+    background: rgb(3,183,0);
+    cursor: pointer;
+  }
+  
+  .btn-sell-submit:hover{
+    background: rgb(3,183,0);
+    cursor: pointer;
   }
 
   /* exchanges-manager */

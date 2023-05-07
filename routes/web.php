@@ -3,9 +3,11 @@
 use App\Http\Controllers\ExchangesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListAuctionedController;
+use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductInFoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QLExchangesController;
+use App\Http\Controllers\SuggestController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +51,10 @@ Route::controller(ExchangesController::class) -> group(function(){
     Route::get('/exchanges','index') -> name('exchanges');
 });
 
-Route::controller(ListAuctionedController::class) -> group(function(){
-    Route::get('/list-auctioned/{id}', 'index') -> name('list-auctioned');
+Route::controller(QLExchangesController::class) -> group(function(){
+    Route::get('/exchanges-management','index') -> name('exchanges-management');
+    Route::post('/exchanges-management', 'createProduct') ->name('create-product');
+    Route::get('/exchanges-management/{id}', 'deleteProduct') -> name('delete-product');
 });
 
 Route::controller(ProductInFoController::class) -> group(function(){
@@ -59,13 +63,26 @@ Route::controller(ProductInFoController::class) -> group(function(){
     Route::post('product-info/update/{id}', 'updateByUser') -> name('update-by-user');
 });
 
-Route::controller(QLExchangesController::class) -> group(function(){
-    Route::get('/exchanges-management','index') -> name('exchanges-management');
-    Route::post('/exchanges-management', 'createProduct') ->name('create-product');
-    Route::get('/exchanges-management/{id}', 'deleteProduct') -> name('delete-product');
+Route::controller(OrderDetailsController::class) -> group(function(){
+    Route::get('/order-details/{id}', 'index') -> name('order-details');
+    // Route::get('/print-order/{id}', 'printOrder') -> name('print-order');
+    Route::post('/confirm-order/{id}', 'confirmOrder') -> name('confirm-order');
+});
+
+Route::controller(ListAuctionedController::class) -> group(function(){
+    Route::get('/list-auctioned/{id}', 'index') -> name('list-auctioned');
 });
 
 
 
+
+
+Route::controller(SuggestController::class) -> group(function()
+{
+    Route::get('/suggest/{id}' ,'index') -> name('suggest');
+});
+
 Route::get('/logout', function(){Auth::logout();return Redirect::to('');})->name('logout');
+
+
 
