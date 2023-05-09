@@ -40,6 +40,9 @@ Route::controller(ProfileController::class) -> group(function(){
     Route::get('/profile', 'index') -> name('profile');
     Route::post('/profile2/{id}', 'followUser') -> name('follow');
     Route::post('/profile2/{id}/unfollow', 'unFollowUser') -> name('un-follow');
+    Route::get('/update-profile', 'updateProfileView') -> name('update-profile-view');
+    Route::post('/update-profile', 'updateProfile') -> name('update-profile');
+    Route::post('/create-post', 'createPost') -> name('create-post');
 });
 
 Route::middleware(['auth', 'auth'])->group(function () {

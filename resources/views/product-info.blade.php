@@ -6,7 +6,7 @@
                 <a href={{route('home')}}>Trang chủ</a>
                 <a href={{route('exchanges')}}>Sàn giao dịch</a>
                 <a href="#">Tin nhắn</a>
-                <a href={{route('exchanges-management')}}>Quản lý sàn giao dịch</a>
+                <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
                 <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
             </div>
         </div>
@@ -23,7 +23,7 @@
                     <div class="user-profile">
                         <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                         <div class="product-rating">
-                            <a href="#"><p>{{$productinfo['username']}}</p></a>
+                            <a href="{{route('profile2', ['id'=> $productinfo['id']])}}"><p>{{$productinfo['username']}}</p></a>
                             <i class="fa fa-star"></i>
                             <span>5</span>
                         </div>

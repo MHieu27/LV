@@ -282,6 +282,26 @@ section {
     margin-right: 10px;
 }
 
+.file-upload {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .file-upload img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .file-upload input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+
 .user-profile p {
     margin-bottom: -5px;
     font-weight: 500;
@@ -376,9 +396,13 @@ section {
 display: none;
 }
 
-.comments-post.active{
+.comments-post.show {
     display: block;
-}
+  }
+
+/* .comments-post.active{
+    display: block;
+} */
 
 .comment-box {
     border-bottom: solid 1px black;
@@ -391,6 +415,7 @@ display: none;
 .comments-info {
     margin-top: 30px;
     border-bottom: solid 1px black;
+    margin-block: 30px;
 }
 
 .user-name-comment, .user-name {
@@ -580,6 +605,39 @@ display: none;
 .user-link {
     display: flex;
 }
+
+.update-profile-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .update-profile-form .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 100%;
+  }
+  
+  .update-profile-form label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .update-profile-form input[type="text"],
+  .update-profile-form input[type="tel"],
+  .update-profile-form select,
+  .update-profile-form textarea {
+    width: 100%;
+    padding: 10px;
+  }  
 
 .product-container {
     width: 100%;
@@ -819,7 +877,7 @@ display: none;
 }
 
 /* The modal (background) */
-.modal {
+.modal{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */

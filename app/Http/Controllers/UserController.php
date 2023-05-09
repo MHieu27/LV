@@ -100,9 +100,9 @@ class UserController extends Controller
             array_push($search_users, $result);
             //$username = $result['n']['properties']['Username'];
         }
-
-        //return response($user);
-       return view ('search', ['search_user' => $search_users, 'user' => $user]);
+        //$idUser = intval($search_users['id']);
+        //return response($search_users['id']);
+       return view ('search', ['search_users' => $search_users, 'user' => $user]);
     }
 
     public function getUser(Request $request){

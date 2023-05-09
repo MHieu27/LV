@@ -5,7 +5,7 @@
                 <a href={{route('home')}}>Trang chủ</a>
                 <a href={{route('exchanges')}}>Sàn giao dịch</a>
                 <a href="#">Tin nhắn</a>
-                <a href={{route('exchanges-management')}}>Quản lý sàn giao dịch</a>
+                <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
                 <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
             </div>
         </div>
@@ -23,8 +23,12 @@
                     <textarea name="" id="" rows="3" placeholder="Bạn đang nghĩ gì...?"></textarea>
                 </div>
                 <div class="add-post-link">
-                    <input type="file">
-                    <button class="btn-create-post" >Đăng bài</button>
+                    <div class="file-upload">
+                        <img src="https://cdn1.vectorstock.com/i/1000x1000/65/00/upload-file-data-icon-isolated-on-transparent-vector-35906500.jpg" alt="Upload icon">
+                        <input type="file" name="file-upload" id="file-upload">
+                        
+                        <button class="btn-create-post" >Đăng bài</button>
+                    </div>
                 </div>
             </div>
 

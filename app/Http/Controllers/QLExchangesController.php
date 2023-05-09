@@ -106,4 +106,6 @@ class QLExchangesController extends Controller
         return redirect() -> route('exchanges-management');
     }
 
+ 
+
 }

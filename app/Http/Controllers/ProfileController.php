@@ -23,7 +23,63 @@ class ProfileController extends Controller
     public function index ()
     {
         $user = new UserResource(User::findOrFail(Auth::id()));
-        return view('profile',['user' => $user]);
+        $myID = intval($user->id);
+        $queryMyProfile = $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $myID})
+        OPTIONAL MATCH (u)<-[:`Theo dõi`]-(follower:User)
+        OPTIONAL MATCH (u) - [:`Đăng bài`] -> (p:Post)
+        RETURN  COUNT(follower) as totalFollower,u.Username as username, p.post_content as post_content, p.post_img as post_img, p.post_nowtime as post_nowtime
+        CYPHER,
+        [
+            'myID' => $myID
+        ]);
+        $myProfiles = [];
+        foreach($queryMyProfile as $value) {
+            array_push($myProfiles,$value);
+        }
+        //return response($value['post_nowtime']);
+        return view('profile',['user' => $user, 'myFollower' => $value['totalFollower'], 'myProfiles' => $myProfiles]);
+    }
+
+    public function updateProfileView ()
+    {
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $id})
+        RETURN u.id as id, u.Username as username, u.birthday as birthday, u.address as address, u.email as email
+        CYPHER,[
+            'id' => $myID
+        ]);
+        //return response($result['id']);
+        return view('update-profile', ['myID' => $myID]);
+    }
+
+    public function updateProfile (Request $request) 
+    {
+        $update_profile = $request->all();
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $queryUpdateProfile = $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $myID})
+        SET u.Username = $username, u.birthday = $birthday, u.bio = $bio, u.gender = $gender, u.address = $address
+        RETURN u.id as id, u.Username as username, u.birthday as birthday, u.address as address, u.email as email, u.gender as gender
+        CYPHER,
+        [
+            'myID' => $myID,
+            'username' => $update_profile['update_name'],
+            'birthday' => $update_profile['update_birthday'],
+            'bio' => $update_profile['update_bio'],
+            'gender' => $update_profile['update_gender'],
+            'address' => $update_profile['update_address']
+        ]);
+
+        // $updateProfiles = [];
+        // foreach($queryUpdateProfile as $value)
+        // {
+        //     array_push($updateProfiles, $value);
+        // }
+        return redirect() -> route('profile');
     }
 
     public function profileOrderUser ($id)
@@ -129,6 +185,36 @@ class ProfileController extends Controller
         ]);
 
         return redirect() -> route('profile2', ['id' => $orderUserID]);
+    }
+
+    public function createPost (Request $request)
+    {
+        $contentPost = $request->all();
+        // dd($contentPost);
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $file = $request->post_img;
+        $file_name = $file->getClientoriginalName();
+        $file->move(public_path('uploads'), $file_name);
+        $queryCreatePost= $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $myID})
+        CREATE (u)-[:`Đăng bài`]->(post:Post{post_content: $post_content, post_img: $post_img, post_nowtime: datetime()})
+        SET post.id = id(post)
+        RETURN post.id as postID, u.Username as username, post.post_content as post_content, post.post_img as post_img, post.post_nowtime as post_nowtime
+        CYPHER,
+        [
+           'myID' => $myID,
+           'post_content' => $contentPost['post_content'],
+           'post_img' => $file_name,
+        ]);
+
+        // $updateProfiles = [];
+        // foreach($queryUpdateProfile as $value)
+        // {
+        //     array_push($updateProfiles, $value);
+        // }
+        //return response($queryCreatePost);
+        return redirect() -> route('profile');
     }
 
 

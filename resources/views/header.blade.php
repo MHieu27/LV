@@ -33,7 +33,6 @@
                     <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="" srcset="">
                 </div>
             </div>
-
             <div class="settings-menu">
                 <div class="settings-menu-inner">
                     <div class="user-profile">
@@ -53,7 +52,7 @@
                     <div class="setting-link">
                         <div class="setting-icon"><i class="fa-regular fa-user"></i></div>
                         <div>
-                            <a href="#">Cập nhật thông tin cá nhân</a>
+                            <a href="{{route('update-profile-view')}}">Cập nhật thông tin cá nhân</a>
                         </div>
                     </div>
                     <div class="setting-link">

@@ -6,7 +6,7 @@
             <a href={{route('home')}}>Trang chủ</a>
             <a href={{route('exchanges')}}>Sàn giao dịch</a>
             <a href="#">Tin nhắn</a>
-            <a href={{route('exchanges-management')}}>Quản lý sàn giao dịch</a>
+            <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
             <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
         </div>
     </div>
