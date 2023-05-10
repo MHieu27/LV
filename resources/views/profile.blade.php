@@ -71,9 +71,8 @@
                     <div>
                         <p>{{$myProfile['username']}}</p>
                         @php
-
-                            $timestamp = ['seconds' => $myProfile['post_nowtime']->seconds, 'nanoseconds' => $myProfile['post_nowtime']->nanoseconds];
-                            $date = \Carbon\Carbon::createFromTimestamp($timestamp['seconds'])->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i');
+                            $timestamp = $myProfile['post_nowtime'] ? ['seconds' => $myProfile['post_nowtime']->seconds, 'nanoseconds' => $myProfile['post_nowtime']->nanoseconds] : null;
+                            $date = $timestamp ? \Carbon\Carbon::createFromTimestamp($timestamp['seconds'])->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') : null;
                         @endphp
                         <span>{{$date}}</span>
                     </div>

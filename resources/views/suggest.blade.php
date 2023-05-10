@@ -46,20 +46,37 @@
     $quanity_b = 0;
     $price_b = 0;
     $weight_b = 0;
+    $totalPrice_a = 0;
+    $totalPrice_b = 0;
+        // foreach ($a as $getUser){
+        // $quanity_a += $getUser['order_quantity'];
+        // $price_a += $getUser['order_price'];
+        // }
+        // $weight_a = $quanity_a * $price_a;
+        // foreach ($b as $getUser){
+        // $quanity_b += $getUser['order_quantity'];
+        // $price_b += $getUser['order_price'];
+        // }
+        // $weight_b = $quanity_b * $price_b;
+        // if ($weight_a === $weight_b ) {
+        //     return 0;
+        // }
+        // return ($weight_a > $weight_b) ? -1 : 1;
+
         foreach ($a as $getUser){
-        $quanity_a += $getUser['order_quantity'];
-        $price_a += $getUser['order_price'];
+        $price_a = $getUser['order_price'] * $getUser['order_quantity'];
+        $totalPrice_a += $price_a;
         }
-        $weight_a = $quanity_a * $price_a;
-        foreach ($b as $index => $getUser){
-        $quanity_b += $getUser['order_quantity'];
-        $price_b += $getUser['order_price'];
+        //$weight_a = $quanity_a * $price_a;
+        foreach ($b as $getUser){
+        $price_b = $getUser['order_price'] * $getUser['order_quantity'];
+        $totalPrice_b += $price_b;
         }
-        $weight_b = $quanity_b * $price_b;
-        if ($weight_a == $weight_b ) {
+        // $weight_b = $quanity_b * $price_b;
+        if ($totalPrice_a === $totalPrice_b ) {
             return 0;
         }
-        return ($weight_a > $weight_b) ? -1 : 1;
+        return ($totalPrice_a > $totalPrice_b) ? -1 : 1;
     }
 
     usort($suggests, "cmp");

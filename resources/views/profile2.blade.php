@@ -56,146 +56,134 @@
             </div>
             @endforeach
             <div class="post-col">
-                           <!--Post1-->
+                <div class="create-post-container">
+            @foreach ($postViews as $postView)
             <div class="post-container">
+                <div>
                 <div class="user-profile">
                     <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                     <div>
-                        <p>Minh Hieu</p>
-                        <span>20/10/2023, 13:40</span>
+                        <p>{{$postView['username']}}</p>
+                        @php
+                            $timestamp = $postView['post_nowtime'] ? ['seconds' => $postView['post_nowtime']->seconds, 'nanoseconds' => $postView['post_nowtime']->nanoseconds] : null;
+                            $date = $timestamp ? \Carbon\Carbon::createFromTimestamp($timestamp['seconds'])->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') : null;
+                        @endphp
+                        <span>{{$date}}</span>
                     </div>
                 </div>
-                <p class="post-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit hic molestias fugiat voluptatum perspiciatis dignissimos repellat magnam animi rerum velit eveniet unde recusandae dicta libero obcaecati eos, inventore ipsum atque!</p>
-                <img src="https://product.hstatic.net/200000271661/product/ca_rot_vi_thuoc_chua_2_f08a9353829c4723a468f1a0cb29bb65.jpg" class="post-img" alt="">
+                <p class="post-text">{{$postView['post_content']}}</p>
+                <img src="{{url('/uploads')}}/{{$postView['post_img']}}" class="post-img" alt="">
 
                 <div class="post-row">
-                    <div class="activity-icons">
-                        <div class="heart-post"><i class="fa-regular fa-heart"></i>
-                            <small class="count-heart">0</small>
+                    <div class="activity-icons" style="margin-bottom: 70px">
+                        <div class="heart-post">
+                            @if(!$postView['liked'])
+                            <button class="heart-btn" style="border: 0; cursor: pointer; background:#fff; " data-post-id="{{$postView['postID']}}"><i class="fa-regular fa-heart"></i></button>
+                            @else
+                            <button class="unheart-btn" style="border: 0; cursor: pointer; background:#fff; " data-post-id="{{$postView['postID']}}"><i class="fa-regular fa-heart"></i></button>
+                            @endif
+                            <small id="count-heart">{{$postView['liked']}}</small>
                         </div>
                         <div class="show-comments"><i class="fa-regular fa-comment"></i>10</div>
                         <div><i class="fa-light fa-share"></i>3</div>
                     </div>
                 </div>
-
                 <div class="comments-post">
-                  <div class="comment-box">
-                    <div class="user-profile">
-                        <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
-                        <div>
-                            <a class="user-name-comment" href="#"> Minh Hieu</a>
-                        </div>
+                    <div class="comment-box">
+                      <div class="user-profile">
+                          <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
+                          <div>
+                              <a class="user-name-comment" href="#"> Minh Hieu</a>
+                          </div>
+                      </div>
+                      <div class="comments-input-container">
+                          <textarea name="" id="" rows="3" placeholder="Bạn đang nghĩ gì...?"></textarea>
+                      </div>
+                      <div class="add-post-link">
+                          <button class="btn-create-comment" >Bình luận</button>
+                      </div>
                     </div>
-                    <div class="comments-input-container">
-                        <textarea name="" id="" rows="3" placeholder="Bạn đang nghĩ gì...?"></textarea>
-                    </div>
-                    <div class="add-post-link">
-                        <button class="btn-create-comment" >Bình luận</button>
-                    </div>
-                  </div>
-
-                    <div class="comments-info">
-                        <div class="user-profile">
-                            <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
-                            <div>
-                                <a class="user-name" href="#"> Minh Hieu</a>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ea fugit quia natus quam totam perferendis eaque praesentium ut, nesciunt alias consectetur, eveniet dolorum est fugiat. Doloremque enim quidem laudantium.</p>
-                        </div>
-                    </div>
-
-                    <div class="comments-info">
-                        <div class="user-profile">
-                            <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
-                            <div>
-                                <a class="user-name" href="#"> Minh Hieu</a>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ea fugit quia natus quam totam perferendis eaque praesentium ut, nesciunt alias consectetur, eveniet dolorum est fugiat. Doloremque enim quidem laudantium.</p>
-                        </div>
-                    </div>
-
+  
+                      <div class="comments-info">
+                          <div class="user-profile">
+                              <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
+                              <div>
+                                  <a class="user-name" href="#"> Minh Hieu</a>
+                              </div>
+                          </div>
+                          <div class="comment">
+                              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ea fugit quia natus quam totam perferendis eaque praesentium ut, nesciunt alias consectetur, eveniet dolorum est fugiat. Doloremque enim quidem laudantium.</p>
+                          </div>
+                      </div>
+                </div>
+                  </div>               
+                {{-- comment --}}
+            </div>
+            @endforeach
                 </div>
             </div>
-            <!--Post2-->
-            <div class="post-container">
-                <div class="user-profile">
-                    <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
-                    <div>
-                        <p>Minh Hieu</p>
-                        <span>20/10/2023, 13:40</span>
-                    </div>
-                </div>
-                <p class="post-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit hic molestias fugiat voluptatum perspiciatis dignissimos repellat magnam animi rerum velit eveniet unde recusandae dicta libero obcaecati eos, inventore ipsum atque!</p>
-                <img src="https://cdn.tgdd.vn/2021/06/CookProductThumb/cu-2-620x620.jpg" class="post-img" alt="">
-
-                <div class="post-row">
-                    <div class="activity-icons">
-                        <div class="heart-post"><i class="fa-regular fa-heart"></i>
-                            <small class="count-heart">0</small>
-                        </div>
-                        <div class="show-comments"><i class="fa-regular fa-comment"></i>10</div>
-                        <div><i class="fa-light fa-share"></i>3</div>
-                    </div>
-                </div>
-
-                <div class="comments-post">
-                  <div class="comment-box">
-                    <div class="user-profile">
-                        <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
-                        <div>
-                            <a class="user-name-comment" href="#"> Minh Hieu</a>
-                        </div>
-                    </div>
-                    <div class="comments-input-container">
-                        <textarea name="" id="" rows="3" placeholder="Bạn đang nghĩ gì...?"></textarea>
-                    </div>
-                    <div class="add-post-link">
-                        <button class="btn-create-comment" >Bình luận</button>
-                    </div>
-                  </div>
-
-                    <div class="comments-info">
-                        <div class="user-profile">
-                            <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
-                            <div>
-                                <a class="user-name" href="#"> Minh Hieu</a>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ea fugit quia natus quam totam perferendis eaque praesentium ut, nesciunt alias consectetur, eveniet dolorum est fugiat. Doloremque enim quidem laudantium.</p>
-                        </div>
-                    </div>
-
-                    <div class="comments-info">
-                        <div class="user-profile">
-                            <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
-                            <div>
-                                <a class="user-name" href="#"> Minh Hieu</a>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ea fugit quia natus quam totam perferendis eaque praesentium ut, nesciunt alias consectetur, eveniet dolorum est fugiat. Doloremque enim quidem laudantium.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            
             </div>
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
-    const commentPost = document.querySelector('.comments-post');
-    const showComments = document.querySelector('.show-comments');
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
 
-    showComments.addEventListener('click', () => {
-        commentPost.classList.toggle('active');
-    })
+
+    $(document).ready(function(){
+        $('.show-comments').on('click', function(){
+            $(this).parents('.post-row').siblings('.comments-post').slideToggle();
+        });
+    });
+
+
+
+$(document).ready(function() {
+   $('.heart-btn').click(function() {
+    var postId = $(this).data('post-id');
+    var postId = postId.toString();
+
+    $.ajax({
+        url: "{{ route('like-post') }}",
+        method: "POST",
+        data: {
+            postId: postId,
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#count-heart').text(response.liked);
+            }
+        }
+    });
+});
+$('.unheart-btn').click(function() {
+    var postId = $(this).data('post-id');
+    var postId = postId.toString();
+
+    $.ajax({
+        url: "{{ route('unlike-post') }}",
+        method: "POST",
+        data: {
+            postId: postId,
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#count-heart').text(response.liked);
+            }
+        }
+    });
+});
+});
+
+
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </html>

@@ -43,6 +43,8 @@ Route::controller(ProfileController::class) -> group(function(){
     Route::get('/update-profile', 'updateProfileView') -> name('update-profile-view');
     Route::post('/update-profile', 'updateProfile') -> name('update-profile');
     Route::post('/create-post', 'createPost') -> name('create-post');
+    Route::post('/like-post', 'like') -> name('like-post');
+    Route::post('/unlike-post', 'unlike') -> name('unlike-post');
 });
 
 Route::middleware(['auth', 'auth'])->group(function () {

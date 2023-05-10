@@ -150,6 +150,7 @@
                             <div class="table-item"><a href="{{route('profile2', ['id'=> $getOrderUser['id']])}}">{{$getOrderUser['username']}}</a></div>
                             <div class="table-item">{{$getOrderUser['order_price']}}</div>
                             <div class="table-item">{{$getOrderUser['order_quantity']}}</div>
+                            <div class="table-item order_status" style="display: none">{{$getOrderUser['order_status']}}</div>
 
                             {{-- <div class="table-item">{{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $getOrderUser['session_endtime'])->format('d/m/Y H:i') }}</div> --}}
                     </div>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use OpenCF\RecommenderService;
+use Illuminate\Http\Response;
 use Laudis\Neo4j\Basic\Session as BasicSession;
 
 use Illuminate\Http\Request;
@@ -84,6 +85,7 @@ class ProfileController extends Controller
 
     public function profileOrderUser ($id)
     {
+        //profile view
         $user = new UserResource(User::findOrFail(Auth::id()));
         $checkUser = Auth::id();
         $orderUserID = intval($id);
@@ -108,8 +110,25 @@ class ProfileController extends Controller
             return redirect() -> route('profile');
         }
 
+        //post view
+        $queryPostView = $this->session->run(<<<'CYPHER'
+        MATCH (n:User{id: $orderUserID})
+        MATCH (u:User{id: $myID})
+        OPTIONAL MATCH (n) -[:`Đăng bài`] -> (p:Post)
+        OPTIONAL MATCH (p:Post) <- [:`Thích`] - (liked:User)
+        RETURN n.id as id, n.Username as username, p.post_content as post_content, p.post_img as post_img, p.post_nowtime as post_nowtime, p.id as postID, count(liked) as liked
+        CYPHER,
+        [
+            'orderUserID' => $orderUserID,
+            'myID' => $myID
+        ]);
+
+        $postViews = [];
+        foreach($queryPostView as $value){
+            array_push($postViews, $value);
+        }
         //return response($profileUsers);
-        return view('profile2',['user' => $user, 'profileUsers' => $profileUsers]);
+        return view('profile2',['user' => $user, 'profileUsers' => $profileUsers, 'postViews' => $postViews]);
 
     }
 
@@ -215,6 +234,72 @@ class ProfileController extends Controller
         // }
         //return response($queryCreatePost);
         return redirect() -> route('profile');
+    }
+
+    public function like (Request $request)
+    {
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $postID = $request->postId;
+        $postID = intval($postID);
+        $this->session->run(<<<'CYPHER'
+        MATCH (p:Post{id: $postID}), (u:User{id: $myID})
+        MERGE (u)-[:`Thích`]->(p)
+        RETURN u,p
+        CYPHER,
+        [
+            'myID' => $myID,
+            'postID' => $postID
+        ]);
+
+        $queryLikePost = $this->session->run(<<<'CYPHER'
+        MATCH (p:Post{id: $postID}) <- [:`Thích`] - (liked:User)
+        RETURN count(liked) as liked
+        CYPHER,
+        [
+            'postID' => $postID
+        ]);
+
+        foreach($queryLikePost as $value)
+        {
+
+        }
+
+        return response()->json(['success' => true, 'liked' => $value['liked']]);
+
+    }
+
+    public function unlike (Request $request)
+    {
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $postID = $request->postId;
+        $postID = intval($postID);
+        $this->session->run(<<<'CYPHER'
+        MATCH (p:Post{id: $postID}), (u:User{id: $myID})
+        OPTIONAL MATCH (u)-[rel:`Thích`]->(p)
+        DELETE rel
+        CYPHER,
+        [
+            'myID' => $myID,
+            'postID' => $postID
+        ]);
+        
+        $queryUnlikePost = $this->session->run(<<<'CYPHER'
+        MATCH (p:Post{id: $postID}) <- [:`Thích`] - (liked:User)
+        RETURN count(liked) as liked
+        CYPHER,
+        [
+            'postID' => $postID
+        ]);
+
+        foreach($queryUnlikePost as $value)
+        {
+
+        }
+
+        return response()->json(['success' => true, 'liked' => $value['liked']]);
+
     }
 
 
