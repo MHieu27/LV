@@ -42,7 +42,7 @@
   display: none;
 }
 .star-rating label{
-  
+
   font-size: 40px;
   color: #444;
   padding: 10px;
@@ -55,10 +55,14 @@ input:not(:checked) ~ label:hover ~ label{
 input:checked ~ label{
   color: #fd4;
 }
-input#rate-5:checked ~ label{
+/* input#rate-5:checked ~ label{
   color: #fe7;
   text-shadow: 0 0 20px #952;
 }
+input#rate1-5:checked ~ label{
+    color: #fe7;
+    text-shadow: 0 0 20px #952;
+  } */
 #rate-1:checked ~ form header:before{
   content: "Tôi Ghét Sản Phẩm ";
 }
@@ -75,34 +79,24 @@ input#rate-5:checked ~ label{
   content: "Sản Phẩm Tuyệt Vời";
 }
 
-form header{
-  width: 100%;
-  font-size: 25px;
-  color: #fe7;
-  font-weight: 500;
-  margin: 5px 0 20px 0;
-  text-align: center;
-  transition: all 0.2s ease;
+
+#rate1-1:checked ~ form header:before{
+    content: "Tôi Ghét Sản Phẩm ";
+  }
+#rate1-2:checked ~ form header:before{
+content: "Tôi Không Thích Sản Phẩm ";
 }
-form .textarea{
-  height: 100px;
-  width: 100%;
-  overflow: hidden;
+#rate1-3:checked ~ form header:before{
+content: "Sản Phẩm Bình Thường ";
 }
-form .textarea textarea{
-  height: 100%;
-  width: 100%;
-  outline: none;
-  color: #eee;
-  border: 1px solid #333;
-  background: #222;
-  padding: 10px;
-  font-size: 17px;
-  resize: none;
+#rate1-4:checked ~ form header:before{
+content: "Sản Phẩm Tốt ";
 }
-.textarea textarea:focus{
-  border-color: #444;
+#rate1-5:checked ~ form header:before{
+content: "Sản Phẩm Tuyệt Vời";
 }
+
+
 form{
     text-align: center;
 }

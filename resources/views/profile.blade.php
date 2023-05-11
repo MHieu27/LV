@@ -1,4 +1,5 @@
 @extends('header')
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <div class="profile-container">
         <img class="cover-img" src="https://i.pinimg.com/originals/40/26/9f/40269f838e7294a13559ce7183f54b1f.jpg" alt="" srcset="">
         <div class="profile-detais">

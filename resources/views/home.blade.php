@@ -1,14 +1,38 @@
 @extends('header')
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <div class="container">
+        @if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com')
         <div class="left-sidebar">
             <div class="link">
-                <a href={{route('home')}}>Trang chủ</a>
+                <a href={{route('home')}} style="color:rgb(3, 183, 0);">Trang chủ</a>
                 <a href={{route('exchanges')}}>Sàn giao dịch</a>
                 <a href="#">Tin nhắn</a>
                 <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
                 <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
+                <a href={{route('statistics', ['id' => $id])}}>Xem thống kê phiên giao dịch</a>
+                <button class="dropdown-btn">Quản lý 
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <div class="dropdown-container">
+                    <a href="{{route('listUsers')}}">Danh sách người dùng</a>
+                    <a href="{{route('listSession')}}">Danh sách phiên giao dịch</a>
+                  </div>
             </div>
-        </div>
+        </div>   
+        @else
+        <div class="left-sidebar">
+            <div class="link">
+                <a href={{route('home')}} style="color:rgb(3, 183, 0);">Trang chủ</a>
+                <a href={{route('exchanges')}}>Sàn giao dịch</a>
+                <a href="#">Tin nhắn</a>
+                <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
+                <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
+                <a href={{route('statistics', ['id' => $id])}}>Xem thống kê phiên giao dịch</a>
+            </div>
+        </div>   
+        @endif
+
+        
         <div class="main-content">
             <div class="create-post-container">
 
@@ -161,6 +185,26 @@
                 </div>
             </div>
         </div>
+        <div class="right-sidebar">
+        <div class="card-title">
+            <div class="container-card-title">
+                <p>Có thể bạn quan tâm</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://cdn.tgdd.vn/Products/Images/8779/226959/bhx/nam-kim-cham-han-quoc-tui-150g-202202151015334518.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
+            <div class="card-name">Nâm kim châm</div>
+            <div class="container-card">
+              <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
+                SL: 100KG
+              </div>
+
+              <div class="flex-btm" style="padding:5px;">
+                Giá: 10.000
+              </div>
+            </div>
+        </div>
+    </div>
     </div>
 </body>
 
@@ -171,6 +215,22 @@
     showComments.addEventListener('click', () => {
         commentPost.classList.toggle('active');
     })
+
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active-dropdown-nav");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  });
+
+}
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </html>

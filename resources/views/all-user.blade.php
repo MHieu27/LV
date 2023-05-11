@@ -1,7 +1,6 @@
 @extends('header')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="container">
     @if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com')
         <div class="left-sidebar">
@@ -10,13 +9,13 @@
                 <a href={{route('exchanges')}}>Sàn giao dịch</a>
                 <a href="#">Tin nhắn</a>
                 <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
-                <a href={{route('list-auctioned', ['id' => $id])}} style="color:rgb(3, 183, 0);">Xem sản phẩm đấu giá</a>
+                <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
                 <a href={{route('statistics', ['id' => $id])}}>Xem thống kê phiên giao dịch</a>
                 <button class="dropdown-btn">Quản lý 
                     <i class="fa fa-caret-down"></i>
                   </button>
                   <div class="dropdown-container">
-                    <a href="{{route('listUsers')}}">Danh sách người dùng</a>
+                    <a href="{{route('listUsers')}}" style="color:rgb(3, 183, 0);">Danh sách người dùng</a>
                     <a href="{{route('listSession')}}">Danh sách phiên giao dịch</a>
                   </div>
             </div>
@@ -28,11 +27,11 @@
                 <a href={{route('exchanges')}}>Sàn giao dịch</a>
                 <a href="#">Tin nhắn</a>
                 <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
-                <a href={{route('list-auctioned', ['id' => $id])}} style="color:rgb(3, 183, 0);">Xem sản phẩm đấu giá</a>
+                <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
                 <a href={{route('statistics', ['id' => $id])}}>Xem thống kê phiên giao dịch</a>
             </div>
         </div>   
-    @endif
+        @endif
     <div class="main-content">
         <div class="post-container">  
             <div class="manager-product">
@@ -40,23 +39,23 @@
             <table class="show-list-auction">
                 <thead>
                     <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Giá đã đấu giá</th>
-                        <th>Số lượng</th>
-                        <th>Trạng thái</th>
-                        <th>Tên người bán</th>
-                        <th>Đánh giá</th>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>SĐT</th>
+                        <th>Địa chỉ</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
                     </tr>
                 </thead>
-            @foreach ($getAllListAuctioned as $ListAuctioned)
+            @foreach ($listUsers as $listUser)
                 <tbody>
                     <tr>
-                        <td><a href="{{route('product-info', ['id' => $ListAuctioned['idProduct']])}}">{{$ListAuctioned['product_name']}}</a></td>
-                        <td>{{$ListAuctioned['order_price']}}đ</td>
-                        <td>{{$ListAuctioned['order_quantity']}}</td>
-                        <td>{{$ListAuctioned['order_status']}}</td>
-                        <td><a href="{{route('profile2',['id'=>$ListAuctioned['idSeller']])}}">{{$ListAuctioned['seller']}}</a></td>
-                        <td>@if($ListAuctioned['order_status']==="Hoàn Thành")<button onclick="document.getElementById('id01').style.display='block'"><i class="fa-solid fa-pen-nib"></i></button>@endif </td>
+                        <td><a href="{{route('profile2', ['id'=> $listUser['id']])}}">{{$listUser['username']}}</a></td>
+                        <td>{{$listUser['email']}}đ</td>
+                        <td>{{$listUser['phonenumber']}}</td>
+                        <td>{{ $listUser['address']}}</td>
+                        <td>{{$listUser['birthday']}}</td>
+                        <td>{{$listUser['gender']}}</td>
                     </tr>
                 </tbody>
             @endforeach
@@ -66,29 +65,6 @@
         </div>
     </div>
 </div>
-  <div id="id01" class="w3-modal">
-    <div class="w3-modal-content" style="width: 400px;">
-      <div class="w3-container">
-        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-        
-        <form action="" style="margin-left: 100;margin-top: 50px;" id="form-request">
-            <div class="rating-title">Đánh giá</div>
-            <div class="rate" style="margin: auto;">
-                <input type="radio" id="star5" name="rate" value="5" />
-                <label for="star5" title="text">5 stars</label>
-                <input type="radio" id="star4" name="rate" value="4" />
-                <label for="star4" title="text">4 stars</label>
-                <input type="radio" id="star3" name="rate" value="3" />
-                <label for="star3" title="text">3 stars</label>
-                <input type="radio" id="star2" name="rate" value="2" />
-                <label for="star2" title="text">2 stars</label>
-                <input type="radio" id="star1" name="rate" value="1" />
-                <label for="star1" title="text">1 star</label>
-            </div> 
-      </form>
-      </div>
-    </div>
-  </div>
 </body>
 
 <script>
@@ -149,27 +125,7 @@
             }
         });
     });
-    $('#form-request').submit(function(event) {
-        event.preventDefault();
-        var formData = $(this).serialize();
 
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('eval') }}",
-            data: formData,
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                location.reload();
-                console.log(response)
-            },
-            error: function(xhr) {
-                // xử lý lỗi
-            }
-        });
-    });
 
     var dropdown = document.getElementsByClassName("dropdown-btn");
     var i;

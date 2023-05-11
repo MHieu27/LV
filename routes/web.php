@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ExchangesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListAuctionedController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductInFoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QLExchangesController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\SuggestController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
@@ -76,6 +78,15 @@ Route::controller(OrderDetailsController::class) -> group(function(){
 
 Route::controller(ListAuctionedController::class) -> group(function(){
     Route::get('/list-auctioned/{id}', 'index') -> name('list-auctioned');
+});
+
+Route::controller(StatisticsController::class) -> group(function(){
+    Route::get('/statistics/{id}', 'index') -> name('statistics');
+});
+
+Route::controller(AdminController::class) -> group(function(){
+    Route::get('/all-users','listUsers') -> name('listUsers');
+    Route::get('/all-session','listSession') -> name('listSession');
 });
 
 

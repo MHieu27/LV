@@ -1,5 +1,5 @@
 @extends('header')
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 @php
     function extractList($array, &$list, $temp = array()) {
     if(count($temp) > 0 && ! in_array($temp, $list))

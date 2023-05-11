@@ -1,5 +1,5 @@
 @extends('header')
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
  {{-- VIEW MODAL COMFIRM ORDER --}}
  <div style="margin-top: 200px;" class="Modal-confirm">
     <div class="modal-confirm-order">
@@ -27,6 +27,10 @@
             <td>{{$getBuyer['order_price']* $getBuyer['order_quantity']}} VNĐ</td>
           </tr>
         </table>
+        @php
+          $totalPrice = $getBuyer['order_price']* $getBuyer['order_quantity'];
+        @endphp
+        <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">  
         <button class="btn-sell-submit" type="submit">Xác nhận</button>
         @endforeach
       </form>

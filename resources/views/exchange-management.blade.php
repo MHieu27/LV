@@ -1,15 +1,36 @@
 @extends('header')
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="container">
-    <div class="left-sidebar">
-        <div class="link">
-            <a href={{route('home')}}>Trang chủ</a>
-            <a href={{route('exchanges')}}>Sàn giao dịch</a>
-            <a href="#">Tin nhắn</a>
-            <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
-            <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
-        </div>
-    </div>
+    @if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com')
+        <div class="left-sidebar">
+            <div class="link">
+                <a href={{route('home')}}>Trang chủ</a>
+                <a href={{route('exchanges')}}>Sàn giao dịch</a>
+                <a href="#">Tin nhắn</a>
+                <a href={{route('exchanges-management')}} style="color:rgb(3, 183, 0);">Tạo phiên giao dịch</a>
+                <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
+                <a href={{route('statistics', ['id' => $id])}}>Xem thống kê phiên giao dịch</a>
+                <button class="dropdown-btn">Quản lý 
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <div class="dropdown-container">
+                    <a href="{{route('listUsers')}}">Danh sách người dùng</a>
+                    <a href="{{route('listSession')}}">Danh sách phiên giao dịch</a>
+                  </div>
+            </div>
+        </div>   
+        @else
+        <div class="left-sidebar">
+            <div class="link">
+                <a href={{route('home')}}>Trang chủ</a>
+                <a href={{route('exchanges')}}>Sàn giao dịch</a>
+                <a href="#">Tin nhắn</a>
+                <a href={{route('exchanges-management')}} style="color:rgb(3, 183, 0);">Tạo phiên giao dịch</a>
+                <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
+                <a href={{route('statistics', ['id' => $id])}}>Xem thống kê phiên giao dịch</a>
+            </div>
+        </div>   
+        @endif
     <div class="main-content">
 
         <div class="post-container">
@@ -76,6 +97,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 </body>
 <script>
@@ -97,6 +119,21 @@ for (var i = 0; i < tdList.length; i++) {
     // Ẩn thẻ tr chứa thẻ td đó
     td.parentElement.style.display = "none";
   }
+}
+
+var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active-dropdown-nav");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  });
 }
 
 </script>

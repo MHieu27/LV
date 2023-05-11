@@ -37,6 +37,6 @@ class ListAuctionedController extends Controller
         {
             array_push($getAllListAuctioned, $item);
         }
-        return view ('list-auctioned', ['id' => $user['id'], 'getAllListAuctioned' => $getAllListAuctioned]);
+        return view ('list-auctioned', ['id' => $user['id'], 'getAllListAuctioned' => $getAllListAuctioned, 'user' => $user]);
     }
 }

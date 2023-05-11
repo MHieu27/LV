@@ -1,4 +1,4 @@
-const btn = document.querySelector("button");
+/* const btn = document.querySelector("button");
 const post = document.querySelector(".post");
 const widget = document.querySelector(".star-rating");
 const editBtn = document.querySelector(".edit");
@@ -11,3 +11,4 @@ btn.onclick = ()=>{
   }
   return false;
 }
+ */

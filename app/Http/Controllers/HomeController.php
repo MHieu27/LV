@@ -31,6 +31,7 @@ class HomeController extends Controller
         $recommobe = $this->filter_user($list);
         $recommobe2 = $this->recommobe_prov($list);
         // Lấy ra các gía trị của user
+        //return response();
         return view ('home',['user'=>$user, 'id' => $user['id']]);
 
         // if(!$recommobe)

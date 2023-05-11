@@ -21,7 +21,6 @@ class SuggestController extends Controller
     }
 
     public function index($id) {
-
         $id = intval($id);
         $querySuggest = $this->session->run(<<<'CYPHER'
         MATCH(u:User) - [:Mua] -> (o:Order) - [:`Đặt mua`] -> (s:Session) <- [rel:`Phiên giao dịch`] - (p:Product{id: $id}) 

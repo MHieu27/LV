@@ -42,17 +42,22 @@ class OrderDetailsController extends Controller
         return view('order-details', ['getBuyers' => $getBuyers]);
     }
 
-    public function confirmOrder ($id)
+    public function confirmOrder (Request $request, $id)
     {
         $id = intval($id);
+        $totalPrice = $request->input('totalPrice');
+        $totalPrice = intval($totalPrice);
         $queryconfirmOrder = $this->session->run(<<<'CYPHER'
         MATCH(u:User) - [:Mua] -> (o:Order{id: $id}) - [:`Đặt mua`] -> (s:Session) <- [:`Phiên giao dịch`] - (p:Product)
         SET o.status = 'Hoàn Thành'
+        SET o.totalPrice = $totalPrice
         RETURN p.id as idProduct
         CYPHER,
         [
             'id' => $id,
+            'totalPrice' => $totalPrice
         ]);
+
         foreach($queryconfirmOrder as $value)
         {
         }
