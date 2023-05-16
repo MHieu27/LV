@@ -144,7 +144,7 @@
                                 @if(\Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $productinfo['Session_endtime'])->format('d/m/Y H:i') < $current_time)
                                     <div>
                                         <a href="{{route('order-details', ['id' => $getOrderUser['orderID']])}}"><button class="orderButton sellButton">Bán</button></a>
-                                        
+                                        <a href="{{route('cancel-order', ['id' => $getOrderUser['orderID']])}}"><button class="orderButton cancelButton"  style="display: none">Huỷ</button></a>
                                     </div>
                                 @else
                                     <p>Chưa kết thúc thời gian đấu giá</p>
@@ -256,9 +256,11 @@ const rowss = document.querySelectorAll('.table-row');
     rowss.forEach(row => {
         // Tìm phần tử có lớp CSS "sellButton"
         const sellButton = row.querySelector('.sellButton');
+        const cancelButton = row.querySelector('.cancelButton');
         // Nếu trạng thái là "Đã bán", ẩn nút "Bán"
         if (row.querySelector('.order_status').textContent.trim() === 'Hoàn Thành') {
             sellButton.style.display = 'none';
+            cancelButton.style.display = 'inline-block';
         }
     });
     $(document).ready(function() {

@@ -35,7 +35,7 @@ class ExchangesController extends Controller
         foreach($getAllProducts as $getAllProduct){
             array_push($new_all_product, $getAllProduct);
         }
-        //return response($new_all_product);
+/*         return response($new_all_product); */
         return view('exchanges', ['user' => $user, 'getAllProducts' => $new_all_product, 'id' => $user['id']]);
     }
 }

@@ -65,6 +65,25 @@ class OrderDetailsController extends Controller
         return redirect()-> route('product-info', ['id' => $value['idProduct']]);
     }
 
+    public function cancelOrder ( $id)
+    {
+        $id = intval($id);
+        $querycancelOrder = $this->session->run(<<<'CYPHER'
+        MATCH(u:User) - [:Mua] -> (o:Order{id: $id}) - [:`Đặt mua`] -> (s:Session) <- [:`Phiên giao dịch`] - (p:Product)
+        SET o.status = 'Đã Huỷ'
+        RETURN p.id as idProduct
+        CYPHER,
+        [
+            'id' => $id,
+        ]);
+
+        foreach($querycancelOrder as $value)
+        {
+        }
+        
+        return redirect()-> route('product-info', ['id' => $value['idProduct']]);
+    }
+
     // public  function printOrder ($id)
     // {
     //     $id = intval($id);

@@ -1,6 +1,12 @@
 @extends('header')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .post-container a.active {
+        color:rgb(3, 183, 0);
+        margin: 0 10px;
+    }
+</style>
 <div class="container">
     @if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com')
         <div class="left-sidebar">
@@ -26,6 +32,7 @@
                 <a href={{route('home')}}>Trang chủ</a>
                 <a href={{route('exchanges')}}>Sàn giao dịch</a>
                 <a href="#">Tin nhắn</a>
+                <a href={{route('criteria')}}>Tiêu chí đánh giá</a>
                 <a href={{route('exchanges-management')}}>Tạo phiên giao dịch</a>
                 <a href={{route('list-auctioned', ['id' => $id])}}>Xem sản phẩm đấu giá</a>
                 <a href={{route('statistics', ['id' => $id])}}>Xem thống kê phiên giao dịch</a>
@@ -44,6 +51,7 @@
                         <th>Số lượng</th>
                         <th>Giá</th>
                         <th>Phiên giao dịch</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
             @foreach ($listSessions as $listSession)
@@ -54,6 +62,10 @@
                         <td>{{$listSession['quantity']}}</td>
                         <td>{{$listSession['price']}}</td>
                         <td><a href="{{route('product-info', ['id' => $listSession['idProduct']])}}">{{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $listSession['session_endtime'])->format('d/m/Y H:i') }}</a></td>
+                        <td>
+                            <a href="{{route('delete-session', ['id' => $listSession['idProduct']])}}"><button class="orderButton sellButton">Xoá</button></a>
+                            
+                        </td>
                     </tr>
                 </tbody>
             @endforeach

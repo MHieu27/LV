@@ -78,14 +78,14 @@
                 <div class="post-row">
                     <div class="activity-icons" style="margin-bottom: 70px">
                         <div class="heart-post">
-                            @if(!$postView['liked'])
+                            @if(!$checkLiked)
                             <button class="heart-btn" style="border: 0; cursor: pointer; background:#fff; " data-post-id="{{$postView['postID']}}"><i class="fa-regular fa-heart"></i></button>
                             @else
                             <button class="unheart-btn" style="border: 0; cursor: pointer; background:#fff; " data-post-id="{{$postView['postID']}}"><i style="color: red" class="fa-regular fa-heart"></i></button>
                             @endif
                             <small id="count-heart">{{$postView['liked']}}</small>
                         </div>
-                        <div class="show-comments"><i class="fa-regular fa-comment"></i>10</div>
+                        <div class="show-comments"><i class="fa-regular fa-comment"></i>{{$postView['totalComment']}}</div>
                         <div><i class="fa-light fa-share"></i>3</div>
                     </div>
                 </div>
@@ -94,31 +94,36 @@
                       <div class="user-profile">
                           <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                           <div>
-                              <a class="user-name-comment" href="#"> Minh Hieu</a>
+                              <a class="user-name-comment" href="#">{{$user->Username}}</a>
                           </div>
                       </div>
-                      <div class="comments-input-container">
-                          <textarea name="" id="" rows="3" placeholder="Bạn đang nghĩ gì...?"></textarea>
-                      </div>
-                      <div class="add-post-link">
-                          <button class="btn-create-comment" >Bình luận</button>
-                      </div>
+                      @if($postView['postID'])
+                      <form action={{route('comment-post', ['id' => $postView['postID']])}} method="post">
+                        @csrf
+                        <div class="comments-input-container">
+                            <textarea name="content_comment" id="" rows="3" placeholder="Bạn đang nghĩ gì...?"></textarea>
+                        </div>
+                        <div class="add-post-link">
+                            <button type="submit" class="btn-create-comment" >Bình luận</button>
+                        </div>
+                      </form>
+                      @endif
                     </div>
-  
+
                       <div class="comments-info">
                           <div class="user-profile">
                               <img src="https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg" alt="">
                               <div>
-                                  <a class="user-name" href="#"> Minh Hieu</a>
+                                  <a class="user-name" href="#"></a>
                               </div>
                           </div>
                           <div class="comment">
-                              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ea fugit quia natus quam totam perferendis eaque praesentium ut, nesciunt alias consectetur, eveniet dolorum est fugiat. Doloremque enim quidem laudantium.</p>
+                              <p>{{$postView['comment']}}</p>
                           </div>
                       </div>
+
                 </div>
                   </div>               
-                {{-- comment --}}
             </div>
             @endforeach
                 </div>

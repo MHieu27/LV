@@ -1,4 +1,12 @@
 @extends('header')
+<style>
+  .product-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+  }
+</style>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="container">
   @if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com')
@@ -32,7 +40,7 @@
   </div>   
   @endif
     <div class="main-content">
-        <div class="filter">
+        <div class="filter" style="display: flex">
             <label for="sort-by-alphabet">Sắp xếp theo bảng chữ c&aacute;i:</label>
             <select id="sort-by-alphabet">
             <option value="asc">A - Z</option>
@@ -77,26 +85,52 @@
         </div>
 
     </div>
-    <div class="right-sidebar">
-        <div class="card-title">
-            <div class="container-card-title">
-                <p>Có thể bạn quan tâm</p>
+    <div class="right-sidebar" style="height: 800px;overflow:auto;">
+            <div class="card-title">
+                <div class="container-card-title">
+                    <p>Có thể bạn quan tâm</p>
+                </div>
             </div>
-        </div>
-        <div class="card">
-            <img src="https://cdn.tgdd.vn/Products/Images/8779/226959/bhx/nam-kim-cham-han-quoc-tui-150g-202202151015334518.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
-            <div class="card-name">Nâm kim châm</div>
-            <div class="container-card">
-              <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
-                SL: 100KG
-              </div>
+            <div class="card">
+                <img src="https://cdn.tgdd.vn/Products/Images/8779/226959/bhx/nam-kim-cham-han-quoc-tui-150g-202202151015334518.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
+                <div class="card-name">Nâm kim châm</div>
+                <div class="container-card">
+                <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
+                    SL: 100KG
+                </div>
 
-              <div class="flex-btm" style="padding:5px;">
-                Giá: 10.000
-              </div>
+                <div class="flex-btm" style="padding:5px;">
+                    Giá: 10.000
+                </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://cdn.tgdd.vn/Products/Images/8785/275320/bhx/bong-cai-trang-tui-500g-600g-1-bong-202303110829571023.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
+                <div class="card-name">Bông cải trắng</div>
+                <div class="container-card">
+                <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
+                    SL: 200KG
+                </div>
+
+                <div class="flex-btm" style="padding:5px;">
+                    Giá: 12.000
+                </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://cdn.tgdd.vn/Products/Images/8785/303829/bhx/ca-rot-tui-500g-2-5-cu-202303031529108121.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
+                <div class="card-name">Cà rốt</div>
+                <div class="container-card">
+                <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
+                    SL: 80KG
+                </div>
+
+                <div class="flex-btm" style="padding:5px;">
+                    Giá: 22.000
+                </div>
+                </div>
             </div>
         </div>
-    </div>
 </body>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -249,15 +283,36 @@ searchInput.addEventListener("keyup", function(event) {
 }
   });
 
-    const currentTime = new Date('{{ $current_time }}').getTime();
-    const productBoxes = document.querySelectorAll('.product-box');
+  function convertTimeStringToTimestamp(timeString) {
+  const dateTimeParts = timeString.split(" ");
+  const dateParts = dateTimeParts[0].split("/");
+  const timeParts = dateTimeParts[1].split(":");
+  const day = parseInt(dateParts[0], 10);
+  const month = parseInt(dateParts[1], 10) - 1; 
+  const year = parseInt(dateParts[2], 10);
+  const hour = parseInt(timeParts[0], 10);
+  const minute = parseInt(timeParts[1], 10);
 
-    productBoxes.forEach((box) => {
-        const sessionEndTime = Date.parse(box.querySelector('.time-cd').textContent.replace('Thời gian kết thúc: ', ''));
-        if (currentTime > sessionEndTime) {
-            box.style.display = 'none';
-        }
-    });
+  const dateObject = new Date(year, month, day, hour, minute);
+  const timestamp = dateObject.getTime();
+
+  return timestamp;
+}
+  const currentTime = convertTimeStringToTimestamp('{{$current_time }}');
+  //const currentTime = new Date('{{$current_time }}').getTime();
+  //console.log(currentTime);
+  const productBoxes = document.querySelectorAll('.product-box');
+  productBoxes.forEach((box) => {
+    const sessionEndTime = Date.parse(box.querySelector('.time-cd').textContent.replace('Thời gian kết thúc: ', ''));
+    //console.log(sessionEndTime);
+    //console.log(currentTime);
+
+    if (sessionEndTime > currentTime) {
+        box.style.display = 'none';
+    }
+});
+
+
 
 
     var dropdown = document.getElementsByClassName("dropdown-btn");

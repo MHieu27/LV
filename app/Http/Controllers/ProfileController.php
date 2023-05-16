@@ -29,7 +29,8 @@ class ProfileController extends Controller
         MATCH (u:User{id: $myID})
         OPTIONAL MATCH (u)<-[:`Theo dõi`]-(follower:User)
         OPTIONAL MATCH (u) - [:`Đăng bài`] -> (p:Post)
-        RETURN  COUNT(follower) as totalFollower,u.Username as username, p.post_content as post_content, p.post_img as post_img, p.post_nowtime as post_nowtime
+        OPTIONAL MATCH (p) <- [:`Thích`] - (liked:User)
+        RETURN  COUNT(follower) as totalFollower,u.Username as username, p.post_content as post_content, p.post_img as post_img, p.post_nowtime as post_nowtime, p.id as postID, count(liked) as liked
         CYPHER,
         [
             'myID' => $myID
@@ -38,8 +39,8 @@ class ProfileController extends Controller
         foreach($queryMyProfile as $value) {
             array_push($myProfiles,$value);
         }
-        //return response($value['post_nowtime']);
-        return view('profile',['user' => $user, 'myFollower' => $value['totalFollower'], 'myProfiles' => $myProfiles]);
+        //return response($myProfiles);
+        return view('profile',['user' => $user, 'myFollower' => $value['totalFollower'], 'myProfiles' => $myProfiles, 'id' => $user['id']]);
     }
 
     public function updateProfileView ()
@@ -83,6 +84,47 @@ class ProfileController extends Controller
         return redirect() -> route('profile');
     }
 
+    public function updatePost (Request $request, $id)
+    {
+        $updatePost = $request->all();
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $postID = intval($id);
+        $file = $request->update_file;
+        $file_name = $file->getClientoriginalName();
+        $file->move(public_path('uploads'), $file_name);
+        $queryUpdatePost = $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $myID}), (p:Post{id: $postID})
+        OPTIONAL MATCH (u) -[:`Đăng bài`] -> (p)
+        SET p.post_content = $update_content, p.post_img = $update_img
+        CYPHER,
+        [
+            'myID' => $myID,
+            'postID' => $postID,
+            'update_content' => $updatePost['update_content'],
+            'update_img' => $file_name
+        ]);
+
+        return redirect() -> route ('profile');
+
+    }
+
+    public function deletePost ($id)
+    {
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $postID = intval($id);
+        $queryDeletePost = $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $myID}), (p:Post{id: $postID})
+        DETACH DELETE p
+        CYPHER,
+        [
+            'myID' => $myID,
+            'postID' => $postID,
+        ]);
+        return redirect() -> route ('profile');
+    }
+
     public function profileOrderUser ($id)
     {
         //profile view
@@ -109,26 +151,57 @@ class ProfileController extends Controller
         if($checkUser == $result['id']){
             return redirect() -> route('profile');
         }
-
+        //showcomment
         //post view
         $queryPostView = $this->session->run(<<<'CYPHER'
         MATCH (n:User{id: $orderUserID})
         MATCH (u:User{id: $myID})
         OPTIONAL MATCH (n) -[:`Đăng bài`] -> (p:Post)
         OPTIONAL MATCH (p:Post) <- [:`Thích`] - (liked:User)
-        RETURN n.id as id, n.Username as username, p.post_content as post_content, p.post_img as post_img, p.post_nowtime as post_nowtime, p.id as postID, count(liked) as liked
+        OPTIONAL MATCH (comment:User) - [rel:`Bình luận`] -> (p:Post)
+        RETURN n.id as id, n.Username as username, p.post_content as post_content, p.post_img as post_img, p.post_nowtime as post_nowtime, p.id as postID, count(liked) as liked, count(comment) as totalComment, rel.content as comment
+        CYPHER,
+        [
+            'orderUserID' => $orderUserID,
+            'myID' => $myID
+        ]);
+        $array = [];
+        $postViews = [];
+
+
+            // foreach($queryPostView as $value){
+            //     if(!isset($postViews[$value['postID']]))
+            //     {
+            //         $postViews[$value['postID']] = [$value];
+            //     }
+            //     $postViews[$value['postID']][] = [$value['comment']];
+            //     // array_push($postViews, $value);
+            // };
+        foreach($queryPostView as $value)
+        {
+            array_push($postViews, $value);
+        }
+
+        //checklike
+        $queryCheckLiked = $this->session->run(<<<'CYPHER'
+        MATCH (n:User{id: $orderUserID})
+        MATCH (u:User{id: $myID})
+        OPTIONAL MATCH (n) -[:`Đăng bài`] -> (p:Post)
+        OPTIONAL MATCH (u) - [rel:`Thích`] -> (p)
+        RETURN rel as liked
         CYPHER,
         [
             'orderUserID' => $orderUserID,
             'myID' => $myID
         ]);
 
-        $postViews = [];
-        foreach($queryPostView as $value){
-            array_push($postViews, $value);
+        foreach ($queryCheckLiked as $checkLiked)
+        {
+
         }
-        //return response($profileUsers);
-        return view('profile2',['user' => $user, 'profileUsers' => $profileUsers, 'postViews' => $postViews]);
+        //dd($postViews);
+        //return response($postViews);
+        return view('profile2',['user' => $user, 'profileUsers' => $profileUsers, 'postViews' => $postViews, 'checkLiked' => $checkLiked['liked']]);
 
     }
 
@@ -300,6 +373,33 @@ class ProfileController extends Controller
 
         return response()->json(['success' => true, 'liked' => $value['liked']]);
 
+    }
+
+    public function comment (Request $request,$id)
+    {
+        $comment = $request->all();
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = intval($user->id);
+        $postID = intval($id);
+        $queryComment = $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $myID}), (p:Post{id: $postID}) <- [:`Đăng bài`] - (u2:User)
+        CREATE (u) - [rel:`Bình luận`{content: $content}] -> (p)
+        RETURN rel.content as comment, u2.id as orderUserID, u2.Username as username
+        CYPHER,
+        [
+            'myID' => $myID,
+            'postID' => $postID,
+            'content' => $comment['content_comment']
+        ]);
+
+        $showComments = [];
+        foreach($queryComment as $showcomments)
+        {
+            array_push($showComments, $showcomments);
+        }
+        
+
+        return redirect() -> route('profile2', ['id' => $showcomments['orderUserID'], 'showComments' => $showcomments['username']]);
     }
 
 

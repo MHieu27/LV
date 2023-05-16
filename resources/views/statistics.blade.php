@@ -35,7 +35,25 @@
     <div class="main-content">
         <div class="post-container">  
             <div class="manager-product">
-            <input id="search-list" type="text" placeholder="Tìm kiếm...">   
+                <div class="filter">
+                    <input id="search-list" type="text" placeholder="Tìm kiếm...">   
+                    <input type="text" id="search-month" placeholder="Nhập tháng (MM)" style="margin-left: 508px">
+                    <button type="button" onclick="filterByMonth()">Tìm kiếm</button>
+                </div>
+                <form action="{{route('print-statistics')}}" method="GET" style="display: grid; justify-content: center;">
+                    <!-- Thêm các trường và điều khiển cho việc chọn tháng -->
+                    <select name="month">
+                        @php
+                            $current_time= \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('m');
+                            $i = 1;
+                        @endphp
+                        @for($i; $i <= $current_time; $i++)
+                            <option value="{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}">Tháng {{$i}}</option>
+                        @endfor
+                        <!-- Thêm các tùy chọn cho các tháng khác -->
+                    </select>
+                    <button type="submit">Xuất báo cáo PDF</button>
+                </form>
             <table class="show-list-auction">
                 <thead>
                     <tr>
@@ -53,6 +71,7 @@
                         <td>{{$getStatistic['price']}}đ</td>
                         <td>{{$getStatistic['quantity']}}</td>
                         <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $getStatistic['session_endtime'])->format('d/m/Y H:i') }}</td>
+                        {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $getStatistic['session_endtime'])->format('m') }}</td> --}}
                         <td>{{$getStatistic['totalPrice']}}đ</td>
                     </tr>
                 </tbody>
@@ -104,7 +123,9 @@
     var container = document.querySelector(".post-container");
     container.appendChild(pagination);
     // Mặc định hiển thị trang đầu tiên
-    pagination.querySelector("a").click();
+    const checkNull = pagination.querySelector("a");
+    if (checkNull) {
+    pagination.querySelector("a").click();}
 
     const searchInput = document.getElementById('search-list');
     const tableRows = document.querySelectorAll('.show-list-auction tbody tr');
@@ -139,6 +160,28 @@
     }
   });
 }
+
+function filterByMonth() {
+  var inputMonth = document.getElementById("search-month").value.toLowerCase();
+
+  // Lặp qua các hàng dữ liệu
+  var rows = document.querySelectorAll(".show-list-auction tbody tr");
+  for (var i = 0; i < rows.length; i++) {
+    var cell = rows[i].querySelector("td:nth-child(4)"); // Lấy ô chứa session_endtime
+
+    // Lấy giá trị session_endtime
+    var sessionEndtime = cell.textContent || cell.innerText;
+    var sessionMonth = sessionEndtime.split("/")[1].trim().toLowerCase(); // Lấy tháng từ session_endtime và chuyển thành chữ thường
+
+    // Kiểm tra nếu sessionMonth không khớp với tháng tìm kiếm
+    if (sessionMonth !== inputMonth && inputMonth !== "") {
+      rows[i].style.display = "none"; // Ẩn hàng dữ liệu
+    } else {
+      rows[i].style.display = ""; // Hiển thị hàng dữ liệu
+    }
+  }
+}
+
 </script>
 
 

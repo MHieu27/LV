@@ -1,6 +1,12 @@
 @extends('header')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .post-container a.active {
+        color:rgb(3, 183, 0);
+        margin: 0 10px;
+    }
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="container">
     @if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com')
@@ -45,21 +51,43 @@
                         <th>Số lượng</th>
                         <th>Trạng thái</th>
                         <th>Tên người bán</th>
-                        <th>Đánh giá</th>
+                        <th colspan="2">Đánh giá</th>
                     </tr>
                 </thead>
-            @foreach ($getAllListAuctioned as $ListAuctioned)
-                <tbody>
-                    <tr>
-                        <td><a href="{{route('product-info', ['id' => $ListAuctioned['idProduct']])}}">{{$ListAuctioned['product_name']}}</a></td>
-                        <td>{{$ListAuctioned['order_price']}}đ</td>
-                        <td>{{$ListAuctioned['order_quantity']}}</td>
-                        <td>{{$ListAuctioned['order_status']}}</td>
-                        <td><a href="{{route('profile2',['id'=>$ListAuctioned['idSeller']])}}">{{$ListAuctioned['seller']}}</a></td>
-                        <td>@if($ListAuctioned['order_status']==="Hoàn Thành")<button onclick="document.getElementById('id01').style.display='block'"><i class="fa-solid fa-pen-nib"></i></button>@endif </td>
-                    </tr>
-                </tbody>
-            @endforeach
+                
+                    @foreach ($getAllListAuctioned as $ListAuctioned)
+                        <tbody>
+                            <tr></tr>
+                                <td><a href="{{route('product-info', ['id' => $ListAuctioned['idProduct']])}}">{{$ListAuctioned['product_name']}}</a></td>
+                                <td>{{$ListAuctioned['order_price']}}đ</td>
+                                <td>{{$ListAuctioned['order_quantity']}}</td>
+                                <td>{{$ListAuctioned['order_status']}}</td>
+                                <td><a href="{{route('profile2',['id'=>$ListAuctioned['idSeller']])}}">{{$ListAuctioned['seller']}}</a></td>
+                                <td>
+                                    @if($ListAuctioned['order_status']==="Hoàn Thành")
+                                        <button data-idprd = "{{$ListAuctioned['id_session']}}" onclick="eval(event)">
+                                            <div><i class="fa-solid fa-pen-nib" style="float: right;"></i></div>
+                                        </button>                                       
+                                    @endif 
+                                </td>
+                                <td style="width: 33px;">
+                                  {{--   @if (count($getAllListAuctioned1) == 0 )
+                                        <i class="fa-solid fa-check"></i>
+                                    @else --}}
+                                    <?php $i=0; ?>
+                                        @foreach ($getAllListAuctioned1 as $value)
+                                            @if($value === $ListAuctioned['id_session'])                                             
+                                                <?php $i++ ?>
+                                            @endif                                           
+                                        @endforeach
+                                    @if($i == 0)
+                                    <div><i class="fa-solid fa-check"></i></div>
+                                    @endif
+                                   {{--  @endif --}}                                  
+                                </td>
+                            </tr>
+                        </tbody>
+                    @endforeach
             </table>
             </div>
         </div>
@@ -71,9 +99,42 @@
       <div class="w3-container">
         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
         
-        <form action="" style="margin-left: 100;margin-top: 50px;" id="form-request">
+        <form action="" id="form-request" style="text-align: center;">
+        @csrf
             <div class="rating-title">Đánh giá</div>
-            <div class="rate" style="margin: auto;">
+            <div class="container-card">
+                <input class="mt-3"  id="print-idprd" name="print-idprd" style="border: none;">
+                <div class="flex-btm" style="padding:5px;border-right:solid 2px black;">
+                    Tiêu chí đánh giá
+                </div>
+                <div class="flex-btm" style="padding:5px;">
+                    Điểm
+                </div>
+            </div>
+            @foreach ($criteria as $item => $p)
+            <div class="container-card">
+              <div class="flex-btm" style="padding:5px;border-right:solid 2px black;">
+                <p id="abc" data-p="{{$p}}" data-name="{{$item}}" onclick="detail(event)" class="hove-criteria">{{$item}}</p>
+              </div>
+
+              <div class="flex-btm" style="padding:5px;">
+                <div style="position: relative;z-index: 1;" id="{{$item}}1"></div>
+                <input class="mt-3" name="{{$item}}" id="{{$item}}" style="position: absolute;top: 0;left: 0;z-index: 0;visibility: hidden;">
+              </div>
+            </div>
+            @endforeach
+            <button class="w3-button w3-amber" style="margin: 5px;">Đánh giá</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+<div id="modal01" class="w3-modal w3-animate-zoom" onclick="this.style.display='none'">
+    <div class="container w3-modal-content" style="width: 400;height: 150px;text-align: center;display:block;padding:0;">
+            <div id="print-name" class="rating-title" data-name2></div>
+            <div id="print-p" class="rating-title" data-p2></div>
+            <div class="rate" style="padding-left: 80px;">
                 <input type="radio" id="star5" name="rate" value="5" />
                 <label for="star5" title="text">5 stars</label>
                 <input type="radio" id="star4" name="rate" value="4" />
@@ -84,19 +145,41 @@
                 <label for="star2" title="text">2 stars</label>
                 <input type="radio" id="star1" name="rate" value="1" />
                 <label for="star1" title="text">1 star</label>
-            </div> 
-      </form>
-      </div>
+            </div>
     </div>
-  </div>
-</body>
+</div>
 
 <script>
-    // Lấy tất cả các dòng trong bảng
+function eval(event) {
+    document.getElementById('id01').style.display='block'
+    const idprd = event.currentTarget.getAttribute("data-idprd");
+       console.log(idprd)
+    document.getElementById('print-idprd').value = idprd;
+}
+function detail(event) {
+    const name = event.currentTarget.getAttribute("data-name");
+    const p = event.currentTarget.getAttribute("data-p");
+    
+    document.getElementById('modal01').style.display='block'
+    document.getElementById('print-name').innerHTML = name;
+    document.getElementById('print-p').innerHTML = p;
+    $('#print-name').data('name2', name);
+    $('#print-p').data('p2', p);
+}
+$('input[name=rate]').click(function() {
+   var name = $('#print-name').data('name2');
+   var p = $('#print-p').data('p2');
+   console.log(name)
+  var rating = $('input[name=rate]:checked').val();
+    const rate = rating*p/100;
+  document.getElementById(name).value = rate;
+  document.getElementById(name+'1').innerHTML = rating;
+});
+</script>
+
+<script>
     var rows = document.querySelectorAll(".show-list-auction tbody tr");
-    // Tính tổng số trang
     var pages = Math.ceil(rows.length / 5);
-    // Tạo một danh sách các nút phân trang
     var pagination = document.createElement("div");
     for (var i = 1; i <= pages; i++) {
         var link = document.createElement("a");
@@ -130,7 +213,9 @@
     var container = document.querySelector(".post-container");
     container.appendChild(pagination);
     // Mặc định hiển thị trang đầu tiên
-    pagination.querySelector("a").click();
+    const checkNull = pagination.querySelector("a");
+    if (checkNull) {
+    pagination.querySelector("a").click();}
 
     const searchInput = document.getElementById('search-list');
     const tableRows = document.querySelectorAll('.show-list-auction tbody tr');
@@ -152,7 +237,7 @@
     $('#form-request').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();
-
+        console.log(formData)
         $.ajax({
             type: 'POST',
             url: "{{ route('eval') }}",
@@ -162,8 +247,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
-                location.reload();
                 console.log(response)
+                location.reload()
             },
             error: function(xhr) {
                 // xử lý lỗi

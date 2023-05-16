@@ -51,7 +51,7 @@ class ProductInFoController extends Controller
         foreach($result as $item){
             array_push($getOrderUsers, $item);
         }
-        //return response($new_productInfo);
+        //return response($getOrderUsers);
         return view('product-info',['productInfos' => $new_productInfo, 'getOrderUsers' => $getOrderUsers, 'username' => $user['Username'], 'id' => $user['id'], 'checkSeller' => $getProductInfo['username'], 'user' => $user]);
     }
 
@@ -77,7 +77,7 @@ class ProductInFoController extends Controller
         ]);
 
         
-
+        
         return redirect() -> route('product-info',['id' => $id]);
     }
 

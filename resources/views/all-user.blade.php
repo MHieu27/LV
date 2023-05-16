@@ -1,6 +1,12 @@
 @extends('header')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .post-container a.active {
+        color:rgb(3, 183, 0);
+        margin: 0 10px;
+    }
+</style>
 <div class="container">
     @if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com')
         <div class="left-sidebar">
@@ -15,6 +21,7 @@
                     <i class="fa fa-caret-down"></i>
                   </button>
                   <div class="dropdown-container">
+                    <a href={{route('criteria')}}>Tiêu chí đánh giá</a>
                     <a href="{{route('listUsers')}}" style="color:rgb(3, 183, 0);">Danh sách người dùng</a>
                     <a href="{{route('listSession')}}">Danh sách phiên giao dịch</a>
                   </div>
@@ -45,17 +52,22 @@
                         <th>Địa chỉ</th>
                         <th>Ngày sinh</th>
                         <th>Giới tính</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
             @foreach ($listUsers as $listUser)
                 <tbody>
                     <tr>
                         <td><a href="{{route('profile2', ['id'=> $listUser['id']])}}">{{$listUser['username']}}</a></td>
-                        <td>{{$listUser['email']}}đ</td>
+                        <td>{{$listUser['email']}}</td>
                         <td>{{$listUser['phonenumber']}}</td>
                         <td>{{ $listUser['address']}}</td>
                         <td>{{$listUser['birthday']}}</td>
                         <td>{{$listUser['gender']}}</td>
+                        <td>
+                            <a href="{{route('delete-users', ['id' => $listUser['id']])}}"><button class="orderButton sellButton">Xoá</button></a>
+                            
+                        </td>
                     </tr>
                 </tbody>
             @endforeach

@@ -47,11 +47,13 @@ Route::controller(ProfileController::class) -> group(function(){
     Route::post('/create-post', 'createPost') -> name('create-post');
     Route::post('/like-post', 'like') -> name('like-post');
     Route::post('/unlike-post', 'unlike') -> name('unlike-post');
+    Route::post('/update-post/{id}', 'updatePost') -> name('update-post');
+    Route::get('/delete-post/{id}', 'deletePost') -> name('delete-post');
+    Route::post('/comment-post/{id}', 'comment') -> name('comment-post');
 });
 
 Route::middleware(['auth', 'auth'])->group(function () {
     Route::get('/index', [HomeController::class, 'index'])->name('home');
-    Route::post('/eval',[HomeController::class,'evalution'])->name('eval');
 });
 
 Route::controller(ExchangesController::class) -> group(function(){
@@ -72,21 +74,29 @@ Route::controller(ProductInFoController::class) -> group(function(){
 
 Route::controller(OrderDetailsController::class) -> group(function(){
     Route::get('/order-details/{id}', 'index') -> name('order-details');
-    // Route::get('/print-order/{id}', 'printOrder') -> name('print-order');
     Route::post('/confirm-order/{id}', 'confirmOrder') -> name('confirm-order');
+    Route::get('/cancel-order/{id}', 'cancelOrder') -> name('cancel-order');
 });
 
 Route::controller(ListAuctionedController::class) -> group(function(){
-    Route::get('/list-auctioned/{id}', 'index') -> name('list-auctioned');
+    Route::get('/list-auctioned/{id}', 'index')->name('list-auctioned');
+    Route::post('/evalution','evalution')->name('eval');
+
 });
 
 Route::controller(StatisticsController::class) -> group(function(){
     Route::get('/statistics/{id}', 'index') -> name('statistics');
+    Route::get('/print-statistics', 'printStatistics') -> name('print-statistics');
 });
 
 Route::controller(AdminController::class) -> group(function(){
+    Route::post('/create-criteria','createcriteria')->name('create-criteria');
     Route::get('/all-users','listUsers') -> name('listUsers');
     Route::get('/all-session','listSession') -> name('listSession');
+    Route::get('/all-criteria','criteria') -> name('criteria');
+    Route::get('/delete-session/{id}', 'deleteSession') -> name('delete-session');
+    Route::get('/delete-users/{id}', 'deleteUsers') -> name('delete-users');
+    Route::get('/delete-criteria', 'deletecriteria') -> name('delete-criteria');
 });
 
 

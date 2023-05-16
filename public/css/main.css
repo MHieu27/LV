@@ -46,6 +46,8 @@ header {
 
 .navbar{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .navbar a{
@@ -84,7 +86,8 @@ header {
 .nav-right {
     display: flex;
     align-items: center;
-    margin-left: 900px;
+    position: absolute;
+    right: 5%;
 
 }
 
@@ -764,7 +767,8 @@ display: none;
     border-radius: 3px;
   }
   .container-card-title {
-    padding: 2px 16px;
+    font-size: 18px;
+    padding: 2px 14px;
     text-align: center;
   }
   .card-name{
@@ -796,7 +800,7 @@ display: none;
     display: flex;
   }
 .product-title {
-    font-size: 35px;
+    font-size: 30px;
     text-transform: capitalize;
     font-weight: 600;
     position: relative;
@@ -1040,7 +1044,9 @@ display: none;
   .modal-content button:hover {
     background-color: var(--texthover-color);
   }
-
+.hove-criteria:hover{
+    background-color: #ffc107!important;
+}
 
 /*Product-info*/
 .auction-table {
@@ -1322,7 +1328,7 @@ display: none;
     overflow:hidden;
     white-space:nowrap;
     cursor:pointer;
-    font-size:30px;
+    font-size:50px;
     color:#ccc;
 }
 .rate:not(:checked) > label:before {
@@ -1343,7 +1349,6 @@ display: none;
     color: #c59b08;
 }
 .rating-title{
-    margin-left: 25px;
     font-size: 26px;
-    color: yellow;
+    color: #ffc107!important;
 }

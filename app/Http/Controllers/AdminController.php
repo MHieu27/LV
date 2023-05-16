@@ -42,7 +42,23 @@ class AdminController extends Controller
         return redirect()->route('home');
         }
     }
-
+    public function createcriteria(Request $request){
+        
+        $result = array();
+        foreach ($request->all() as $key => $value) {
+            if ($key !== '_token') {
+                $result[$request['ten' . substr($key, -1)]] = $request['tyle' . substr($key, -1)];
+            }
+        }
+        foreach($result as $item => $value){
+            $queryListSessions= $this->session->run(<<<'CYPHER'
+            match(u:User{email:"minhhieu@gmail.com"})
+            create(cm1:Criteria{title: $title, percent: $percent})
+            create (u)-[:`đánh giá người bán`]->(cm1)            
+            CYPHER,['title'=>$item,'percent'=>$value]);
+        }
+        return redirect()->back();
+    }
     public function listSession ()
     {
         $user = new UserResource(User::findOrFail(Auth::id()));
@@ -65,5 +81,66 @@ class AdminController extends Controller
         
         return redirect()->route('home');
         }
+    }
+    public function criteria(){
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $result= $this->session->run(<<<'CYPHER'
+        MATCH p=()-[r:`đánh giá người bán`]->() 
+        RETURN p
+        CYPHER);
+        $array_criteria = [];
+        foreach($result as $value)
+        { 
+            $title = $value['p']['nodes'][1]['properties']['title'];
+            $percent = $value['p']['nodes'][1]['properties']['percent'];
+            $array_criteria[] = ['title'=>$title,'percent'=>$percent];
+        }
+        //return response($user)
+        if ($user->email == 'minhhieu@gmail.com' || $user->email == 'xuandanh@gmail.com'){
+            return view('criteria',['array_criteria' => $array_criteria, 'id' => $user['id'], 'user' => $user]);
+        }else{
+        
+        return redirect()->route('home');
+        }
+    }
+    public function deleteSession ($id) 
+    {
+        $id = intval($id);
+        $this->session->run(<<<'CYPHER'
+        MATCH(p:Product{id: $id})- [:`Phiên giao dịch`] -> (s:Session)
+        OPTIONAL MATCH (o:Order) - [:`Đặt mua`] -> (s:Session)
+        DETACH DELETE p, o, s
+        CYPHER,
+        [
+            'id' => $id
+        ]);
+        return redirect() -> route('listSession');
+    } 
+
+    public function deleteUsers ($id) 
+    {
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $id = intval($id);
+        if($user['id'] !== $id)
+        {
+            $this->session->run(<<<'CYPHER'
+            OPTIONAL MATCH (u:User{id: $id})
+            OPTIONAL MATCH (u) - [r] -> ()
+            DELETE u, r
+            CYPHER,
+        [
+            'id' => $id
+        ]);
+        }
+        
+        return redirect() -> route('listUsers');
+    } 
+    public function deletecriteria(){
+        $result = $this->session->run(<<<'CYPHER'
+        Match(c:Criteria) detach delete c 
+        return c
+        CYPHER);
+        if($result) return redirect()->back();
+        return redirect()->back();
     }
 }

@@ -102,7 +102,7 @@ class UserController extends Controller
         }
         //$idUser = intval($search_users['id']);
         //return response($search_users['id']);
-       return view ('search', ['search_users' => $search_users, 'user' => $user]);
+       return view ('search', ['search_users' => $search_users, 'user' => $user, 'id' => $user['id']]);
     }
 
     public function getUser(Request $request){

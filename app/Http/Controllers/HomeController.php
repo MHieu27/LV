@@ -21,92 +21,50 @@ class HomeController extends Controller
     public function index()
     {
         $user = new UserResource(User::findOrFail(Auth::id()));
-        $arr = $this->get_list();
-        echo '<script>var data = ' . json_encode($arr) . ';</script>';
-        usort($arr, function($a, $b) {
-            return $b['rating'] <=> $a['rating'];
-        });
-        $request['username'] = Auth::id();
-        $list = $this->Recommodater($request);
-        $recommobe = $this->filter_user($list);
-        $recommobe2 = $this->recommobe_prov($list);
         // Lấy ra các gía trị của user
         //return response();
-        return view ('home',['user'=>$user, 'id' => $user['id']]);
 
-        // if(!$recommobe)
-        //     return view('content',['recommobe2' => $recommobe2,'user' => $user,'product_user'=>$this->List_product(),'products' => $arr,'recommobe' => $recommobe = array()/* $this->List_top() */]);
-        // /* foreach ($this->List_top() as $elem2) {
-        //     $found = false;
-        //     foreach ($recommobe as $elem1) {
-        //         if ($elem1['user'] === $elem2['user']) {
-        //             $found = true;
-        //             break;
-        //         }
-        //     }
-        //     if (!$found) {
-        //         $recommobe[] = $elem2;
-        //     }
-        // } */
-        // return view('content',['recommobe2' => $recommobe2,'user' => $user,'product_user'=>$this->List_product(),'products' => $arr,'recommobe' => $recommobe]);
-    }
+        $myID = intval($user->id);
+        $queryShowHome = $this->session->run(<<<'CYPHER'
+        MATCH (u:User{id: $myID}) - [:`Theo dõi`] -> (u2:User)
+        OPTIONAL MATCH (u2) - [:`Đăng bài`] -> (p:Post)
+        OPTIONAL MATCH (p) <- [:`Thích`] - (liked:User)
+        RETURN u2.Username as username, p.post_nowtime as post_nowtime, p.post_content as post_content, p.post_img as post_img,count(liked) as liked, p.id as postID
+        CYPHER,
+        [
+            'myID' => $myID,
+        ]);
 
-
-
-
-
-    public function List_top(){
-        $arr_recom1 = array();
-        $arr_recom2 = array();
-        $recommodation = $this->session->run(<<<'CYPHER'
-            MATCH (p:Person)-[r:PROVIDER]->() RETURN p
-        CYPHER);
-        foreach($recommodation as $item){
-            $propertie_p = $item['p']['properties']['name'];
-            if (!in_array($propertie_p, $arr_recom1)) {
-                $arr_recom1[] = $propertie_p;
-            }
+        $showHomePages = [];
+        foreach ($queryShowHome as $value)
+        {
+            array_push($showHomePages, $value);
         }
 
-        foreach($arr_recom1 as $name){
-            $rate = $this->session->run(<<<'CYPHER'
-            MATCH p=()-[r:REVIEWED]->(:Person{name:$name}) RETURN p
-            CYPHER,['name'=>$name]);
-            $rating = 0;
-            $i=0;
-            foreach($rate as $item){
-                $rating = $rating+$item['p']['relationships'][0]['properties']['rating'];
-                $i++;
-            }
-            if($i)
-                $arr_recom2[] = ['user'=>$name,'rating'=> round($rating/$i, 0, PHP_ROUND_HALF_UP)*5/100];
-        }
+        $value_rcd = $this->Recommodater();
+        $recommodation = $this->filter_user($value_rcd);
+        return view ('home',['user'=>$user, 'id' => $user['id'], 'showHomePages' => $showHomePages]);
 
-        usort($arr_recom2, function($a, $b) {
-            return $b['rating'] <=> $a['rating'];
-        });
-        return $arr_recom2;
+        
     }
-    public function Recommodater($request)
+    public function Recommodater()
     {
         $result_2 = $this->session->run(<<<'CYPHER'
-        MATCH p=()-[r:REVIEWED]->() RETURN p
+        MATCH p=()-[r:REVIEWED]->()<-[:`Phiên giao dịch`]-() RETURN p
         CYPHER);
         $result_array2 = array();
         foreach ($result_2 as $result) {
             $user = $result['p']['nodes'][0]['properties']['email'];
             $rating = $result['p']['relationships'][0]['properties']['rating'];
-
             if($rating ==""){
                 $rating = -1;
             }
             $result_array2[] = array([
-                $result['p']['nodes'][1]['properties']['title'] =>[
+                $result['p']['nodes'][2]['properties']['name'] =>[
                     'user' => $user, 'rating' => $rating
                 ]
             ]);
         }
-
         $product_ratings = array();
         $matrix = array();
         foreach ($result_array2 as $rating) {
@@ -258,21 +216,23 @@ class HomeController extends Controller
                 $filteredRatings[$item] = $itemRatings[$user];
             }
         }
+       /*  dd($array_normal); */
         $array_recommodation = array();
         foreach ($filteredRatings as $item => $rating){
             if($rating > 2.5){
                 $result = $this->session->run(<<<'CYPHER'
-                MATCH (p:Person)-[prd:PROVIDER]->(pr:Production {title: $item})
+                MATCH (p:User)-[prd:PROVIDER]->(pr:Production {name: $item})
                 RETURN p,pr,prd
                 CYPHER,['item' => $item]);
                 foreach($result as $value){
                     $email = $value['p']['properties']['email'];
-                    $name = $value['p']['properties']['name'];
-                    $title = $value['pr']['properties']['title'];
+                    $name = $value['p']['properties']['Username'];
+                    $title = $value['pr']['properties']['name'];
                     $img = $value['pr']['properties']['img'];
                     $price = $value['prd']['properties']['price'];
+                    $amount = $value['prd']['properties']['amount'];
                     $result1 = $this->session->run(<<<'CYPHER'
-                    match (:Person{email:$email})-[:PROVIDER]->(:Production)<-[r:REVIEWED]-(:Person)
+                    match (:User{email:$email})-[:PROVIDER]->(:Production)<-[r:REVIEWED]-(:User)
                     return r
                     CYPHER,['email' => $email]);
                     $array_recommodation[] =[
@@ -280,7 +240,8 @@ class HomeController extends Controller
                         'rating' => $this->avg_rating($result1),
                         'title' => $title,
                         'img' => $img,
-                        'price' => $price
+                        'price' => $price,
+                        'amount' => $amount
 
                     ];
                 }
@@ -298,25 +259,25 @@ class HomeController extends Controller
             });
         }, $array_normal);
         $result_array = array();
+        $array_user = array();
         foreach ($filtered_recomm as $item => $value){
-                $result = $this->session->run(<<<'CYPHER'
-                MATCH (p:Person)-[prd:PROVIDER]->(pr:Production {title: $item})
-                RETURN p,pr,prd
-                CYPHER,['item' => $item]);
-                foreach($result as $value){
-                    $email = $value['p']['properties']['email'];
-                    $name = $value['p']['properties']['name'];
-                    $title = $value['pr']['properties']['title'];
-                    $img = $value['pr']['properties']['img'];
-                    $price = $value['prd']['properties']['price'];
-                    $result_array[] =[
-                        'name' => $name,
-                        'title' => $title,
-                        'img' => $img,
-                        'price' => $price
-
-                    ];
-                }
+                $array_user = $value;
+            $result = $this->session->run(<<<'CYPHER'
+            MATCH (p:User)-[prd:PROVIDER]->(pr:Production {name: $item})
+            RETURN p,pr,prd
+            CYPHER,['item' => $item]);
+            $img = null;
+            foreach($result as $value){
+                $img = $value['pr']['properties']['img'];
+                $price = $value['prd']['properties']['price'];
+                $amount = $value['prd']['properties']['amount'];
+            }
+            $result_array[$item] = [
+                'user' => $array_user,
+                'img' => $img,
+                'price' => $price,
+                'amount' => $amount,
+            ];
         }
         return $result_array;
     }
@@ -325,8 +286,7 @@ class HomeController extends Controller
         $array = array();
         foreach($request as $value){
             $rating = $value['r']['properties']['rating'];
-            $summary = $value['r']['properties']['summary'];
-            $array[] = [$rating,$summary];
+            $array[] = [$rating];
         }
         $sum = 0;
         $count = 0;
@@ -360,121 +320,6 @@ class HomeController extends Controller
             $result  = $dotProduct / ($magnitude1 * $magnitude2);
             return round($result,2);
         }
-    }
-    public function List_product(){
-        $result = $this->session->run(<<<'CYPHER'
-        MATCH p=(:Person{email:$name})-[r:PROVIDER]->() RETURN p
-        CYPHER,['name' => Auth::id()]);
-        $arr = array();
-        foreach($result as $item){
-            $provider = $item['p']['nodes'][0]['properties']['name'];
-            $title = $item['p']['nodes'][1]['properties']['title'];
-            $img = $item['p']['nodes'][1]['properties']['img'];
-            $detail = $item['p']['nodes'][1]['properties']['detail'];
-            $price = $item['p']['relationships'][0]['properties']['price'];
-            $amount = $item['p']['relationships'][0]['properties']['amount'];
-            $rate = $this->session->run(<<<'CYPHER'
-            MATCH p=()-[r:REVIEWED]->(:Person{name:$name}) RETURN p
-            CYPHER,['name'=>$provider]);
-            $rating = 0;
-            $i=0;
-            foreach($rate as $item){
-                $rating = $rating+$item['p']['relationships'][0]['properties']['rating'];
-                $i++;
-            }
-            if($rating == 0)
-                $point = 0;
-            else
-                $point = round($rating/$i, 0, PHP_ROUND_HALF_UP)*5/100;
-            $arr[] = [
-                'provider' => $provider,
-                'product' => [
-                    'title' => $title,
-                    'detail' => $detail,
-                    'img' => $img,
-                    'price' => $price,
-                    'amount' => $amount
-                ],
-                'rating' => $point
-            ];
-
-        }
-        return $arr;
-    }
-    public function get_list(){
-        $result = $this->session->run(<<<'CYPHER'
-        MATCH p=()-[r:PROVIDER]->() RETURN p
-        CYPHER);
-        $arr = array();
-        foreach($result as $item){
-            $provider = $item['p']['nodes'][0]['properties']['name'];
-            $email = $item['p']['nodes'][0]['properties']['email'];
-            $title = $item['p']['nodes'][1]['properties']['title'];
-            $id = $item['p']['nodes'][1]['id'];
-            $img = $item['p']['nodes'][1]['properties']['img'];
-            $detail = $item['p']['nodes'][1]['properties']['detail'];
-            $price = $item['p']['relationships'][0]['properties']['price'];
-            $amount = $item['p']['relationships'][0]['properties']['amount'];
-            $rate = $this->session->run(<<<'CYPHER'
-            MATCH p=()-[r:REVIEWED]->(:Person{name:$name}) RETURN p
-            CYPHER,['name'=>$provider]);
-            $rating = 0;
-            $i=0;
-            foreach($rate as $item){
-                $rating = $rating+$item['p']['relationships'][0]['properties']['rating'];
-                $i++;
-            }
-            if($rating == 0)
-                $point = 0;
-            else
-                $point = round($rating/$i, 0, PHP_ROUND_HALF_UP)*5/100;
-            $arr[] = [
-                'provider' => $provider,
-                'email' => $email,
-                'product' => [
-                    'title' => $title,
-                    'detail' => $detail,
-                    'img' => $img,
-                    'price' => $price,
-                    'amount' => $amount,
-                    'id' => $id,
-
-                ],
-                'rating' => $point
-            ];
-
-        }
-        return $arr;
-    }
-    public function evalution(Request $request){
-        $result = $this->session->run(<<<'CYPHER'
-        MATCH (p1:Person)-[r:REVIEWED]->(pr:Production)
-        WHERE p1.email = $reviewer AND pr.title = $reviewed
-        RETURN r
-        CYPHER,['reviewer' => Auth::id(),'reviewed' => $request->title]);
-        if($request->rate === null){$request['rate'] = ' ';}
-        if($request->text === null){$request['text'] = ' ';}
-        if(count($result) != 0){
-            $result1 = $this->session->run(<<<'CYPHER'
-            MATCH (u1)-[r:REVIEWED]->(prod)
-            WHERE u1.email = $reviewer AND prod.title = $reviewed
-            SET r.rating = $rating, r.summary = $summary
-            RETURN r
-            CYPHER,['reviewer' => Auth::id(),'reviewed' => $request->title,'rating' => $request->rate,'summary' => $request->text]);
-            return response()->json( $result1);
-        }
-            $result1 = $this->session->run(<<<'CYPHER'
-            MATCH (p:Person),(prd:Production)
-            WHERE p.email = $reviewer
-            create (p)-[:REVIEWED{rating:'', summary:''}]->(prd)
-            CYPHER,['reviewer' => Auth::id()]);
-            $result1 = $this->session->run(<<<'CYPHER'
-            MATCH (u1)-[r:REVIEWED]->(prod)
-            WHERE u1.email = $reviewer AND prod.title = $reviewed
-            SET r.rating = $rating, r.summary = $summary
-            RETURN r
-            CYPHER,['reviewer' => Auth::id(),'reviewed' => $request->title,'rating' => $request->rate,'summary' => $request->text]);
-            return response()->json( $result1);
     }
 }
 

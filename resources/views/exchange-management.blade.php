@@ -136,6 +136,46 @@ var dropdown = document.getElementsByClassName("dropdown-btn");
   });
 }
 
+// Lấy tất cả các dòng trong bảng
+var rows = document.querySelectorAll(".table-session tbody tr");
+    // Tính tổng số trang
+    var pages = Math.ceil(rows.length / 5);
+    // Tạo một danh sách các nút phân trang
+    var pagination = document.createElement("div");
+    for (var i = 1; i <= pages; i++) {
+        var link = document.createElement("a");
+        link.href = "#";
+        link.innerHTML = i;
+        link.onclick = function() {
+            // Lấy số trang hiện tại
+            var page = parseInt(this.innerHTML);
+            // Tính vị trí bắt đầu và kết thúc của các dòng trong trang này
+            var start = (page - 1) * 5;
+            var end = start + 5;
+            // Ẩn tất cả các dòng trong bảng
+            for (var j = 0; j < rows.length; j++) {
+                rows[j].style.display = "none";
+            }
+            // Hiển thị các dòng trong trang này
+            for (var j = start; j < end && j < rows.length; j++) {
+                rows[j].style.display = "";
+            }
+            // Đặt lại trạng thái của nút phân trang
+            var links = pagination.querySelectorAll("a");
+            for (var j = 0; j < links.length; j++) {
+                links[j].classList.remove("active");
+            }
+            this.classList.add("active");
+            return false;
+        };
+        pagination.appendChild(link);
+    }
+    // Thêm danh sách nút phân trang vào trang HTML
+    var container = document.querySelector(".post-container");
+    container.appendChild(pagination);
+    // Mặc định hiển thị trang đầu tiên
+    pagination.querySelector("a").click();
+
 </script>
   
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
