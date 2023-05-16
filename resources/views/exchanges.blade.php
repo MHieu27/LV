@@ -91,50 +91,67 @@
                     <p>Có thể bạn quan tâm</p>
                 </div>
             </div>
-            <div class="card">
-                <img src="https://cdn.tgdd.vn/Products/Images/8779/226959/bhx/nam-kim-cham-han-quoc-tui-150g-202202151015334518.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
-                <div class="card-name">Nâm kim châm</div>
-                <div class="container-card">
-                <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
-                    SL: 100KG
-                </div>
+            @foreach ($recommodation as $value)
+                <div class="card">
+                    <div class="d-flex" >
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp"
+                                        class="rounded-circle shadow-1-strong" width="40" height="40" />
+                                        <div style="margin-left: 5px;">
+                                        <div style="font-size: 15px;">{{ $value['name'] }}</div>
+                                        <ul class="list-unstyled d-flex p-0 mb-0" style="font-size:12px;">
+                                            <?php
+                                                $numStars = $value['rating'];
+                                                $numFullStars = floor($numStars); // Số sao nguyên
+                                                $numHalfStars = $numStars - $numFullStars; // Số sao nửa
+                                            ?>
+                                            @for ($i = 0; $i < $numFullStars; $i++)
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                            @endfor
+                                            @if ($numHalfStars > 0)
+                                                <li>
+                                                    <i class="fas fa-star-half-alt fa-sm text-warning"></i>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    </div>
+                                    
+                    <img src="{{url('/uploads')}}/{{$value['img']}}"alt="" style="width:100%;height: 168px;border-radius: 8px 8px 0 0;">
+                    <div class="card-name">Nâm kim châm</div>
+                    <div class="container-card">
+                    <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
+                        SL: {{$value['amount']}}KG
+                    </div>
 
-                <div class="flex-btm" style="padding:5px;">
-                    Giá: 10.000
-                </div>
+                    <div class="flex-btm" style="padding:5px;">
+                        Giá: {{number_format($value['price'], 0, ',', '.')  }}
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <img src="https://cdn.tgdd.vn/Products/Images/8785/275320/bhx/bong-cai-trang-tui-500g-600g-1-bong-202303110829571023.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
-                <div class="card-name">Bông cải trắng</div>
-                <div class="container-card">
-                <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
-                    SL: 200KG
-                </div>
-
-                <div class="flex-btm" style="padding:5px;">
-                    Giá: 12.000
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://cdn.tgdd.vn/Products/Images/8785/303829/bhx/ca-rot-tui-500g-2-5-cu-202303031529108121.jpg" alt="Avatar" style="width:100%;  border-radius: 8px 8px 0 0;">
-                <div class="card-name">Cà rốt</div>
-                <div class="container-card">
-                <div class="flex-btm"  style="padding:5px;border-right:solid 2px black;">
-                    SL: 80KG
-                </div>
-
-                <div class="flex-btm" style="padding:5px;">
-                    Giá: 22.000
-                </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 </body>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script>
+
+const currentTime = convertTimeStringToTimestamp('{{$current_time }}');
+  var products = document.getElementsByClassName("product-box");
+    for (var i = 0; i < products.length; i++) {
+        var product = products[i];
+
+        // Lấy thời gian kết thúc từ sản phẩm
+        var endTimeString = product.getElementsByClassName("time-cd")[0].textContent;
+        var endTime = new Date(endTimeString.replace(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/, "$2/$1/$3 $4:$5"));
+
+        // So sánh thời gian kết thúc với thời gian hiện tại
+        if (endTime < currentTime) {
+            product.style.display = "none";
+        }
+    }
+
     // Lấy danh sách sản phẩm và lưu vào biến products
     var getAllProducts = <?php echo json_encode($getAllProducts); ?>;
 
@@ -177,6 +194,7 @@
 
     // Thêm tiêu đề sản phẩm
     const productTitle = document.createElement('h2');
+    productTitle.classList.add('product-title');
     const productLink = document.createElement('a');
     productLink.href = `/product-info/${product.idProduct}`;
     productLink.innerText = product.product_name;
@@ -266,6 +284,9 @@ searchInput.addEventListener("keyup", function(event) {
     function searchProduct() {
         let input = searchInput.value;
         let products = document.getElementsByClassName('product-box');
+        const currentTime = convertTimeStringToTimestamp('{{$current_time }}');
+        var endTimeString = product.getElementsByClassName("time-cd")[0].textContent;
+        var endTime = new Date(endTimeString.replace(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/, "$2/$1/$3 $4:$5"));
         if (input === '') {
             for (let i = 0; i < products.length; i++) {
                 products[i].style.display = 'block';
@@ -273,8 +294,8 @@ searchInput.addEventListener("keyup", function(event) {
         } else {
                 for (let i = 0; i < products.length; i++) {
                     let productName = products[i].getElementsByClassName('product-title')[0].innerText.toLowerCase();
-                    if (productName.indexOf(input.toLowerCase()) > -1) {
-                    products[i].style.display = 'block';
+                    if (productName.indexOf(input.toLowerCase()) > -1 && endTime < currentTime) {
+                        products[i].style.display = 'block';
         } else {
                 products[i].style.display = 'none';
       }
@@ -298,19 +319,17 @@ searchInput.addEventListener("keyup", function(event) {
 
   return timestamp;
 }
-  const currentTime = convertTimeStringToTimestamp('{{$current_time }}');
-  //const currentTime = new Date('{{$current_time }}').getTime();
-  //console.log(currentTime);
-  const productBoxes = document.querySelectorAll('.product-box');
-  productBoxes.forEach((box) => {
-    const sessionEndTime = Date.parse(box.querySelector('.time-cd').textContent.replace('Thời gian kết thúc: ', ''));
-    //console.log(sessionEndTime);
-    //console.log(currentTime);
+  
+//   const productBoxes = document.querySelectorAll('.product-box');
+//   productBoxes.forEach((box) => {
+//     const sessionEndTime = Date.parse(box.querySelector('.time-cd').textContent.replace('Thời gian kết thúc: ', ''));
+//     //console.log(sessionEndTime);
+//     //console.log(currentTime);
 
-    if (sessionEndTime > currentTime) {
-        box.style.display = 'none';
-    }
-});
+//     if (sessionEndTime > currentTime) {
+//         box.style.display = 'none';
+//     }
+// });
 
 
 

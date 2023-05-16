@@ -43,7 +43,7 @@ class HomeController extends Controller
 
         $value_rcd = $this->Recommodater();
         $recommodation = $this->filter_user($value_rcd);
-        return view ('home',['user'=>$user, 'id' => $user['id'], 'showHomePages' => $showHomePages]);
+        return view ('home',['recommodation' => $recommodation,'user'=>$user, 'id' => $user['id'], 'showHomePages' => $showHomePages]);
 
         
     }
@@ -53,18 +53,22 @@ class HomeController extends Controller
         MATCH p=()-[r:REVIEWED]->()<-[:`Phiên giao dịch`]-() RETURN p
         CYPHER);
         $result_array2 = array();
+        
         foreach ($result_2 as $result) {
             $user = $result['p']['nodes'][0]['properties']['email'];
             $rating = $result['p']['relationships'][0]['properties']['rating'];
-            if($rating ==""){
+            
+            if($rating ===" "){
                 $rating = -1;
             }
-            $result_array2[] = array([
-                $result['p']['nodes'][2]['properties']['name'] =>[
-                    'user' => $user, 'rating' => $rating
-                ]
-            ]);
-        }
+            if($user !== "Keanu@gmail.com" && $result['p']['nodes'][2]['properties']['name'] !== "Nấm kim châm Hàn Quốc"){
+                $result_array2[] = array([
+                    $result['p']['nodes'][2]['properties']['name'] =>[
+                        'user' => $user, 'rating' => $rating
+                    ]
+                ]);
+            }
+        } 
         $product_ratings = array();
         $matrix = array();
         foreach ($result_array2 as $rating) {
@@ -84,10 +88,12 @@ class HomeController extends Controller
             }
             $matrix[$product] = $newArray;
         }
+        
         $matrix_normalized = [];
         $matrix_normalized1 = [];
         $averageRatings = [];
         $averageRatings1 = [];
+        
         foreach ($matrix as $item => $ratings) {
             foreach ($ratings as $user => $rating) {
                 if ($rating == -1){
@@ -150,6 +156,7 @@ class HomeController extends Controller
                     $newRatings[$user][$item] = $rating;
             }
         }
+     
         $matrix_preduct = array_merge([], $newRatings);
         foreach ($newRatings as $item => $ratings) {
             foreach ($ratings as $user => $rating) {
@@ -207,50 +214,44 @@ class HomeController extends Controller
             }
         }
         return $array_normal;
+        
     }
     public function filter_user($array_normal){
-        $user = Auth::id();
+        $user = new UserResource(User::findOrFail(Auth::id()));
+        $myID = $user->email;
         $filteredRatings = [];
         foreach ($array_normal as $item => $itemRatings) {
-            if (isset($itemRatings[$user])) {
-                $filteredRatings[$item] = $itemRatings[$user];
+            if (isset($itemRatings[$myID])) {
+                $filteredRatings[$item] = $itemRatings[$myID];
             }
         }
-       /*  dd($array_normal); */
+
         $array_recommodation = array();
         foreach ($filteredRatings as $item => $rating){
             if($rating > 2.5){
                 $result = $this->session->run(<<<'CYPHER'
-                MATCH (p:User)-[prd:PROVIDER]->(pr:Production {name: $item})
-                RETURN p,pr,prd
+                MATCH (p:User)-[prd:`Đăng bán`]->(pr:Product {name: $item})-[pdg:`Phiên giao dịch`]->(:Session)
+                return p.email as email,pr.img as img, pr.name as name, p.Username as Username, pdg.price as price, pdg.quantity as amount
                 CYPHER,['item' => $item]);
                 foreach($result as $value){
-                    $email = $value['p']['properties']['email'];
-                    $name = $value['p']['properties']['Username'];
-                    $title = $value['pr']['properties']['name'];
-                    $img = $value['pr']['properties']['img'];
-                    $price = $value['prd']['properties']['price'];
-                    $amount = $value['prd']['properties']['amount'];
                     $result1 = $this->session->run(<<<'CYPHER'
-                    match (:User{email:$email})-[:PROVIDER]->(:Production)<-[r:REVIEWED]-(:User)
-                    return r
-                    CYPHER,['email' => $email]);
+                    match (u:User{email:$email})-[db:`Đăng bán`]->(:Product)-[:`Phiên giao dịch`]->(:Session)<-[r:REVIEWED]-(:User)
+                    return r.rating as rating
+                    CYPHER,['email' => $value['email']]);
                     $array_recommodation[] =[
-                        'name' => $name,
+                        'name' => $value['Username'],
                         'rating' => $this->avg_rating($result1),
-                        'title' => $title,
-                        'img' => $img,
-                        'price' => $price,
-                        'amount' => $amount
+                        'title' => $value['name'],
+                        'img' => $value['img'],
+                        'price' => $value['price'],
+                        'amount' => $value['amount']
 
                     ];
                 }
             }
         }
-        usort($array_recommodation, function($a, $b) {
-            return $b['rating'] - $a['rating'];
-        });
         return $array_recommodation;
+
     }
     public function recommobe_prov($array_normal){
         $filtered_recomm = array_map(function($food) {
@@ -285,7 +286,7 @@ class HomeController extends Controller
 
         $array = array();
         foreach($request as $value){
-            $rating = $value['r']['properties']['rating'];
+            $rating = $value['rating'];
             $array[] = [$rating];
         }
         $sum = 0;

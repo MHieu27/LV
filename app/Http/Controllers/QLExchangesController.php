@@ -65,6 +65,11 @@ class QLExchangesController extends Controller
         $file->move(public_path('uploads'), $file_name);
         //dd($product);
         $result=$this->session->run(<<<'CYPHER'
+        MATCH (u:User),(prd:Session)
+        WHERE NOT (u)-[:REVIEWED]->(prd)
+        create (u)-[r:REVIEWED{rating: ' '}]->(prd)
+        CYPHER);
+        $result=$this->session->run(<<<'CYPHER'
         MERGE (u:User{email: $email})
         MERGE (p:Product{name: $name,
             desc: $desc,
@@ -88,7 +93,6 @@ class QLExchangesController extends Controller
         ]);
         return redirect() -> route('exchanges-management');
     }
-
 
     public function deleteProduct ($id) {
         $id = intval($id);

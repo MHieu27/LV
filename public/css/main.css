@@ -788,6 +788,7 @@ display: none;
     width: 100%;
     border-radius: 8px;
     margin-bottom: 5px;
+    background-color: white;
   }
 
   .card:hover {
@@ -1351,4 +1352,20 @@ display: none;
 .rating-title{
     font-size: 26px;
     color: #ffc107!important;
+}
+.text-warning{
+    --bs-text-opacity: 1;
+    color: #ffc107;
+    font-size: 18px;
+}
+.d-flex {
+    display: flex!important;
+    padding: 5px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+ul{
+    list-style-type: none;
 }
